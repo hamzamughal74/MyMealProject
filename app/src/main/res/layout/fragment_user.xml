@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/username_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/edittext_round"
+        android:hint="Username"
+        android:inputType="text"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/password_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_round"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textColor="#8F0707"
+        android:text="Forgot Password ?"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="157dp"
+        android:layout_height="53dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="90dp"
+        android:textColor="#fff"
+        android:background="@drawable/btn_round"
+        android:onClick="LoginExistingUser"
+        android:text="Login"
+        />
+
+</LinearLayout>

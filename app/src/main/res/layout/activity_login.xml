@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image_login"
+    android:orientation="vertical"
+    tools:context=".SignIn">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_round"
+            android:backgroundTint="@android:color/transparent"
+            android:text="@string/login_panel"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <Button
+            android:id="@+id/btnSignupPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_round"
+            android:backgroundTint="@android:color/transparent"
+            android:text="@string/signup_panel"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="216dp"
+        android:layout_height="195dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/logo_mymeal" />
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textAlignment="center"
+        app:tabTextColor="@color/colorPrimaryDark"
+        android:id="@+id/tabLayout">
+    </android.support.design.widget.TabLayout>
+<android.support.v4.view.ViewPager
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewPager">
+</android.support.v4.view.ViewPager>
+    <EditText
+        android:id="@+id/username_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/edittext_round"
+        android:hint="Username"
+        android:inputType="text"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/password_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_round"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textColor="#8F0707"
+        android:text="Forgot Password ?"        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="157dp"
+        android:layout_height="53dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="110dp"
+        android:textColor="#fff"
+        android:background="@drawable/btn_round"
+        android:onClick="LoginExistingUser"
+        android:text="Login" />
+
+</LinearLayout>

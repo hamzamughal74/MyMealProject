@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "503087938004",
+    "firebase_url": "https://mymealapp-6b619.firebaseio.com",
+    "project_id": "mymealapp-6b619",
+    "storage_bucket": "mymealapp-6b619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503087938004:android:9b8a9dc22d80bb5a",
+        "android_client_info": {
+          "package_name": "com.example.mymealproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503087938004-hcg587n9dffgi6a6cipbp8gksidfvudn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mymealproject",
+            "certificate_hash": "6fb6ef25c13b59f33be0a275c5a98054264eeaa0"
+          }
+        },
+        {
+          "client_id": "503087938004-v7egdhtjlthl27u01ogbb6gein3pjdbn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4qFPQL2AX-vxMsUuv9BzbVGlQMSUmXu8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503087938004-v7egdhtjlthl27u01ogbb6gein3pjdbn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
