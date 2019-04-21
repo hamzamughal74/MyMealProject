@@ -17,6 +17,8 @@ public class DiscoverRestaurant extends Activity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DR_Adapter(this);
-        recyclerView.setAdapter(adapter);    }
+        recyclerView.setAdapter(adapter);
+
+    }
 
 }

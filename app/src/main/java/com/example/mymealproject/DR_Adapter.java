@@ -1,10 +1,8 @@
 package com.example.mymealproject;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.mymealproject.DiscoverRestaurant;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import java.util.List;
-
 public class DR_Adapter extends RecyclerView.Adapter<DR_Adapter.DRViewHolder> {
 
     private Context mCtx;
-    private List<DiscoverRestaurant> mRestaurantList;
+    private List<String> mRestaurantList;
 
     public DR_Adapter(Context mCtx) {
         this.mCtx = mCtx;
@@ -32,12 +28,16 @@ public class DR_Adapter extends RecyclerView.Adapter<DR_Adapter.DRViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DR_Adapter.DRViewHolder holder, int position) {
+        holder.textViewAge.setText("test");
+        holder.textViewDep.setText("test");
+        holder.textViewDoc_Id.setText("ID");
+        holder.textViewName.setText("Muneeb");
 
     }
 
     @Override
     public int getItemCount() {
-        return mRestaurantList.size();
+        return 0;
     }
 
     class DRViewHolder extends RecyclerView.ViewHolder {
