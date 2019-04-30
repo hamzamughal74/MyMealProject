@@ -1,4 +1,4 @@
-package com.example.mymealproject;
+package com.example.mymealproject.Sign;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
+import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,6 +28,7 @@ public class SignUp extends AppCompatActivity {
     private EditText mConfirmPassword;
     private DatabaseReference mDatabaseReference;
     private ProgressBar mProgressBar;
+    private Spinner mRoleSpinner;
 
 
     // Firebase instance veriable
@@ -42,7 +45,7 @@ public class SignUp extends AppCompatActivity {
         mEmailadress = findViewById(R.id.emailadress);
         mPassword = findViewById(R.id.password);
         mConfirmPassword = findViewById(R.id.confirmPassword);
-
+        mRoleSpinner = findViewById(R.id.roleSpinner);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
 
@@ -68,7 +71,7 @@ private  void register(){
 String email =mEmailadress.getText().toString();
 String password = mPassword.getText().toString();
 String name = mName.getText().toString();
-
+String role =  mRoleSpinner.getSelectedItem().toString();
     mEmailadress.setError(null);
     mPassword.setError(null);
 
@@ -97,7 +100,7 @@ String name = mName.getText().toString();
         focusView.requestFocus();
     } else {
         // TODO: Call create FirebaseUser() here
-        createFirebaseUser(email,password,name);
+        createFirebaseUser(email,password,name,role);
 
     }
 }
@@ -116,7 +119,7 @@ String name = mName.getText().toString();
 
    }
     //TODO : Create Firebase user
-    private  void   createFirebaseUser(String email, String password, final String name){
+    private  void   createFirebaseUser(String email, String password, final String name, final String role){
 
     mAuth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -124,7 +127,7 @@ String name = mName.getText().toString();
                 public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                    Users user = new Users(
-                      name
+                      name,role
                    ) ;
 
                     FirebaseDatabase.getInstance().getReference("Users")

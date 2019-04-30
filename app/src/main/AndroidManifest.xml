@@ -12,11 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DiscoverRestaurant"
-            android:label="@string/title_activity_discover_restaurant"></activity>
-        <activity android:name=".MainRestaurantsActivity" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".SignIn">
+            android:name=".AddRestaurant"
+            android:label="@string/title_activity_add_restaurant"></activity>
+        <activity
+            android:name=".Create"
+            android:label="@string/title_activity_create" />
+        <activity
+            android:name=".OpenRestaurant.open_restaurant"
+            android:label="@string/title_activity_open_restaurant" />
+        <activity
+            android:name=".DiscoverRestaurant.DiscoverRestaurant"
+            android:label="@string/title_activity_discover_restaurant" />
+        <activity android:name=".StaffOpenRestaurant.staff_open_restaurant" />
+        <activity android:name=".Sign.SignUp" />
+        <activity android:name=".Sign.SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

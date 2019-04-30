@@ -5,36 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DiscoverRestaurant"
-    android:background="#000">
+    android:gravity="center"
+    tools:context=".DiscoverRestaurant.DiscoverRestaurant"
+    android:background="@drawable/background">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center">
+        android:layout_marginTop="120dp"
+        android:background="@drawable/search_box_outer"
+        android:gravity="center"
+       >
 
         <EditText
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textAlignment="center"
-            android:hint="@string/search_here"
 
-            android:background="@drawable/edittext_round_stroke" />
+            android:layout_gravity="center_horizontal"
+            android:height="50dp"
+            android:background="@null"
+            android:hint="@string/search_here"
+            android:textAlignment="center"
+
+            android:textColor="@color/theme_orange"
+            android:textCursorDrawable="@color/theme_orange" />
+
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/search_icon" />
+
     </LinearLayout>
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center">
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="20dp" />
+        android:background="@drawable/search_box_outer"
+       >
+
 
         <Spinner
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:entries="@array/catagory">
+
+        </Spinner>
+        <Spinner
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:entries="@array/catagory">
+
+        </Spinner>
+        <Spinner
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
             android:background="@color/colorPrimaryDark"
             android:entries="@array/catagory">
 
@@ -42,9 +74,26 @@
 
 
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewDR"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+
+        />
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/main_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="50dp"
+        app:itemBackground="@color/theme_orange"
+        app:menu="@menu/nav_items">
+    </android.support.design.widget.BottomNavigationView>
 
 </LinearLayout>
