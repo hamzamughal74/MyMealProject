@@ -37,10 +37,10 @@ public class AddRestaurant extends AppCompatActivity{
         Auth = FirebaseAuth.getInstance();
 
     }
+
     public void RestDone(View view){
         createRestaurant();
     }
-
 
     private void createRestaurant(){
         final String name = mRestName.getText().toString();
@@ -59,6 +59,9 @@ public class AddRestaurant extends AppCompatActivity{
                         mDatabaseReference.child("Restaurant").setValue(rest);
                         Toast.makeText(AddRestaurant.this, "Details Submitted", Toast.LENGTH_SHORT).show();
                     }
+                    else {
+                        Toast.makeText(AddRestaurant.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 
@@ -67,10 +70,6 @@ public class AddRestaurant extends AppCompatActivity{
 
                 }
             });
-
-
-            dataModelRest rest = new dataModelRest(name,adress,contact);
-            mDatabaseReference.child("Restaurant").setValue(rest);
 
             }
 

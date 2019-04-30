@@ -77,13 +77,13 @@ public class fragment_admin extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             String mRole =dataSnapshot.getValue(String.class);
-                            if(mRole!="Admin"){
+                            if(!mRole.equals("Admin")){
                                 Toast.makeText(getActivity(), "Invalid Attempt", Toast.LENGTH_SHORT).show();
                                 getActivity().finish();
                             }
                             else {
                                 Intent intent = new Intent(getActivity(), Create.class);
-                                getActivity().finish();
+//                                getActivity().finish();
                                 startActivity(intent);
                             }
                         }
