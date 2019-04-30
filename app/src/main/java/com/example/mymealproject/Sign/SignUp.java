@@ -32,7 +32,7 @@ public class SignUp extends AppCompatActivity {
 
 
     // Firebase instance veriable
-    private FirebaseAuth mAuth;
+    private FirebaseAuth Auth;
 
 
     @Override
@@ -59,7 +59,7 @@ public class SignUp extends AppCompatActivity {
         });
 
         //TODO: get hold of an instance of firebase auth
-        mAuth = FirebaseAuth.getInstance();
+        Auth = FirebaseAuth.getInstance();
 
     }
 public void attemptSignUp(View view){
@@ -121,7 +121,7 @@ String role =  mRoleSpinner.getSelectedItem().toString();
     //TODO : Create Firebase user
     private  void   createFirebaseUser(String email, String password, final String name, final String role){
 
-    mAuth.createUserWithEmailAndPassword(email,password)
+    Auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -135,7 +135,8 @@ String role =  mRoleSpinner.getSelectedItem().toString();
 
 
 
-                    Intent intent = new Intent(SignUp.this, SignIn.class);
+
+                    Intent intent = new Intent(SignUp.this,SignIn.class);
                     finish();
                     startActivity(intent);
                 }

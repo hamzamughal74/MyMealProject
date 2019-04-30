@@ -12,7 +12,6 @@ import com.example.mymealproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignIn extends AppCompatActivity {
-    private FirebaseAuth auth;
 
 
 
@@ -36,7 +35,6 @@ public class SignIn extends AppCompatActivity {
 
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
-        auth = FirebaseAuth.getInstance();
 
 
     setAdapter();
@@ -48,7 +46,7 @@ public class SignIn extends AppCompatActivity {
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
         //adding fragment
         viewPageAdapter.AddFragment(new fragment_user(),"SignIn as Customer");
-        viewPageAdapter.AddFragment(new fragment_user(),"SignIn in Staff");
+        viewPageAdapter.AddFragment(new fragment_admin(),"SignIn in Staff");
         mViewPager.setAdapter(viewPageAdapter);
         mViewPager.setAdapter(viewPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mymealproject.Create;
 import com.example.mymealproject.R;
 import com.example.mymealproject.StaffOpenRestaurant.staff_open_restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,9 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class fragment_staff  extends Fragment {
+public class fragment_admin extends Fragment {
     private Button Signin;
-    private FirebaseAuth auth;
+    private FirebaseAuth Auth;
 
     private EditText mUsername_login;
     private EditText mPassword_login;
@@ -41,7 +42,7 @@ public class fragment_staff  extends Fragment {
         mUsername_login = view.findViewById(R.id.adminUsername);
         mPassword_login = view.findViewById(R.id.adminPassword);
         Signin = view.findViewById(R.id.btn_login);
-        auth = FirebaseAuth.getInstance();
+        Auth = FirebaseAuth.getInstance();
         mReference = FirebaseDatabase.getInstance().getReference("Users");
 
 
@@ -65,13 +66,13 @@ public class fragment_staff  extends Fragment {
 
         //TODO: login with firebase
 
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+        Auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
                     showErrorDialog("There was problem signing in");
                 } else {
-                    String CurrentId = auth.getInstance().getCurrentUser().getUid();
+                    String CurrentId = Auth.getCurrentUser().getUid();
                     mReference.child(CurrentId).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,7 +82,7 @@ public class fragment_staff  extends Fragment {
                                 getActivity().finish();
                             }
                             else {
-                                Intent intent = new Intent(getActivity(),staff_open_restaurant.class);
+                                Intent intent = new Intent(getActivity(), Create.class);
                                 getActivity().finish();
                                 startActivity(intent);
                             }
@@ -92,9 +93,7 @@ public class fragment_staff  extends Fragment {
 
                         }
                     });
-                    Intent intent = new Intent(getActivity(), staff_open_restaurant.class);
-                    getActivity().finish();
-                    startActivity(intent);
+
                 }
             }
         });
