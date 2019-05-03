@@ -3,10 +3,10 @@ package com.example.mymealproject.DiscoverRestaurant;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymealproject.R;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<ModelFood>mList;
-    FoodAdapter(Context context, ArrayList<ModelFood>list){
+    private ArrayList<ModelFood> mFoodList;
+    FoodAdapter(Context context, ArrayList<ModelFood> foodList){
         mContext = context;
-        mList = list;
+        mFoodList = foodList;
     }
 
     @NonNull
@@ -35,22 +35,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        try{
+            ModelFood modelFood = mFoodList.get(i);
+            viewHolder.item_name.setText(modelFood.getName());
+            viewHolder.item_price.setText(modelFood.getPrice());
+            viewHolder.item_restName.setText(modelFood.getRestName());
+        }
+        catch (Exception e){
+            Log.d("test", "onBindViewHolder: " + e);
+        }
 
-        ModelFood foodItem = mList.get(i);
 
-        ImageView mImage;
-        TextView mName,mPlace,mPrice;
-
-        mImage = viewHolder.item_image;
-        mName = viewHolder.item_name;
-        mPlace = viewHolder.item_place;
-        mPrice = viewHolder.item_price;
-
-        mImage.setImageResource(mList.get(i).getImage());
-
-        mName.setText(foodItem.getName());
-        mPlace.setText(foodItem.getPlace());
-        mPrice.setText(foodItem.getPrice());
 
     }
 
@@ -59,19 +54,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mFoodList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView item_image;
-        TextView item_name,item_place,item_price;
+        TextView item_name,item_price,item_restName;
         public ViewHolder( View itemView) {
             super(itemView);
 
-            item_image = itemView.findViewById(R.id.media_image);
-            item_name = itemView.findViewById(R.id.primary_text);
-            item_place = itemView.findViewById(R.id.sub_text);
-            item_price = itemView.findViewById(R.id.action_button_1);
+
+            item_name = itemView.findViewById(R.id.itemName);
+            item_price = itemView.findViewById(R.id.itemPrice);
+            item_restName = itemView.findViewById(R.id.itemRestName);
+
 
         }
     }

@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.mymealproject.AddRestaurant;
 import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -140,6 +142,8 @@ String role =  mRoleSpinner.getSelectedItem().toString();
                     finish();
                     startActivity(intent);
                 }
+                else
+                   showErrorDialog("There was in problem Signing in");
                 }
             });
 

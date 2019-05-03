@@ -1,14 +1,12 @@
 package com.example.mymealproject.StaffOpenRestaurant;
 
-public class StaffModelDish {
+public class AdminModelCatagory {
     private  int image;
     private String name;
-    private String price;
 
-    public StaffModelDish(int image, String name, String price) {
+    public AdminModelCatagory(int image, String name) {
         this.image = image;
         this.name = name;
-        this.price = price;
 
     }
 
@@ -27,12 +25,6 @@ public class StaffModelDish {
     public void setName(String name) {
         this.name = name;
     }
-    public String getPrice() {
-        return price;
-    }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
 }

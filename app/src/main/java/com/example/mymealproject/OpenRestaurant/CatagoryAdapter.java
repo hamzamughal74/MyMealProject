@@ -67,8 +67,8 @@ public class CatagoryAdapter extends RecyclerView.Adapter<CatagoryAdapter.ViewHo
             super(itemView);
 
             item_image = itemView.findViewById(R.id.media_image);
-            item_name = itemView.findViewById(R.id.primary_text);
-            item_place = itemView.findViewById(R.id.sub_text);
+            item_name = itemView.findViewById(R.id.itemName);
+            item_place = itemView.findViewById(R.id.itemRestName);
             item_price = itemView.findViewById(R.id.action_button_1);
 
         }

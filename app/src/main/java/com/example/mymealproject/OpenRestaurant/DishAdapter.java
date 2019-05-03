@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymealproject.R;
@@ -16,10 +15,10 @@ import java.util.ArrayList;
 public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<ModelDish>mList;
-    DishAdapter(Context context, ArrayList<ModelDish>list){
+    private ArrayList<ModelDish> mDishList;
+    DishAdapter(Context context, ArrayList<ModelDish>dishList){
         mContext = context;
-        mList = list;
+        mDishList = dishList;
     }
 
     @NonNull
@@ -38,20 +37,24 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
-        ModelDish foodItem = mList.get(i);
-
-        ImageView mImage;
-        TextView mName,mRs;
-
-        mImage = viewHolder.item_image;
-        mName = viewHolder.item_name
-        ;
+        viewHolder.item_name.setText(mDishList.get(i).getName());
+        viewHolder.item_price.setText(mDishList.get(i).getPrice());
+        viewHolder.item_catagory.setText(mDishList.get(i).getCatagory());
 
 
-        mImage.setImageResource(mList.get(i).getImage());
 
-        mName.setText(foodItem.getName());
+//        ModelDish foodItem = mDishList.get(i);
+//
+//        ImageView mImage;
+//        TextView mName,mRs;
+//
+//        mImage = viewHolder.item_image;
+//        mName = viewHolder.item_name;
+//
+//
+//        mImage.setImageResource(mDishList.get(i).getImage());
+//
+//        mName.setText(foodItem.getName());
 
 
     }
@@ -61,18 +64,18 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mDishList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView item_image;
-        TextView item_name,item_place,item_price;
+
+        TextView item_name, item_catagory,item_price;
         public ViewHolder( View itemView) {
             super(itemView);
 
-            item_image = itemView.findViewById(R.id.media_image);
-            item_name = itemView.findViewById(R.id.primary_text);
-            item_place = itemView.findViewById(R.id.sub_text);
+
+            item_name = itemView.findViewById(R.id.itemName);
+            item_catagory = itemView.findViewById(R.id.itemRestName);
 
 
         }

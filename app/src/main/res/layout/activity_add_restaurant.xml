@@ -14,6 +14,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:text="Add Image"
+        android:onClick="RestImage"
         android:textColor="#fff"
         android:textSize="38dp"
 
@@ -43,7 +44,6 @@
             android:background="@drawable/edittext_round"
             android:hint="Adress"
             android:inputType="text"
-            android:onClick="RestDone"
             android:padding="5dp"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -67,6 +67,7 @@
             android:text="Done"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="220dp"
+            android:onClick="RestDone"
             android:background="@drawable/btn_round"
             android:textColor="#fff"
             />

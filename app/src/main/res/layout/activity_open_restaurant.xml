@@ -52,7 +52,7 @@
                 />
 
             <TextView
-                android:id="@+id/primary_text"
+                android:id="@+id/itemName"
                 android:layout_width="92dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,7 +108,7 @@
                 android:textSize="18sp" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewDR3"
+                android:id="@+id/recyclerViewDish"
                 android:layout_width="345dp"
                 android:layout_height="300dp"
                 >

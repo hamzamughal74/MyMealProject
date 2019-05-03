@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 
+import com.example.mymealproject.StaffOpenRestaurant.AdminOpenRestaurant;
+
 public class Create extends Activity {
 
     @Override
@@ -18,6 +20,10 @@ public class Create extends Activity {
         finish();
         startActivity(intent);
 
+    }
+    public  void btnTest(View view){
+        Intent intent = new Intent(Create.this, AdminOpenRestaurant.class);
+        startActivity(intent);
     }
 
 

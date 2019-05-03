@@ -1,4 +1,4 @@
-package com.example.mymealproject;
+package com.example.mymealproject.StaffOpenRestaurant;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,17 +7,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mymealproject.StaffOpenRestaurant.addMenu;
+import com.example.mymealproject.AddRestaurant;
+import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,62 +28,61 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
-public class AddRestaurant extends AppCompatActivity {
-    private EditText mRestName, mRestAdress, mRestContact;
-    private Button mDone;
-    private ImageButton mRestImage;
-
+public class addMenu extends AppCompatActivity {
+    private EditText mName,mPrice;
+    private Spinner mSpinner;
+    private ImageButton mDishImage;
+    private String rID;
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 10;
-
-
-    //Firebase
     FirebaseStorage storage;
     StorageReference storageReference;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth Auth;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_restaurant);
-        mRestName = findViewById(R.id.RestName);
-        mRestAdress = findViewById(R.id.RestAdress);
-        mRestContact = findViewById(R.id.RestContact);
-        mRestImage = findViewById(R.id.RestImage);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        Auth = FirebaseAuth.getInstance();
+        setContentView(R.layout.add_menu);
+
+        mName = findViewById(R.id.dishName);
+        mPrice = findViewById(R.id.dishPrice);
+        mSpinner = findViewById(R.id.dishCatagory);
+        mDishImage = findViewById(R.id.dishImage);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant");
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        Auth = FirebaseAuth.getInstance();
+        rID = Auth.getCurrentUser().getUid();
 
     }
-    public void RestImage(View view){
+    public void DishImage(View view){
         chooseImage();
     }
-
-    public void RestDone(View view) {
-        createRestaurant();
+    public void dishDone(View view){
         uploadImage();
-
-    }
-
-    private void createRestaurant() {
-        final String name = mRestName.getText().toString();
-        final String adress = mRestAdress.getText().toString();
-        final String contact = mRestContact.getText().toString();
-
-        dataModelRest rest = new dataModelRest(name, adress, contact);
-
-        mDatabaseReference.child("Restaurant").child(Auth.getCurrentUser().getUid()).setValue(rest);
-        Toast.makeText(AddRestaurant.this, "Details Submitted", Toast.LENGTH_SHORT).show();
-
-        Intent  intent = new Intent(AddRestaurant.this, addMenu.class);
-        intent.putExtra("restName",name);
+        Dish();
+        Intent intent = new Intent(addMenu.this, AdminOpenRestaurant.class);
         startActivity(intent);
+    }
+    private void Dish(){
+        Intent intent = getIntent();
 
+
+        String name = mName.getText().toString();
+        String price = mPrice.getText().toString();
+        String catagory = mSpinner.getSelectedItem().toString();
+        String restName = intent.getStringExtra("restName");
+
+        MenuModel menu = new MenuModel(
+                name,price,catagory,rID,restName
+        );
+        mDatabaseReference.child("Menu").push().setValue(menu);
+        Toast.makeText(addMenu.this, "Details Submitted", Toast.LENGTH_SHORT).show();
     }
     private void chooseImage() {
         Intent intent = new Intent();
@@ -100,7 +100,7 @@ public class AddRestaurant extends AppCompatActivity {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                mRestImage.setImageBitmap(bitmap);
+                mDishImage.setImageBitmap(bitmap);
             }
             catch (IOException e)
             {
@@ -122,14 +122,14 @@ public class AddRestaurant extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(AddRestaurant.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(addMenu.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(AddRestaurant.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(addMenu.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

@@ -13,11 +13,11 @@ import com.example.mymealproject.R;
 
 import java.util.ArrayList;
 
-public class StaffDishAdapter extends RecyclerView.Adapter<StaffDishAdapter.ViewHolder> {
+public class AdminCatagoryAdapter extends RecyclerView.Adapter<AdminCatagoryAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<StaffModelDish>mList;
-    StaffDishAdapter(Context context, ArrayList<StaffModelDish>list){
+    private ArrayList<AdminModelCatagory>mList;
+    AdminCatagoryAdapter(Context context, ArrayList<AdminModelCatagory>list){
         mContext = context;
         mList = list;
     }
@@ -27,26 +27,22 @@ public class StaffDishAdapter extends RecyclerView.Adapter<StaffDishAdapter.View
     public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
-        View mView = mLayoutInflater.inflate(R.layout.rv_dish,viewGroup,false);
+        View mView = mLayoutInflater.inflate(R.layout.rv_catagory,viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(mView);
-
-
 
         return viewHolder;
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        StaffModelDish foodItem = mList.get(i);
+        AdminModelCatagory foodItem = mList.get(i);
 
         ImageView mImage;
-        TextView mName,mRs;
+        TextView mName;
 
         mImage = viewHolder.item_image;
-        mName = viewHolder.item_name
-        ;
+        mName = viewHolder.item_name;
 
 
         mImage.setImageResource(mList.get(i).getImage());
@@ -71,11 +67,10 @@ public class StaffDishAdapter extends RecyclerView.Adapter<StaffDishAdapter.View
             super(itemView);
 
             item_image = itemView.findViewById(R.id.media_image);
-            item_name = itemView.findViewById(R.id.primary_text);
-            item_place = itemView.findViewById(R.id.sub_text);
-
+            item_name = itemView.findViewById(R.id.itemName);
+            item_place = itemView.findViewById(R.id.itemRestName);
+            item_price = itemView.findViewById(R.id.action_button_1);
 
         }
     }
-
 }

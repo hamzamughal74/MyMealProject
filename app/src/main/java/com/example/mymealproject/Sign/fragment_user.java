@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.mymealproject.DiscoverRestaurant.DiscoverRestaurant;
 import com.example.mymealproject.R;
-import com.example.mymealproject.StaffOpenRestaurant.staff_open_restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -79,7 +78,7 @@ public class fragment_user extends Fragment {
         });
     }
 
-    private void showErrorDialog(String message) {
+   private void showErrorDialog(String message) {
         new AlertDialog.Builder(getActivity())
                 .setTitle("Oops")
                 .setMessage(message)

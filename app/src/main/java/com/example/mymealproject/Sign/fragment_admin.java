@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.mymealproject.Create;
 import com.example.mymealproject.R;
-import com.example.mymealproject.StaffOpenRestaurant.staff_open_restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

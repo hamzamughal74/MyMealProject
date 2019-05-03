@@ -3,6 +3,7 @@ package com.example.mymealproject.StaffOpenRestaurant;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,13 @@ import com.example.mymealproject.R;
 
 import java.util.ArrayList;
 
-public class StaffCatagoryAdapter extends RecyclerView.Adapter<StaffCatagoryAdapter.ViewHolder> {
+public class AdminDishAdapter extends RecyclerView.Adapter<AdminDishAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<StaffModelCatagory>mList;
-    StaffCatagoryAdapter(Context context, ArrayList<StaffModelCatagory>list){
+    private ArrayList<MenuModel> mDishList;
+    AdminDishAdapter(Context context, ArrayList<MenuModel> dishList){
         mContext = context;
-        mList = list;
+        mDishList = dishList;
     }
 
     @NonNull
@@ -27,28 +28,28 @@ public class StaffCatagoryAdapter extends RecyclerView.Adapter<StaffCatagoryAdap
     public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
-        View mView = mLayoutInflater.inflate(R.layout.rv_catagory,viewGroup,false);
+        View mView = mLayoutInflater.inflate(R.layout.rv_dish,viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(mView);
+
+
 
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        StaffModelCatagory foodItem = mList.get(i);
+try {
+    MenuModel menuModel = mDishList.get(i);
+    viewHolder.item_name.setText(menuModel.getName());
+    viewHolder.item_price.setText(menuModel.getPrice());
 
-        ImageView mImage;
-        TextView mName;
-
-        mImage = viewHolder.item_image;
-        mName = viewHolder.item_name;
-
-
-        mImage.setImageResource(mList.get(i).getImage());
-
-        mName.setText(foodItem.getName());
-
+}
+catch (Exception e)
+{
+    Log.d("test", "onBindViewHolder: " + e);
+}
 
     }
 
@@ -57,20 +58,21 @@ public class StaffCatagoryAdapter extends RecyclerView.Adapter<StaffCatagoryAdap
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mDishList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView item_image;
-        TextView item_name,item_place,item_price;
+        TextView item_name,item_price;
         public ViewHolder( View itemView) {
             super(itemView);
 
             item_image = itemView.findViewById(R.id.media_image);
-            item_name = itemView.findViewById(R.id.primary_text);
-            item_place = itemView.findViewById(R.id.sub_text);
-            item_price = itemView.findViewById(R.id.action_button_1);
+            item_name = itemView.findViewById(R.id.itemName);
+           item_price = itemView.findViewById(R.id.itemPrice);
+
 
         }
     }
+
 }

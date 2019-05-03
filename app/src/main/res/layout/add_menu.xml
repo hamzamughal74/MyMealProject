@@ -3,18 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRestaurant"
+    tools:context=".StaffOpenRestaurant.addMenu"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="#000">
-    <Button
+    <ImageButton
+        android:id="@+id/dishImage"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:text="Add Image"
+        android:autofillHints="AddIMage"
         android:textColor="#fff"
         android:textSize="38dp"
-
+        android:onClick="DishImage"
         android:background="@drawable/orange_stroke"/>
     <TextView
         android:layout_marginTop="40dp"
@@ -25,10 +27,12 @@
         android:text="Select Catagory"/>
 
     <Spinner
+        android:id="@+id/dishCatagory"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimaryDark"
+        android:dropDownWidth="wrap_content"
         android:entries="@array/catagory">
 
     </Spinner>
@@ -42,36 +46,38 @@
         app:cardCornerRadius="8dp"
         >
         <EditText
-
+            android:id="@+id/dishName"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:background="@drawable/edittext_round"
-            android:hint="Price"
-            android:inputType="number"
+            android:hint="Name"
+            android:inputType="text"
             android:padding="5dp"
             android:textAlignment="center"
             android:textSize="24sp" />
         <EditText
-
+            android:id="@+id/dishPrice"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="120dp"
             android:background="@drawable/edittext_round"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="5dp"
+            android:hint="Price"
             android:textAlignment="center"
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/dishDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Done"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="220dp"
+            android:onClick="dishDone"
             android:background="@drawable/btn_round"
             android:textColor="#fff"
             />
