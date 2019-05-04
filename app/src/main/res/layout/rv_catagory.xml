@@ -18,7 +18,7 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/media_image"
+            android:id="@+id/itemImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:background="#C8000000"
-            app:layout_constraintBottom_toBottomOf="@+id/media_image"
+            app:layout_constraintBottom_toBottomOf="@+id/itemImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

@@ -21,6 +21,16 @@ public class MenuModel  {
    public String price;
     private String catagory;
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private String imageUrl;
+
     public String getRestName() {
         return restName;
     }
@@ -31,12 +41,13 @@ public class MenuModel  {
 
     private  String restName;
 
-    public MenuModel(String name, String price, String catagory,String rID,String restName) {
+    public MenuModel(String name, String price, String catagory,String rID,String restName,String imageUrl) {
         this.name = name;
         this.price = price;
         this.catagory = catagory;
         this.rID = rID;
         this.restName = restName;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {

@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mymealproject.R;
+import com.example.mymealproject.StaffOpenRestaurant.MenuModel;
 
 import java.util.ArrayList;
 
 public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<ModelDish> mDishList;
-    DishAdapter(Context context, ArrayList<ModelDish>dishList){
+    private ArrayList<MenuModel> mDishList;
+    DishAdapter(Context context, ArrayList<MenuModel>dishList){
         mContext = context;
         mDishList = dishList;
     }

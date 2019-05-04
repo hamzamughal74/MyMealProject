@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.example.mymealproject.R;
+import com.example.mymealproject.StaffOpenRestaurant.MenuModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class open_restaurant extends AppCompatActivity {
     private RecyclerView mRecyclerView,mRecyclerViewDish;
     ArrayList<ModelCatagory> mFoodList;
-    ArrayList<ModelDish>mDishList;
+    ArrayList<MenuModel>mDishList;
     DatabaseReference mDatabaseReference;
     DishAdapter mAdapter;
     @Override
@@ -56,7 +57,7 @@ public class open_restaurant extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    ModelDish dishList = dataSnapshot1.getValue(ModelDish.class);
+                    MenuModel dishList = dataSnapshot1.getValue(MenuModel.class);
                     mDishList.add(dishList);
                 }
                 mAdapter =  new  DishAdapter(open_restaurant.this,mDishList);

@@ -43,6 +43,8 @@ public class addMenu extends AppCompatActivity {
     StorageReference storageReference;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth Auth;
+    private String dishID;
+    private String imageUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,24 +66,26 @@ public class addMenu extends AppCompatActivity {
         chooseImage();
     }
     public void dishDone(View view){
-        uploadImage();
         Dish();
         Intent intent = new Intent(addMenu.this, AdminOpenRestaurant.class);
         startActivity(intent);
     }
     private void Dish(){
-        Intent intent = getIntent();
+//        Intent intent = getIntent();
 
 
-        String name = mName.getText().toString();
-        String price = mPrice.getText().toString();
-        String catagory = mSpinner.getSelectedItem().toString();
-        String restName = intent.getStringExtra("restName");
-
-        MenuModel menu = new MenuModel(
-                name,price,catagory,rID,restName
-        );
-        mDatabaseReference.child("Menu").push().setValue(menu);
+//        String name = mName.getText().toString();
+//        String price = mPrice.getText().toString();
+//        String catagory = mSpinner.getSelectedItem().toString();
+//        String restName = intent.getStringExtra("restName");
+//        mDatabaseReference = mDatabaseReference.child("Menu").push();
+//        dishID = mDatabaseReference.getKey();
+        uploadImage();
+//        MenuModel menu = new MenuModel(
+//                name,price,catagory,rID,restName,imageUrl
+//        );
+//
+//        mDatabaseReference.setValue(menu);
         Toast.makeText(addMenu.this, "Details Submitted", Toast.LENGTH_SHORT).show();
     }
     private void chooseImage() {
@@ -112,17 +116,40 @@ public class addMenu extends AppCompatActivity {
 
         if(filePath != null)
         {
+            Intent intent = getIntent();
+            mDatabaseReference = mDatabaseReference.child("Menu").push();
+            dishID = mDatabaseReference.getKey();
+           final String name = mName.getText().toString();
+           final String price = mPrice.getText().toString();
+           final String catagory = mSpinner.getSelectedItem().toString();
+
+          final   String restName = intent.getStringExtra("restName");
+
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("images/"+ dishID);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(addMenu.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                             @Override
+                             public void onSuccess(Uri uri) {
+                                 imageUrl = uri.toString();
+
+                                 MenuModel menu = new MenuModel(
+                                         name,price,catagory,rID,restName,imageUrl
+                                 );
+
+                                 mDatabaseReference.setValue(menu);
+
+                             }
+                         })   ;
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

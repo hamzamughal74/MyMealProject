@@ -39,7 +39,11 @@ public class AdminOpenRestaurant extends AppCompatActivity {
         Auth = FirebaseAuth.getInstance();
         key = Auth.getCurrentUser().getUid();
         mDatabaseReference= FirebaseDatabase.getInstance().getReference("Restaurant");
+
+
         //for catagory
+
+
         mFoodList = new ArrayList<>();
         mFoodList.add(new AdminModelCatagory(R.drawable.food,"Steaks"));
         mFoodList.add(new AdminModelCatagory(R.drawable.food,"BBQ"));
@@ -72,7 +76,7 @@ public class AdminOpenRestaurant extends AppCompatActivity {
 
         Query query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu")
                 .orderByChild("rID").equalTo(key);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -107,8 +111,6 @@ public class AdminOpenRestaurant extends AppCompatActivity {
                             Intent intent = new Intent(AdminOpenRestaurant.this , Create.class );
                             startActivity(intent);
                             break;
-
-
 
                     }
                     return false;

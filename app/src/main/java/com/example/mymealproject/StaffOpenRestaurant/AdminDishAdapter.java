@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymealproject.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ try {
     MenuModel menuModel = mDishList.get(i);
     viewHolder.item_name.setText(menuModel.getName());
     viewHolder.item_price.setText(menuModel.getPrice());
+     Picasso.with(mContext).load(menuModel.getImageUrl()).fit().into(viewHolder.item_image);
 
 }
 catch (Exception e)
@@ -67,7 +69,7 @@ catch (Exception e)
         public ViewHolder( View itemView) {
             super(itemView);
 
-            item_image = itemView.findViewById(R.id.media_image);
+            item_image = itemView.findViewById(R.id.itemImage);
             item_name = itemView.findViewById(R.id.itemName);
            item_price = itemView.findViewById(R.id.itemPrice);
 

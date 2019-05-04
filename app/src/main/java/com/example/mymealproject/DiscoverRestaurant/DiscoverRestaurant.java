@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.mymealproject.R;
 import com.example.mymealproject.OpenRestaurant.open_restaurant;
 import com.example.mymealproject.StaffOpenRestaurant.AdminOpenRestaurant;
+import com.example.mymealproject.StaffOpenRestaurant.MenuModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 public class DiscoverRestaurant extends AppCompatActivity {
     private RecyclerView mFoodRecycleView;
-    ArrayList<ModelFood> mFoodList;
+    ArrayList<MenuModel> mFoodList;
     DatabaseReference mDatabaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +77,14 @@ public class DiscoverRestaurant extends AppCompatActivity {
         mFoodRecycleView.setAdapter(mFoodAdapter);
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     mFoodList.clear();
 
                     for (DataSnapshot Snapshot : dataSnapshot.getChildren()){
-                        ModelFood modelFood = Snapshot.getValue(ModelFood.class);
+                        MenuModel modelFood = Snapshot.getValue(MenuModel.class);
                         mFoodList.add(modelFood);
                     }
                     mFoodAdapter.notifyDataSetChanged();

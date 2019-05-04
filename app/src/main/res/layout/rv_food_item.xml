@@ -21,7 +21,7 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/media_image"
+            android:id="@+id/itemImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -72,12 +72,12 @@
             android:text="Restarant"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toTopOf="@+id/action_button_1"
+            app:layout_constraintBottom_toTopOf="@+id/goToRest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/action_button_1"
+            android:id="@+id/goToRest"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             android:minWidth="0dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="Action1"
+            android:text="Go to Restaurant"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -102,19 +102,19 @@
             app:layout_constraintBottom_toTopOf="@+id/itemRestName"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-            android:id="@+id/action_button_2"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:minWidth="0dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="Action 2"
-            android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintStart_toEndOf="@+id/action_button_1"
-            app:layout_constraintTop_toTopOf="@+id/action_button_1" />
+        <!--<Button-->
+            <!--android:id="@+id/action_button_2"-->
+            <!--style="@style/Widget.AppCompat.Button.Borderless"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:minWidth="0dp"-->
+            <!--android:paddingStart="8dp"-->
+            <!--android:paddingEnd="8dp"-->
+            <!--android:text="Action 2"-->
+            <!--android:textColor="@color/colorPrimaryDark"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/action_button_1"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/action_button_1" />-->
 
     </android.support.constraint.ConstraintLayout>
 
