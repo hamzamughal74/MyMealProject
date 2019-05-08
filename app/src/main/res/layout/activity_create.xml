@@ -16,17 +16,6 @@
         >
 
         <Button
-            android:id="@+id/btnTest"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_round"
-            android:onClick="btnTest"
-            android:text="test"
-            android:textColor="#fff"
-            android:textSize="18sp" />
-
-        <Button
             android:id="@+id/addRest"
             android:layout_width="200dp"
             android:layout_height="100dp"

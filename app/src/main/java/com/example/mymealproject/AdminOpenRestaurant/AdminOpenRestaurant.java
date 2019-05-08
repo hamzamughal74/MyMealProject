@@ -1,4 +1,4 @@
-package com.example.mymealproject.StaffOpenRestaurant;
+package com.example.mymealproject.AdminOpenRestaurant;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mymealproject.Create;
+import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -62,6 +63,8 @@ public class AdminOpenRestaurant extends AppCompatActivity {
         dishContent();
 
     }
+
+
     private void  dishContent(){
         mDishList = new ArrayList<>();
 
@@ -74,8 +77,9 @@ public class AdminOpenRestaurant extends AppCompatActivity {
 
 
 
+
         Query query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu")
-                .orderByChild("rID").equalTo(key);
+            .orderByChild("rID").equalTo(key);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,6 +105,11 @@ public class AdminOpenRestaurant extends AppCompatActivity {
 
 
     }
+
+    private void restDetails(){
+
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -108,7 +117,7 @@ public class AdminOpenRestaurant extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.add:
 
-                            Intent intent = new Intent(AdminOpenRestaurant.this , Create.class );
+                            Intent intent = new Intent(AdminOpenRestaurant.this , addMenu.class );
                             startActivity(intent);
                             break;
 

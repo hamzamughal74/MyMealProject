@@ -5,12 +5,5 @@
         android:id="@+id/nav_discoverRestaurants"
         android:icon="@drawable/ic_menu_camera"
         android:title="@string/nav_home" />
-    <item
-        android:id="@+id/nav_discoverDishes"
-        android:icon="@drawable/ic_menu_share"
-        android:title="@string/nav_notif" />
-    <item
-        android:id="@+id/nav_staff"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="Staff" />
+
 </menu>

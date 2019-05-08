@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".DiscoverRestaurant.DiscoverRestaurant"
+    tools:context=".DiscoverDishes.DiscoverDishes"
     android:background="@drawable/background">
     <LinearLayout
         android:layout_width="wrap_content"

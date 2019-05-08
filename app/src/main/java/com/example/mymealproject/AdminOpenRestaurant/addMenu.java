@@ -1,4 +1,4 @@
-package com.example.mymealproject.StaffOpenRestaurant;
+package com.example.mymealproject.AdminOpenRestaurant;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mymealproject.AddRestaurant;
+import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,8 +28,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
 
 public class addMenu extends AppCompatActivity {
     private EditText mName,mPrice;
@@ -123,7 +121,7 @@ public class addMenu extends AppCompatActivity {
            final String price = mPrice.getText().toString();
            final String catagory = mSpinner.getSelectedItem().toString();
 
-          final   String restName = intent.getStringExtra("restName");
+           final   String restName = intent.getStringExtra("restName");
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");

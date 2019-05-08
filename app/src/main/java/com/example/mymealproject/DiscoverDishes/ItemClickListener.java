@@ -1,4 +1,4 @@
-package com.example.mymealproject.DiscoverRestaurant;
+package com.example.mymealproject.DiscoverDishes;
 
 import android.view.View;
 

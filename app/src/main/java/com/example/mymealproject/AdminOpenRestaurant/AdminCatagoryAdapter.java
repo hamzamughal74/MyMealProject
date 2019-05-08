@@ -1,4 +1,4 @@
-package com.example.mymealproject.StaffOpenRestaurant;
+package com.example.mymealproject.AdminOpenRestaurant;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

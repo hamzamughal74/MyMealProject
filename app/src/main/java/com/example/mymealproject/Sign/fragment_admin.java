@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mymealproject.AdminOpenRestaurant.AdminOpenRestaurant;
 import com.example.mymealproject.Create;
 import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,7 +72,7 @@ public class fragment_admin extends Fragment {
                 if (!task.isSuccessful()) {
                     showErrorDialog("There was problem signing in");
                 } else {
-                    String CurrentId = Auth.getCurrentUser().getUid();
+                    final String CurrentId = Auth.getCurrentUser().getUid();
                     mReference.child(CurrentId).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,9 +82,30 @@ public class fragment_admin extends Fragment {
                                 getActivity().finish();
                             }
                             else {
-                                Intent intent = new Intent(getActivity(), Create.class);
-//                                getActivity().finish();
-                                startActivity(intent);
+                                FirebaseDatabase.getInstance().getReference("Restaurant").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                       for (DataSnapshot data : dataSnapshot.getChildren()){
+                                           if (dataSnapshot.hasChild(CurrentId)){
+                                               Intent intent = new Intent(getActivity(), AdminOpenRestaurant.class);
+//                                             getActivity().finish();
+                                               startActivity(intent);
+
+                                           }
+                                           else {
+                                               Intent intent = new Intent(getActivity(),Create.class);
+                                               getActivity().finish();
+                                               startActivity(intent);
+                                           }
+                                       }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
                             }
                         }
 

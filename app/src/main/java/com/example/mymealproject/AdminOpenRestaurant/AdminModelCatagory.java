@@ -1,4 +1,4 @@
-package com.example.mymealproject.StaffOpenRestaurant;
+package com.example.mymealproject.AdminOpenRestaurant;
 
 public class AdminModelCatagory {
     private  int image;

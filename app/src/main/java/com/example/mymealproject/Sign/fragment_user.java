@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mymealproject.DiscoverRestaurant.DiscoverRestaurant;
+import com.example.mymealproject.DiscoverDishes.DiscoverDishes;
 import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,7 +70,7 @@ public class fragment_user extends Fragment {
                 if (!task.isSuccessful()) {
                     showErrorDialog("There was problem signing in");
                 } else {
-                    Intent intent = new Intent(getActivity(), DiscoverRestaurant.class);
+                    Intent intent = new Intent(getActivity(), DiscoverDishes.class);
                     getActivity().finish();
                     startActivity(intent);
                 }

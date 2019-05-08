@@ -1,7 +1,4 @@
-package com.example.mymealproject.StaffOpenRestaurant;
-
-import android.widget.Spinner;
-
+package com.example.mymealproject;
 
 
 public class MenuModel  {

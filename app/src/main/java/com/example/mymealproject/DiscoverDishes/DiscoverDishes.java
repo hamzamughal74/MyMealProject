@@ -1,9 +1,8 @@
-package com.example.mymealproject.DiscoverRestaurant;
+package com.example.mymealproject.DiscoverDishes;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.solver.widgets.Snapshot;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mymealproject.R;
-import com.example.mymealproject.OpenRestaurant.open_restaurant;
-import com.example.mymealproject.StaffOpenRestaurant.AdminOpenRestaurant;
-import com.example.mymealproject.StaffOpenRestaurant.MenuModel;
+import com.example.mymealproject.MenuModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class DiscoverRestaurant extends AppCompatActivity {
+public class DiscoverDishes extends AppCompatActivity {
     private RecyclerView mFoodRecycleView;
     ArrayList<MenuModel> mFoodList;
     DatabaseReference mDatabaseReference;
@@ -46,18 +43,9 @@ public class DiscoverRestaurant extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.nav_discoverRestaurants:
 
-                            Intent intent = new Intent(DiscoverRestaurant.this ,DiscoverRestaurant.class );
+                            Intent intent = new Intent(DiscoverDishes.this , DiscoverDishes.class );
                             startActivity(intent);
                             break;
-                        case  R.id.nav_discoverDishes:
-                            Intent intent1 = new Intent(DiscoverRestaurant.this, open_restaurant.class);
-                            startActivity(intent1);
-                            break;
-                        case R.id.nav_staff:
-                            Intent intent2 = new Intent(DiscoverRestaurant.this, AdminOpenRestaurant.class);
-                            startActivity(intent2);
-                            break;
-
 
 
                     }
@@ -90,7 +78,7 @@ public class DiscoverRestaurant extends AppCompatActivity {
                     mFoodAdapter.notifyDataSetChanged();
                 }
                 else {
-                    Toast.makeText(DiscoverRestaurant.this, "No data found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -22,11 +22,11 @@
             android:label="@string/title_activity_open_restaurant" />
 
         <activity
-            android:name=".DiscoverRestaurant.DiscoverRestaurant"
+            android:name=".DiscoverDishes.DiscoverDishes"
             android:label="@string/title_activity_discover_restaurant" />
-        <activity android:name=".StaffOpenRestaurant.AdminOpenRestaurant" />
+        <activity android:name=".AdminOpenRestaurant.AdminOpenRestaurant" />
         <activity android:name=".Sign.SignUp" />
-        <activity android:name=".StaffOpenRestaurant.addMenu"/>
+        <activity android:name=".AdminOpenRestaurant.addMenu"/>
         <activity android:name=".Sign.SignIn">
 
             <intent-filter>

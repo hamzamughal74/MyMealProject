@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymealproject.R;
-import com.example.mymealproject.StaffOpenRestaurant.MenuModel;
+import com.example.mymealproject.MenuModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,9 +40,10 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.item_name.setText(mDishList.get(i).getName());
-        viewHolder.item_price.setText(mDishList.get(i).getPrice());
-        viewHolder.item_catagory.setText(mDishList.get(i).getCatagory());
+        MenuModel menuModel = mDishList.get(i);
+        viewHolder.item_name.setText(menuModel.getName());
+        viewHolder.item_price.setText(menuModel.getPrice());
+        Picasso.with(mContext).load(menuModel.getImageUrl()).fit().into(viewHolder.item_image);
 
 
 
@@ -70,13 +73,14 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView item_name, item_catagory,item_price;
+        ImageView item_image;
+        TextView item_name,item_price;
         public ViewHolder( View itemView) {
             super(itemView);
 
-
+            item_image = itemView.findViewById(R.id.itemImage);
             item_name = itemView.findViewById(R.id.itemName);
-            item_catagory = itemView.findViewById(R.id.itemRestName);
+            item_price = itemView.findViewById(R.id.itemPrice);
 
 
         }

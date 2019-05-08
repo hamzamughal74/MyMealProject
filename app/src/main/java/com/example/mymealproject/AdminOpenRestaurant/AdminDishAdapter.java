@@ -1,4 +1,4 @@
-package com.example.mymealproject.StaffOpenRestaurant;
+package com.example.mymealproject.AdminOpenRestaurant;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
 import com.squareup.picasso.Picasso;
 
