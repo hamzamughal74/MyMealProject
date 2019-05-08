@@ -117,6 +117,7 @@ public class addMenu extends AppCompatActivity {
             Intent intent = getIntent();
             mDatabaseReference = mDatabaseReference.child("Menu").push();
             dishID = mDatabaseReference.getKey();
+
            final String name = mName.getText().toString();
            final String price = mPrice.getText().toString();
            final String catagory = mSpinner.getSelectedItem().toString();

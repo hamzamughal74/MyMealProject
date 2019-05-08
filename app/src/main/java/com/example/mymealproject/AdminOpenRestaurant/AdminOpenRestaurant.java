@@ -62,6 +62,7 @@ public class AdminOpenRestaurant extends AppCompatActivity {
 
         dishContent();
 
+
     }
 
 
