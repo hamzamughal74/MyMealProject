@@ -11,24 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Cart"></activity>
+        <activity android:name=".Orders" />
         <activity
             android:name=".AddRestaurant"
-            android:label="@string/title_activity_add_restaurant"></activity>
+            android:label="@string/title_activity_add_restaurant" />
         <activity
             android:name=".Create"
             android:label="@string/title_activity_create" />
         <activity
             android:name=".OpenRestaurant.open_restaurant"
             android:label="@string/title_activity_open_restaurant" />
-
         <activity
             android:name=".DiscoverDishes.DiscoverDishes"
             android:label="@string/title_activity_discover_restaurant" />
         <activity android:name=".AdminOpenRestaurant.AdminOpenRestaurant" />
         <activity android:name=".Sign.SignUp" />
-        <activity android:name=".AdminOpenRestaurant.addMenu"/>
+        <activity android:name=".AdminOpenRestaurant.addMenu" />
         <activity android:name=".Sign.SignIn">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

@@ -20,8 +20,11 @@ import com.example.mymealproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -43,6 +46,7 @@ public class addMenu extends AppCompatActivity {
     private FirebaseAuth Auth;
     private String dishID;
     private String imageUrl;
+    private String restaurantName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class addMenu extends AppCompatActivity {
         storageReference = storage.getReference();
         Auth = FirebaseAuth.getInstance();
         rID = Auth.getCurrentUser().getUid();
+
 
     }
     public void DishImage(View view){
@@ -75,12 +80,12 @@ public class addMenu extends AppCompatActivity {
 //        String name = mName.getText().toString();
 //        String price = mPrice.getText().toString();
 //        String catagory = mSpinner.getSelectedItem().toString();
-//        String restName = intent.getStringExtra("restName");
+//        String restaurantName = intent.getStringExtra("restaurantName");
 //        mDatabaseReference = mDatabaseReference.child("Menu").push();
 //        dishID = mDatabaseReference.getKey();
         uploadImage();
 //        MenuModel menu = new MenuModel(
-//                name,price,catagory,rID,restName,imageUrl
+//                name,price,catagory,rID,restaurantName,imageUrl
 //        );
 //
 //        mDatabaseReference.setValue(menu);
@@ -113,8 +118,19 @@ public class addMenu extends AppCompatActivity {
     private void uploadImage() {
 
         if(filePath != null)
-        {
-            Intent intent = getIntent();
+        {     String CurrentUID = Auth.getCurrentUser().getUid();
+            mDatabaseReference.child(CurrentUID).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    restaurantName = dataSnapshot.getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
             mDatabaseReference = mDatabaseReference.child("Menu").push();
             dishID = mDatabaseReference.getKey();
 
@@ -122,7 +138,7 @@ public class addMenu extends AppCompatActivity {
            final String price = mPrice.getText().toString();
            final String catagory = mSpinner.getSelectedItem().toString();
 
-           final   String restName = intent.getStringExtra("restName");
+//           final   String RestName = intent.getStringExtra("restaurantName");
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
@@ -141,7 +157,7 @@ public class addMenu extends AppCompatActivity {
                                  imageUrl = uri.toString();
 
                                  MenuModel menu = new MenuModel(
-                                         name,price,catagory,rID,restName,imageUrl
+                                         name,price,catagory,rID,restaurantName,imageUrl,dishID
                                  );
 
                                  mDatabaseReference.setValue(menu);

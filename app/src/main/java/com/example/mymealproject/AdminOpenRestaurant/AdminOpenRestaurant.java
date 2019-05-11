@@ -8,11 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mymealproject.Create;
 import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
+import com.example.mymealproject.dataModelRest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class AdminOpenRestaurant extends AppCompatActivity {
@@ -28,13 +30,16 @@ public class AdminOpenRestaurant extends AppCompatActivity {
     ArrayList<AdminModelCatagory> mFoodList;
     DatabaseReference mDatabaseReference;
     ArrayList<MenuModel>mDishList;
+    ArrayList<dataModelRest>mRestDetails;
     FirebaseAuth Auth;
     String key;
+    TextView RestName;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_open_restaurant);
         mRecyclerView = findViewById(R.id.recyclerViewDR2);
         mRecyclerViewDish = findViewById(R.id.recyclerViewDish);
+        RestName = findViewById(R.id.RestName);
         BottomNavigationView bottomNav = findViewById(R.id.nav_StaffOpenRestaurant);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         Auth = FirebaseAuth.getInstance();
@@ -61,7 +66,7 @@ public class AdminOpenRestaurant extends AppCompatActivity {
         //for dishes
 
         dishContent();
-
+        restDetails();
 
     }
 
@@ -90,6 +95,7 @@ public class AdminOpenRestaurant extends AppCompatActivity {
                     for (DataSnapshot Snapshot : dataSnapshot.getChildren()) {
                         MenuModel menuModel = Snapshot.getValue(MenuModel.class);
                         mDishList.add(menuModel);
+
                     }
                     mDishAdapter.notifyDataSetChanged();
                 }
@@ -108,7 +114,22 @@ public class AdminOpenRestaurant extends AppCompatActivity {
     }
 
     private void restDetails(){
+        String CurrentUID = Auth.getCurrentUser().getUid();
+        Query query = FirebaseDatabase.getInstance().getReference("Restaurant").orderByKey().equalTo(CurrentUID);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot Snapshot : dataSnapshot.getChildren()) {
+                    dataModelRest dataModelRest = Snapshot.getValue(dataModelRest.class);
+                    RestName.setText(dataModelRest.getName());
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

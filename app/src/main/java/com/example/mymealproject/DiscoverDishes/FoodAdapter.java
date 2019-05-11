@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.mymealproject.OpenRestaurant.open_restaurant;
 import com.example.mymealproject.R;
-import com.example.mymealproject.AdminOpenRestaurant.AdminOpenRestaurant;
 import com.example.mymealproject.MenuModel;
 import com.squareup.picasso.Picasso;
 
@@ -84,7 +83,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             super(itemView);
 
 
-            item_name = itemView.findViewById(R.id.itemName);
+            item_name = itemView.findViewById(R.id.RestName);
             item_price = itemView.findViewById(R.id.itemPrice);
             item_restName = itemView.findViewById(R.id.itemRestName);
             item_image = itemView.findViewById(R.id.itemImage);

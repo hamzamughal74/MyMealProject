@@ -18,6 +18,16 @@ public class MenuModel  {
    public String price;
     private String catagory;
 
+    public String getID() {
+        return mID;
+    }
+
+    public void setID(String ID) {
+        mID = ID;
+    }
+
+    private String mID;
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -38,13 +48,15 @@ public class MenuModel  {
 
     private  String restName;
 
-    public MenuModel(String name, String price, String catagory,String rID,String restName,String imageUrl) {
+    public MenuModel(String name, String price, String catagory,String rID,String restName,String imageUrl, String mID) {
         this.name = name;
         this.price = price;
         this.catagory = catagory;
         this.rID = rID;
         this.restName = restName;
         this.imageUrl = imageUrl;
+        this.mID = mID;
+
     }
 
     public String getName() {

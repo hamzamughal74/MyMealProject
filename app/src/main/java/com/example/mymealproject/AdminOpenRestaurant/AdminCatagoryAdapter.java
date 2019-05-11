@@ -67,7 +67,7 @@ public class AdminCatagoryAdapter extends RecyclerView.Adapter<AdminCatagoryAdap
             super(itemView);
 
             item_image = itemView.findViewById(R.id.itemImage);
-            item_name = itemView.findViewById(R.id.itemName);
+            item_name = itemView.findViewById(R.id.RestName);
             item_place = itemView.findViewById(R.id.itemRestName);
             item_price = itemView.findViewById(R.id.goToRest);
 

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.mymealproject.AdminOpenRestaurant.AdminOpenRestaurant;
 import com.example.mymealproject.AdminOpenRestaurant.addMenu;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -78,8 +79,9 @@ public class AddRestaurant extends AppCompatActivity {
         mDatabaseReference.child("Restaurant").child(Auth.getCurrentUser().getUid()).setValue(rest);
         Toast.makeText(AddRestaurant.this, "Details Submitted", Toast.LENGTH_SHORT).show();
 
-        Intent  intent = new Intent(AddRestaurant.this, addMenu.class);
-        intent.putExtra("restName",name);
+        Intent  intent = new Intent(AddRestaurant.this, AdminOpenRestaurant.class);
+//        intent.putExtra("restName",name);
+        finish();
         startActivity(intent);
 
     }

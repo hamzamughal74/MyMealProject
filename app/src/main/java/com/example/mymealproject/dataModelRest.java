@@ -10,6 +10,9 @@ public class dataModelRest{
         this.contact = contact;
     }
 
+    public dataModelRest() {
+    }
+
     public String getName() {
         return name;
     }
