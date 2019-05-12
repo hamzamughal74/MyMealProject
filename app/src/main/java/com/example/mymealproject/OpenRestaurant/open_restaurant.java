@@ -125,7 +125,7 @@ public class open_restaurant extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.nav_orders:
 
-                            Intent intent = new Intent(open_restaurant.this,Cart.class);
+                            Intent intent = new Intent(open_restaurant.this,Cart.class );
                             startActivity(intent);
                             break;
 

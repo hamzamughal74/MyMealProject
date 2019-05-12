@@ -44,6 +44,22 @@ public class Orders extends AppCompatActivity {
         mElegantNumberButton = findViewById(R.id.btnNumber);
         mbtnCart = findViewById(R.id.btnCart);
 
+
+
+        mDishName = findViewById(R.id.dishName);
+        mDishPrice = findViewById(R.id.dishPrice);
+        mDishImage = findViewById(R.id.dishImage);
+
+        mCollapsingToolbarLayout = findViewById(R.id.collapsing);
+        mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpendedAppBar);
+        mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapseAppBar);
+
+//        if (getIntent() !=null){
+            dishId = getIntent().getStringExtra("mID");
+//            if (!dishId.isEmpty()){
+                getDishDetails(dishId);
+//            }
+//        }
         mbtnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,21 +73,6 @@ public class Orders extends AppCompatActivity {
                 Toast.makeText(Orders.this, "Added to Cart", Toast.LENGTH_SHORT).show();
             }
         });
-
-        mDishName = findViewById(R.id.dishName);
-        mDishPrice = findViewById(R.id.dishPrice);
-        mDishImage = findViewById(R.id.dishImage);
-
-        mCollapsingToolbarLayout = findViewById(R.id.collapsing);
-        mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpendedAppBar);
-        mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapseAppBar);
-
-        if (getIntent() !=null){
-            dishId = getIntent().getStringExtra("mID");
-            if (!dishId.isEmpty()){
-                getDishDetails(dishId);
-            }
-        }
 
 
     }

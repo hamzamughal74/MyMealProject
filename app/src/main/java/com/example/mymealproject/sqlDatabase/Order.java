@@ -1,9 +1,7 @@
 package com.example.mymealproject.sqlDatabase;
 
-import java.lang.ref.SoftReference;
-
 public class Order {
-    private String ProductID;
+    private String ProductId;
     private String ProductName;
     private String Quantity;
     private String Price;
@@ -11,19 +9,19 @@ public class Order {
     public Order() {
     }
 
-    public Order(String productID, String productName, String quantity, String price) {
-        ProductID = productID;
+    public Order(String productId, String productName, String quantity, String price) {
+        ProductId = productId;
         ProductName = productName;
         Quantity = quantity;
         Price = price;
     }
 
-    public String getProductID() {
-        return ProductID;
+    public String getProductId() {
+        return ProductId;
     }
 
-    public void setProductID(String productID) {
-        ProductID = productID;
+    public void setProductId(String productId) {
+        ProductId = productId;
     }
 
     public String getProductName() {
