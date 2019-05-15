@@ -65,6 +65,11 @@ viewHolder.btnOrderCompleted.setOnClickListener(new View.OnClickListener() {
         request.child(orderRequest.getOrderID()).child("status").setValue("1");
     }
 });
+viewHolder.btnOrderCancle.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        request.child(orderRequest.getOrderID()).removeValue();   }
+});
 
 
 
@@ -77,7 +82,7 @@ viewHolder.btnOrderCompleted.setOnClickListener(new View.OnClickListener() {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView orderID,orderStatus,orderTableNo;
-        Button btnOrderCompleted;
+        Button btnOrderCompleted,btnOrderCancle;
         private ItemClickListener itemClickListener;
 
         public ViewHolder(@NonNull View itemView) {
@@ -87,9 +92,7 @@ viewHolder.btnOrderCompleted.setOnClickListener(new View.OnClickListener() {
             orderTableNo = itemView.findViewById(R.id.orderTableNo);
             btnOrderCompleted = itemView.findViewById(R.id.btnOrderComplete);
             itemView.setOnClickListener(this);
-
-
-
+            btnOrderCancle=itemView.findViewById(R.id.btnOrderCancel);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener){
