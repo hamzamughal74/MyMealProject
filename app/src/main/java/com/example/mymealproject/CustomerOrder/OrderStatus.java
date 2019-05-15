@@ -5,9 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mymealproject.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +25,7 @@ import java.util.ArrayList;
 
 public class OrderStatus extends AppCompatActivity {
     public RecyclerView recyclerView;
-   ArrayList<OrderRequest> orderList;
+   ArrayList<OrderRequest> orderRequestList;
 
 
     FirebaseDatabase database;
@@ -48,11 +53,11 @@ public class OrderStatus extends AppCompatActivity {
 
     private void orderListShow() {
 
-            orderList = new ArrayList<>();
+            orderRequestList = new ArrayList<>();
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             RecyclerView.LayoutManager rvLayoutManager = layoutManager;
             recyclerView.setLayoutManager(rvLayoutManager);
-            final OrderAdapter orderAdapter = new OrderAdapter(this,orderList);
+            final OrderAdapter orderAdapter = new OrderAdapter(this, orderRequestList);
             recyclerView.setAdapter(orderAdapter);
 
             Query query = requests.orderByChild("customerId").equalTo(currentUID);
@@ -60,11 +65,11 @@ public class OrderStatus extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()){
-                        orderList.clear();
+                        orderRequestList.clear();
 
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                             OrderRequest orderRequest =snapshot.getValue(OrderRequest.class);
-                            orderList.add(orderRequest);
+                            orderRequestList.add(orderRequest);
                         }
                         orderAdapter.notifyDataSetChanged();
                     }else {
@@ -82,36 +87,34 @@ public class OrderStatus extends AppCompatActivity {
 
     }
 
-
+//
 //    private void loadOrders(String customerID) {
 //
 //        FirebaseRecyclerOptions<OrderRequest> options =
 //                new FirebaseRecyclerOptions.Builder<OrderRequest>()
-//                        .setQuery( requests.orderByChild("customerId").equalTo(customerID), OrderRequest.class)
+//                        .setQuery(requests.orderByChild("customerId").equalTo(customerID), OrderRequest.class)
 //                        .build();
-//       adapter = new FirebaseRecyclerAdapter<OrderRequest, OrderAdapter>(options) {
+//        adapter = new FirebaseRecyclerAdapter<OrderRequest, OrderAdapter>(options) {
 //
 //
 //            @NonNull
 //            @Override
 //            public OrderAdapter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.order_layout,viewGroup,false);
+//                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.order_layout, viewGroup, false);
 //                return new OrderAdapter(view);
 //            }
 //
 //            @Override
 //            protected void onBindViewHolder(@NonNull OrderAdapter holder, int position, @NonNull OrderRequest model) {
-//            holder.orderId.setText(adapter.getRef(position).getKey());
-//            holder.orderStatus.setText(covertCodeToStatus(model.getStatus()));
-//            holder.orderTableNo.setText(model.getTableNo());
+//                holder.orderId.setText(adapter.getRef(position).getKey());
+//                holder.orderStatus.setText(covertCodeToStatus(model.getStatus()));
+//                holder.orderTableNo.setText(model.getTableNo());
 //
 //
 //            }
 //        };
-//       recyclerView.setAdapter(adapter);
-//
-//
-//
+//        recyclerView.setAdapter(adapter);
+//        adater.get
 //    }
 
 

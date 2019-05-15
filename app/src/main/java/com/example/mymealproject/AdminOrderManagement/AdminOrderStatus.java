@@ -101,42 +101,4 @@ public class AdminOrderStatus extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-
-//        orderList = new ArrayList<>();
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        RecyclerView.LayoutManager rvLayoutManager = layoutManager;
-//        recyclerView.setLayoutManager(rvLayoutManager);
-//        final AdminOrderAdapter adminOrderAdapter = new AdminOrderAdapter(this, orderList);
-//        recyclerView.setAdapter(adminOrderAdapter);
-
-        if (item.getIntent().equals(UPDATE))
-            showUpdateDialog();
-        return super.onContextItemSelected(item);
-    }
-
-    private void showUpdateDialog() {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminOrderStatus.this);
-        alertDialog.setTitle("Update Order");
-        alertDialog.setMessage("Please  choose status");
-
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.update_order,null);
-
-        spinner = (MaterialSpinner) view.findViewById(R.id.statusSpinner);
-        spinner.setItems("Pending","In making","Ready");
-
-        alertDialog.setView(view);
-
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-
-            }
-        });
-
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.mymealproject.AdminOrderManagement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mymealproject.CustomerOrder.OrderRequest;
+import com.example.mymealproject.CustomerOrder.OrderStatus;
 import com.example.mymealproject.DiscoverDishes.ItemClickListener;
+import com.example.mymealproject.OrderDetails;
 import com.example.mymealproject.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -53,7 +56,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
         viewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int i) {
-
+//                Intent intent = new Intent(AdminOrderAdapter.this,OrderDetails.class);
             }
         });
 
@@ -67,7 +70,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
         return orderList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnCreateContextMenuListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView orderID,orderStatus,orderTableNo;
         Button btnOrderCompleted;
         private ItemClickListener itemClickListener;
@@ -78,8 +81,9 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
             orderStatus = itemView.findViewById(R.id.orderStatus);
             orderTableNo = itemView.findViewById(R.id.orderTableNo);
             btnOrderCompleted = itemView.findViewById(R.id.btnOrderComplete);
-            btnOrderCompleted.setOnClickListener(this);
-        itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(this);
+
+
 
         }
 
@@ -93,12 +97,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
         }
 
 
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select the Action");
-            menu.add(0,0,getAdapterPosition(),"Update");
-            menu.add(0,1,getAdapterPosition(),"Delete");
-        }
+
     }
     private String covertCodeToStatus(String status) {
         if (status.equals("0"))
