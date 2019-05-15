@@ -93,11 +93,6 @@ viewHolder.btnOrderCancle.setOnClickListener(new View.OnClickListener() {
             btnOrderCompleted = itemView.findViewById(R.id.btnOrderComplete);
             itemView.setOnClickListener(this);
             btnOrderCancle=itemView.findViewById(R.id.btnOrderCancel);
-
-
-
-
-
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener){
