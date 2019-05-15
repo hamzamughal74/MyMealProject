@@ -53,13 +53,18 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
         viewHolder.orderID.setText(orderRequest.getCustomerId());
         viewHolder.orderStatus.setText("Status : "+covertCodeToStatus(orderRequest.getStatus()));
         viewHolder.orderTableNo.setText("Table No. : "+orderRequest.getTableNo());
-        viewHolder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int i) {
-//                Intent intent = new Intent(AdminOrderAdapter.this,OrderDetails.class);
-            }
-        });
-
+//        viewHolder.setItemClickListener(new ItemClickListener() {
+//            @Override
+//            public void onClick(View view, int i) {
+////                Intent intent = new Intent(AdminOrderAdapter.this,OrderDetails.class);
+//            }
+//        });
+viewHolder.btnOrderCompleted.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        request.child(orderRequest.getOrderID()).child("status").setValue("1");
+    }
+});
 
 
 
