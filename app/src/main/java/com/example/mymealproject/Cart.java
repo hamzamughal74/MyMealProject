@@ -24,6 +24,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import java.util.UUID;
 
 public class Cart extends AppCompatActivity {
 
@@ -35,6 +37,7 @@ public class Cart extends AppCompatActivity {
     TextView txtTotalPrice;
     Button btnPlace;
     String restID;
+    String orderID;
     String currentUID;
     List<Order> cart = new ArrayList<>();
     CartAdapter adapter;
@@ -44,8 +47,10 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         Bundle extras = getIntent().getExtras();
         restID = extras.getString("get");
+        orderID = UUID.randomUUID().toString();
         database = FirebaseDatabase.getInstance();
         request = database.getReference("OrderRequest");
+
         Auth = FirebaseAuth.getInstance();
         currentUID = Auth.getCurrentUser().getUid();
         //Init
@@ -55,6 +60,7 @@ public class Cart extends AppCompatActivity {
         recyclerViewCart.setLayoutManager(layoutManager);
         txtTotalPrice = findViewById(R.id.total);
         btnPlace = findViewById(R.id.btnPlaceOrder);
+
 
 
         loadFoodList();
@@ -81,6 +87,7 @@ public class Cart extends AppCompatActivity {
     }
 
     private void showAlertDialog(){
+
         AlertDialog.Builder ad = new AlertDialog.Builder(Cart.this);
         ad.setTitle("One more step!");
         ad.setMessage("Enter your Table No.");
@@ -103,12 +110,17 @@ public class Cart extends AppCompatActivity {
                     txtTotalPrice.getText().toString(),
                     cart,
                     restID,
-                    currentUID
+                    currentUID,
+                    orderID
 
             );
             //Submit to Firebase
-            request.child(String.valueOf(System.currentTimeMillis()))
+//                request = request.push();
+//             String   orderID= request.getKey();
+
+            request.child(orderID)
                     .setValue(orderRequest);
+
             //Delete Cart
                 new  Database(getBaseContext()).cleanCart();
                 Toast.makeText(Cart.this, "Thank you! Order Placed", Toast.LENGTH_SHORT).show();

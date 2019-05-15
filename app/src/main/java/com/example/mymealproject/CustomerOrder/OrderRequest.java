@@ -12,6 +12,7 @@ public class OrderRequest {
     private String restID;
     private String customerId;
     private String status;
+    private String orderID;
 
 
 
@@ -19,15 +20,28 @@ public class OrderRequest {
 
     public OrderRequest() {
     }
+    public OrderRequest(String status) {
+        this.status = status;
+    }
 
-    public OrderRequest(String tableNo, String total, List<Order> orderList,String restID,String customerId) {
+    public OrderRequest(String tableNo, String total, List<Order> orderList,String restID,String customerId,String orderID) {
         this.tableNo = tableNo;
         this.total = total;
         this.orderList = orderList;
         this.restID = restID;
         this.customerId = customerId;
+        this.orderID = orderID;
         this.status = "0";
 
+
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
     public String getTableNo() {

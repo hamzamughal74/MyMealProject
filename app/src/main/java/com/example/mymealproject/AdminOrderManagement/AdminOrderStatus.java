@@ -104,9 +104,12 @@ public class AdminOrderStatus extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-//
-        final AdminOrderAdapter adminOrderAdapter = new AdminOrderAdapter(this, orderList);
-        recyclerView.setAdapter(adminOrderAdapter);
+//        orderList = new ArrayList<>();
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        RecyclerView.LayoutManager rvLayoutManager = layoutManager;
+//        recyclerView.setLayoutManager(rvLayoutManager);
+//        final AdminOrderAdapter adminOrderAdapter = new AdminOrderAdapter(this, orderList);
+//        recyclerView.setAdapter(adminOrderAdapter);
 
         if (item.getIntent().equals(UPDATE))
             showUpdateDialog();
