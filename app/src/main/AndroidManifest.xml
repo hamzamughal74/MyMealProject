@@ -11,8 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Cart"></activity>
-        <activity android:name=".Orders" />
+        <activity
+            android:name=".AdminOrderManagement.AdminOrderStatus"
+            android:label="@string/title_activity_admin_order_status"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CustomerOrder.OrderStatus" />
+        <activity android:name=".Cart" />
+        <activity android:name=".CustomerOrder.Orders" />
         <activity
             android:name=".AddRestaurant"
             android:label="@string/title_activity_add_restaurant" />

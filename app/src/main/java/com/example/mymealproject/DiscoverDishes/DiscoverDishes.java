@@ -44,7 +44,6 @@ public class DiscoverDishes extends AppCompatActivity {
                         case R.id.nav_discoverRestaurants:
 
                             Intent intent = new Intent(DiscoverDishes.this , DiscoverDishes.class );
-                            finish();
                             startActivity(intent);
                             break;
 

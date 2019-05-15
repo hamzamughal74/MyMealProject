@@ -54,4 +54,5 @@
     <string name="order">Order</string>
     <string name="title_activity_create">Create</string>
     <string name="title_activity_add_restaurant">AddRestaurant</string>
+    <string name="title_activity_admin_order_status">AdminOrderStatus</string>
 </resources>

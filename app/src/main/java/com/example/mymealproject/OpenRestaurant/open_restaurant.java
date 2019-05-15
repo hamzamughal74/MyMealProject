@@ -3,6 +3,7 @@ package com.example.mymealproject.OpenRestaurant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.Snapshot;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,13 +12,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mymealproject.AdminOpenRestaurant.AdminOpenRestaurant;
 import com.example.mymealproject.Cart;
-import com.example.mymealproject.DiscoverDishes.DiscoverDishes;
+import com.example.mymealproject.CustomerOrder.OrderStatus;
 import com.example.mymealproject.R;
 import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.dataModelRest;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.mymealproject.sqlDatabase.Database;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 
 public class open_restaurant extends AppCompatActivity {
@@ -35,12 +34,14 @@ public class open_restaurant extends AppCompatActivity {
     DatabaseReference mDatabaseReference;
     DishAdapter mAdapter;
     TextView RestName;
-
+    String string;
+Database mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_restaurant);
-
+        Bundle extras = getIntent().getExtras();
+        string  = extras.getString("rID");
         mRecyclerView = findViewById(R.id.recyclerViewDR2);
         mRecyclerViewDish = findViewById(R.id.recyclerViewDish);
         RestName = findViewById(R.id.RestName);
@@ -66,11 +67,12 @@ public class open_restaurant extends AppCompatActivity {
         dishContent();
         restDetails();
 
+        new  Database(getBaseContext()).cleanCart();
+
     }
 
     private void dishContent() {
-        Bundle extras = getIntent().getExtras();
-        String string = extras.getString("rID");
+
         Query query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("rID").equalTo(string);
 //        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
         mDishList = new ArrayList<>();
@@ -126,7 +128,12 @@ public class open_restaurant extends AppCompatActivity {
                         case R.id.nav_orders:
 
                             Intent intent = new Intent(open_restaurant.this,Cart.class );
+                            intent.putExtra("get",string);
                             startActivity(intent);
+                            break;
+                        case R.id.nav:
+                            Intent intent1 = new Intent(open_restaurant.this, OrderStatus.class);
+                            startActivity(intent1);
                             break;
 
 

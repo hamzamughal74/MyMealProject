@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymealproject.AdminOrderManagement.AdminOrderStatus;
 import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
 import com.example.mymealproject.dataModelRest;
@@ -142,7 +143,10 @@ public class AdminOpenRestaurant extends AppCompatActivity {
                             Intent intent = new Intent(AdminOpenRestaurant.this , addMenu.class );
                             startActivity(intent);
                             break;
-
+                        case R.id.nav_orders:
+                        Intent intent1 = new Intent(AdminOpenRestaurant.this, AdminOrderStatus.class);
+                        startActivity(intent1);
+                        break;
                     }
                     return false;
                 }

@@ -7,16 +7,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.textclassifier.TextLinks;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymealproject.CustomerOrder.OrderRequest;
 import com.example.mymealproject.sqlDatabase.Database;
 import com.example.mymealproject.sqlDatabase.Order;
-import com.google.android.gms.common.internal.service.Common;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,24 +29,25 @@ public class Cart extends AppCompatActivity {
 
     RecyclerView recyclerViewCart;
     RecyclerView.LayoutManager layoutManager;
-
+    FirebaseAuth Auth;
     FirebaseDatabase database;
     DatabaseReference request;
-   private  FirebaseAuth Auth;
     TextView txtTotalPrice;
     Button btnPlace;
-
+    String restID;
+    String currentUID;
     List<Order> cart = new ArrayList<>();
     CartAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
+        Bundle extras = getIntent().getExtras();
+        restID = extras.getString("get");
         database = FirebaseDatabase.getInstance();
         request = database.getReference("OrderRequest");
         Auth = FirebaseAuth.getInstance();
-
+        currentUID = Auth.getCurrentUser().getUid();
         //Init
         recyclerViewCart =  findViewById(R.id.listCart);
         recyclerViewCart.setHasFixedSize(true);
@@ -101,7 +101,9 @@ public class Cart extends AppCompatActivity {
             OrderRequest orderRequest = new OrderRequest(
                     txtAdress.getText().toString(),
                     txtTotalPrice.getText().toString(),
-                    cart
+                    cart,
+                    restID,
+                    currentUID
 
             );
             //Submit to Firebase

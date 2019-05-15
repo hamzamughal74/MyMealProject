@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DiscoverDishes.DiscoverDishes"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar">
 
     <TextView
         android:layout_width="141dp"

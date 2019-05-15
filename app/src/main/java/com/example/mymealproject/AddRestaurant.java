@@ -1,5 +1,6 @@
 package com.example.mymealproject;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,7 +34,7 @@ public class AddRestaurant extends AppCompatActivity {
     private EditText mRestName, mRestAdress, mRestContact;
     private Button mDone;
     private ImageButton mRestImage;
-
+    ActionBar mActionBar;
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 10;
@@ -57,6 +58,10 @@ public class AddRestaurant extends AppCompatActivity {
         Auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        mActionBar = getActionBar();
+        mActionBar.setTitle("MY TITLE");
+        mActionBar.show();
 
     }
     public void RestImage(View view){
