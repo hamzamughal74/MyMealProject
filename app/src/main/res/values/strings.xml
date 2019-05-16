@@ -43,6 +43,7 @@
     <array name="role">
 
         <item>Admin</item>
+        <item>User</item>
 
     </array>
 

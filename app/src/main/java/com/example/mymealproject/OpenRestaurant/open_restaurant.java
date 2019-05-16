@@ -16,6 +16,7 @@ import com.example.mymealproject.Cart;
 import com.example.mymealproject.CustomerOrder.OrderStatus;
 import com.example.mymealproject.R;
 import com.example.mymealproject.MenuModel;
+import com.example.mymealproject.RateDish;
 import com.example.mymealproject.dataModelRest;
 import com.example.mymealproject.sqlDatabase.Database;
 import com.google.firebase.database.DataSnapshot;
@@ -134,6 +135,10 @@ Database mDatabase;
                         case R.id.nav:
                             Intent intent1 = new Intent(open_restaurant.this, OrderStatus.class);
                             startActivity(intent1);
+                            break;
+                        case  R.id.rate:
+                            Intent  intent2 = new Intent(open_restaurant.this, RateDish.class);
+                            startActivity(intent2);
                             break;
 
 

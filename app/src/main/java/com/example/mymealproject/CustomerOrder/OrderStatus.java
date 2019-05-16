@@ -83,8 +83,6 @@ public class OrderStatus extends AppCompatActivity {
 
                 }
             });
-
-
     }
 
 //

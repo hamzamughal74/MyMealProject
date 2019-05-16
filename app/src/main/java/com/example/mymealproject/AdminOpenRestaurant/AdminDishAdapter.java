@@ -30,7 +30,7 @@ public class AdminDishAdapter extends RecyclerView.Adapter<AdminDishAdapter.View
     public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
-        View mView = mLayoutInflater.inflate(R.layout.rv_dish,viewGroup,false);
+        View mView = mLayoutInflater.inflate(R.layout.rv_admin_dish,viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(mView);
 
 

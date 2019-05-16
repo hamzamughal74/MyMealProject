@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrderDetails"></activity>
+        <activity android:name=".CustomerOrder.CustomerOrderFeedback"></activity>
+        <activity android:name=".RateDish" />
+        <activity android:name=".AdminOrderManagement.OrderDetail" />
         <activity
             android:name=".AdminOrderManagement.AdminOrderStatus"
             android:label="@string/title_activity_admin_order_status"
