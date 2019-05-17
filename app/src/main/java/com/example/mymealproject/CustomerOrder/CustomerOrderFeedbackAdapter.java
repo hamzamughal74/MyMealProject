@@ -30,6 +30,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
     DatabaseReference request;
     DatabaseReference countRef;
     String rating;
+    String test;
     String ratingCount;
     private Context context;
     private ArrayList<Order> orderDetailList;
