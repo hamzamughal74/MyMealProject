@@ -1,25 +1,34 @@
 package com.example.mymealproject.CustomerOrder;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.mymealproject.DiscoverDishes.ItemClickListener;
 import com.example.mymealproject.R;
 import com.example.mymealproject.sqlDatabase.Order;
-import com.stepstone.apprating.AppRatingDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerOrderFeedbackAdapter.ViewHolder> {
+    FirebaseDatabase database;
+    DatabaseReference request;
+    DatabaseReference countRef;
     private Context context;
     private ArrayList<Order> orderDetailList;
 
@@ -40,6 +49,9 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
 
     @Override
     public void onBindViewHolder(@NonNull final CustomerOrderFeedbackAdapter.ViewHolder viewHolder, int i) {
+        database = FirebaseDatabase.getInstance();
+        request = database.getReference("Restaurant");
+
         final Order order = orderDetailList.get(i);
         viewHolder.productName.setText(order.getProductName());
         viewHolder.productQuantity.setText(order.getQuantity());
@@ -47,19 +59,67 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
         viewHolder.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AppRatingDialog.Builder()
-                        .setPositiveButtonText("Submit")
-                        .setNegativeButtonText("Cancel")
-                        .setNoteDescriptions(Arrays.asList("Very Bad","Not Good","Quite Ok","Very Good","Excellent"))
-                        .setDefaultRating(0)
-                        .setTitle("Rate this Food")
-                        .setDescription("Please select some stars and give your feedback")
-                        .setTitleTextColor(R.color.theme_orange)
-                        .setDescriptionTextColor(R.color.theme_orange);
-//                        .create()
-//                        .show();
+                final RatingBar ratingBar;
+                final float[] ratingValue = new float[1];
+                Dialog rankDialog = new Dialog(context);
+                rankDialog.setContentView(R.layout.rank_dialog);
+                rankDialog.setCancelable(true);
+                ratingBar = (RatingBar)rankDialog.findViewById(R.id.bar);
+
+                final TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
+//                text.setText("Rating");
+                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                        ratingValue[0] = rating;
+
+                        text.setText(Arrays.toString(ratingValue));
+                    }
+                });
+
+
+                Button updateButton = (Button) rankDialog.findViewById(R.id.btnRateSubmit);
+                updateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                       getCount(order.getProductId());
+//                        String[] count = getCount(order.getProductId());
+//                        String count="0";
+//                        String result = 0;
+
+//                        result = String.valueOf(( Integer.parseInt(Arrays.toString(count)))* (Integer.parseInt(Arrays.toString(ratingValue))));
+                        request.child("Menu").child(order.getProductId()).child("rating").setValue(Arrays.toString(ratingValue));
+                    }
+                });
+                Button cancelButton = rankDialog.findViewById(R.id.btnRateCanel);
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                rankDialog.show();
             }
         });
+//
+    }
+
+    private String[] getCount(String productID) {
+        final String[] ratingCount = new String[1];
+        countRef = database.getReference("Restaurants");
+        Query query = countRef.child("Menu").child("rating").orderByChild("id").equalTo(productID);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ratingCount[0] = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return ratingCount;
     }
 
     @Override
@@ -77,7 +137,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
             productQuantity = itemView.findViewById(R.id.productQuantity);
             productPrice= itemView.findViewById(R.id.productPrice);
             fab = itemView.findViewById(R.id.btnRating);
-
+            String rateingValue;
 
         }
 

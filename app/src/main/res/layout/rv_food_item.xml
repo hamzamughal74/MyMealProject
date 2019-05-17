@@ -41,7 +41,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/top_space"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Space
             android:id="@+id/top_space"
@@ -56,6 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Food"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/colorPrimaryDark"
@@ -65,17 +66,30 @@
         <TextView
             android:id="@+id/itemRestName"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="Restarant"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toTopOf="@+id/goToRest"
+            app:layout_constraintBottom_toTopOf="@+id/bar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <RatingBar
+            android:id="@+id/bar"
+            android:layout_width="241dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/theme_orange"
+            android:rating="1"
+            android:stepSize="1"
+            app:layout_constraintBottom_toTopOf="@+id/goToRest"
+            app:layout_constraintStart_toStartOf="parent" />
         <Button
             android:id="@+id/goToRest"
             style="@style/Widget.AppCompat.Button.Borderless"

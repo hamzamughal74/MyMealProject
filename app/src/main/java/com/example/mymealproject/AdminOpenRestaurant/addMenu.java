@@ -137,6 +137,9 @@ public class addMenu extends AppCompatActivity {
            final String name = mName.getText().toString();
            final String price = mPrice.getText().toString();
            final String catagory = mSpinner.getSelectedItem().toString();
+           final  String Rating = "0";
+           final  String ratingCount = "0";
+
 
 //           final   String RestName = intent.getStringExtra("restaurantName");
 
@@ -157,7 +160,7 @@ public class addMenu extends AppCompatActivity {
                                  imageUrl = uri.toString();
 
                                  MenuModel menu = new MenuModel(
-                                         name,price,catagory,rID,restaurantName,imageUrl,dishID
+                                         name,price,catagory,rID,restaurantName,imageUrl,dishID,Rating,ratingCount
                                  );
 
                                  mDatabaseReference.setValue(menu);

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.mymealproject.OpenRestaurant.open_restaurant;
@@ -46,17 +47,26 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             viewHolder.item_name.setText(menuModel.getName());
             viewHolder.item_price.setText(menuModel.getPrice());
             viewHolder.item_restName.setText(menuModel.getRestName());
+            viewHolder.ratingBar.setRating(Float.parseFloat(menuModel.getRating()));
             Picasso.with(mContext).load(menuModel.getImageUrl()).fit().into(viewHolder.item_image);
-            viewHolder.setItemClickListener(new ItemClickListener() {
+            viewHolder.goToRest.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view, int i) {
+                public void onClick(View v) {
                     Intent intent = new Intent(mContext,open_restaurant.class);
                     intent.putExtra("rID",menuModel.getrID());
                     mContext.startActivity(intent);
-
-
                 }
             });
+//            viewHolder.setItemClickListener(new ItemClickListener() {
+//                @Override
+//                public void onClick(View view, int i) {
+//                    Intent intent = new Intent(mContext,open_restaurant.class);
+//                    intent.putExtra("rID",menuModel.getrID());
+//                    mContext.startActivity(intent);
+//
+//
+//                }
+//            });
         }
         catch (Exception e){
             Log.d("test", "onBindViewHolder: " + e);
@@ -78,6 +88,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         TextView item_name,item_price,item_restName;
         ImageView item_image;
         Button goToRest;
+        RatingBar ratingBar;
         private ItemClickListener itemClickListener;
         public ViewHolder( View itemView) {
             super(itemView);
@@ -87,8 +98,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             item_price = itemView.findViewById(R.id.itemPrice);
             item_restName = itemView.findViewById(R.id.itemRestName);
             item_image = itemView.findViewById(R.id.itemImage);
+            ratingBar = itemView.findViewById(R.id.bar);
             goToRest = itemView.findViewById(R.id.goToRest);
-            goToRest.setOnClickListener(this);
+
+//            goToRest.setOnClickListener(this);
 
         }
         public void setItemClickListener(ItemClickListener itemClickListener){
