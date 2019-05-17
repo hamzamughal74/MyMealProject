@@ -30,6 +30,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
     DatabaseReference request;
     DatabaseReference countRef;
     String rating;
+    String ratingCount;
     private Context context;
     private ArrayList<Order> orderDetailList;
 
@@ -83,15 +84,30 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                 updateButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                       getCount(order.getProductId());
-//                        String[] count = getCount(order.getProductId());
+                        countRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").child(order.getProductId());
+                        countRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                ratingCount = dataSnapshot.child("ratingCount").getValue(String.class);
+                                rating=dataSnapshot.child("rating").getValue(String.class);
+                                rating=String.valueOf(Integer.parseInt(rating)+Integer.parseInt(ratingCount));
+                                countRef.child("rating").setValue(rating);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+//                        String count = getCount(order.getProductId());
 //                        String count="0";
 //                        String result = 0;
-
+//
 //                        result = String.valueOf(( Integer.parseInt(Arrays.toString(count)))* (Integer.parseInt(Arrays.toString(ratingValue))));
                         request.child("Menu").child(order.getProductId()).child("rating").setValue(Arrays.toString(ratingValue));
-                    }
-                });
+//                    }
+//                });
                 Button cancelButton = rankDialog.findViewById(R.id.btnRateCanel);
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -105,13 +121,12 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
 //
     }
 
-    private String[] getCount(String productID) {
-        final String[] ratingCount = new String[1];
+    private String getCount(String productID) {
         countRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").child(productID);
         countRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ratingCount[0] = dataSnapshot.child("ratingCount").getValue(String.class);
+                ratingCount = dataSnapshot.child("ratingCount").getValue(String.class);
                 rating=dataSnapshot.child("rating").getValue(String.class);
             }
 
