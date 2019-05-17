@@ -29,6 +29,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
     FirebaseDatabase database;
     DatabaseReference request;
     DatabaseReference countRef;
+    String rating;
     private Context context;
     private ArrayList<Order> orderDetailList;
 
@@ -106,12 +107,12 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
 
     private String[] getCount(String productID) {
         final String[] ratingCount = new String[1];
-        countRef = database.getReference("Restaurants");
-        Query query = countRef.child("Menu").child("rating").orderByChild("id").equalTo(productID);
-        query.addValueEventListener(new ValueEventListener() {
+        countRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").child(productID);
+        countRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ratingCount[0] = dataSnapshot.getValue(String.class);
+                ratingCount[0] = dataSnapshot.child("ratingCount").getValue(String.class);
+                rating=dataSnapshot.child("rating").getValue(String.class);
             }
 
             @Override

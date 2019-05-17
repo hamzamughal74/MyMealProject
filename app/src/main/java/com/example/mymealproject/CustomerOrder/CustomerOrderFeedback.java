@@ -1,6 +1,7 @@
 package com.example.mymealproject.CustomerOrder;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CustomerOrderFeedback extends AppCompatActivity {
+public class CustomerOrderFeedback extends AppCompatActivity  {
 
     public RecyclerView orderRecyclerView;
     ArrayList<Order> orderDetailList;

@@ -13,15 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymealproject.CustomerOrder.CustomerOrderFeedback;
 import com.example.mymealproject.CustomerOrder.OrderRequest;
 import com.example.mymealproject.sqlDatabase.Database;
 import com.example.mymealproject.sqlDatabase.Order;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.stepstone.apprating.AppRatingDialog;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -41,6 +44,7 @@ public class Cart extends AppCompatActivity {
     String currentUID;
     List<Order> cart = new ArrayList<>();
     CartAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,39 +58,38 @@ public class Cart extends AppCompatActivity {
         Auth = FirebaseAuth.getInstance();
         currentUID = Auth.getCurrentUser().getUid();
         //Init
-        recyclerViewCart =  findViewById(R.id.listCart);
+        recyclerViewCart = findViewById(R.id.listCart);
         recyclerViewCart.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewCart.setLayoutManager(layoutManager);
         txtTotalPrice = findViewById(R.id.total);
         btnPlace = findViewById(R.id.btnPlaceOrder);
-
-
-
         loadFoodList();
 
     }
-    public void  btnPlaceOrder(View view){
+
+    public void btnPlaceOrder(View view) {
         showAlertDialog();
     }
-    private void loadFoodList(){
+
+    private void loadFoodList() {
 
 
         cart = new Database(this).getCarts();
-        adapter = new CartAdapter(cart,this);
+        adapter = new CartAdapter(cart, this);
         recyclerViewCart.setAdapter(adapter);
 
         // Calculate total price
         int total = 0;
-        for (Order order:cart)
-            total+=(Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuantity()));
-        Locale locale = new Locale("en","US");
+        for (Order order : cart)
+            total += (Integer.parseInt(order.getPrice())) * (Integer.parseInt(order.getQuantity()));
+        Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         txtTotalPrice.setText(fmt.format(total));
     }
 
-    private void showAlertDialog(){
+    private void showAlertDialog() {
 
         AlertDialog.Builder ad = new AlertDialog.Builder(Cart.this);
         ad.setTitle("One more step!");
@@ -105,24 +108,24 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-            OrderRequest orderRequest = new OrderRequest(
-                    txtAdress.getText().toString(),
-                    txtTotalPrice.getText().toString(),
-                    cart,
-                    restID,
-                    currentUID,
-                    orderID
+                OrderRequest orderRequest = new OrderRequest(
+                        txtAdress.getText().toString(),
+                        txtTotalPrice.getText().toString(),
+                        cart,
+                        restID,
+                        currentUID,
+                        orderID
 
-            );
-            //Submit to Firebase
+                );
+                //Submit to Firebase
 //                request = request.push();
 //             String   orderID= request.getKey();
 
-            request.child(orderID)
-                    .setValue(orderRequest);
+                request.child(orderID)
+                        .setValue(orderRequest);
 
-            //Delete Cart
-                new  Database(getBaseContext()).cleanCart();
+                //Delete Cart
+                new Database(getBaseContext()).cleanCart();
                 Toast.makeText(Cart.this, "Thank you! Order Placed", Toast.LENGTH_SHORT).show();
                 finish();
             }
