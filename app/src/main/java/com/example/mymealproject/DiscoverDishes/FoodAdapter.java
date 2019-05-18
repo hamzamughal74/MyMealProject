@@ -45,7 +45,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         try{
             final MenuModel menuModel = mFoodList.get(i);
             viewHolder.item_name.setText(menuModel.getName());
-            viewHolder.item_price.setText(menuModel.getPrice());
+            viewHolder.item_price.setText(menuModel.getPrice()+ " Rs");
             viewHolder.item_restName.setText(menuModel.getRestName());
             viewHolder.ratingBar.setRating(Float.parseFloat(menuModel.getRating()));
             Picasso.with(mContext).load(menuModel.getImageUrl()).fit().into(viewHolder.item_image);

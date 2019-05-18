@@ -19,6 +19,7 @@ public class MenuModel  {
     private String catagory;
     private  String Rating;
     private String ratingCount;
+    private String totalRating;
 
     public String getRating() {
         return Rating;
@@ -59,7 +60,7 @@ public class MenuModel  {
     private  String restName;
 
     public MenuModel(String name, String price, String catagory,String rID,String restName,
-                     String imageUrl, String mID,String Rating,String ratingCount) {
+                     String imageUrl, String mID,String Rating,String ratingCount,String totalRating) {
         this.name = name;
         this.price = price;
         this.catagory = catagory;
@@ -69,7 +70,16 @@ public class MenuModel  {
         this.mID = mID;
         this.Rating = Rating;
         this.ratingCount = ratingCount;
+        this.totalRating = totalRating;
 
+    }
+
+    public String getTotalRating() {
+        return totalRating;
+    }
+
+    public void setTotalRating(String totalRating) {
+        this.totalRating = totalRating;
     }
 
     public String getRatingCount() {

@@ -19,19 +19,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerOrderFeedbackAdapter.ViewHolder> {
     FirebaseDatabase database;
     DatabaseReference request;
     DatabaseReference countRef;
-    String rating;
-    String test;
     String ratingCount;
+    String totalRating;
+    String rating;
+
     private Context context;
     private ArrayList<Order> orderDetailList;
 
@@ -64,10 +63,10 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
             public void onClick(View v) {
                 final RatingBar ratingBar;
                 final float[] ratingValue = new float[1];
-               final Dialog rankDialog = new Dialog(context);
+                final Dialog rankDialog = new Dialog(context);
                 rankDialog.setContentView(R.layout.rank_dialog);
                 rankDialog.setCancelable(true);
-                ratingBar = (RatingBar) rankDialog.findViewById(R.id.bar);
+                ratingBar = (RatingBar)rankDialog.findViewById(R.id.bar);
 
                 final TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
 //                text.setText("Rating");
@@ -76,7 +75,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                         ratingValue[0] = rating;
 
-                        text.setText(Arrays.toString(ratingValue));
+//                        text.setText(Arrays.toString(ratingValue));
                     }
                 });
 
@@ -85,67 +84,88 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                 updateButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String count = getCount(order.getProductId());
-//                        String count="0";
-//                        String result = 0;
-//
-//                        result = String.valueOf(( Integer.parseInt(Arrays.toString(count)))* (Integer.parseInt(Arrays.toString(ratingValue))));
-                        request.child("Menu").child(order.getProductId()).child("rating").setValue(Arrays.toString(ratingValue));
-//                    }
-//                });
-                        Button cancelButton = rankDialog.findViewById(R.id.btnRateCanel);
-                        cancelButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
 
-                            }
-                        });
-                        rankDialog.show();
-                    }
-                });
-//
-            }
+                       getCount(order.getProductId(),ratingValue[0]);
 
-            private String getCount(String productID) {
-                countRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").child(order.getProductId());
-                countRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        ratingCount = dataSnapshot.child("ratingCount").getValue(String.class);
-                        rating = dataSnapshot.child("rating").getValue(String.class);
-                        rating = String.valueOf(Integer.parseInt(rating) + Integer.parseInt(ratingCount));
-                        countRef.child("rating").setValue(rating);
-                    }
+                       rankDialog.dismiss();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
+                Button cancelButton = rankDialog.findViewById(R.id.btnRateCanel);
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                return ratingCount;
+                    }
+                });
+                rankDialog.show();
+            }
+        });
+//
+    }
+    private void getCount(String PID, final float RV){
+        countRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").child(PID);
+        countRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ratingCount = dataSnapshot.child("ratingCount").getValue(String.class);
+                totalRating = dataSnapshot.child("totalRating").getValue(String.class);
+//
+                float newRating = RV;
+
+              totalRating = String.valueOf(Float.parseFloat(totalRating)+ (newRating));
+              rating = String.valueOf(Float.parseFloat(totalRating)/ Float.parseFloat(ratingCount));
+//              float  add = ((Float.parseFloat(totalRating) + (newRating)));
+//              totalRating = String.valueOf(add / Float.parseFloat(ratingCount));
+                ratingCount = String.valueOf(Integer.parseInt(ratingCount) + 1);
+//                totalRating = String.valueOf(Float.parseFloat(totalRating) + Float.parseFloat(ratingCount));
+                countRef.child("totalRating").setValue(totalRating);
+                countRef.child("ratingCount").setValue(ratingCount);
+                countRef.child("rating").setValue(rating);
+
+
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
+            }
         });
     }
+
+//    private String[] getCount(String productID) {
+//        final String[] ratingCount = new String[1];
+//        countRef = database.getReference("Restaurants");
+//        Query query = countRef.child("Menu").child("totalRating").orderByChild("id").equalTo(productID);
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                ratingCount[0] = dataSnapshot.getValue(String.class);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//        return ratingCount;
+//    }
 
     @Override
     public int getItemCount() {
         return orderDetailList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView productName, productQuantity, productPrice;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView productName,productQuantity,productPrice;
         FloatingActionButton fab;
         private ItemClickListener itemClickListener;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.productName);
             productQuantity = itemView.findViewById(R.id.productQuantity);
-            productPrice = itemView.findViewById(R.id.productPrice);
+            productPrice= itemView.findViewById(R.id.productPrice);
             fab = itemView.findViewById(R.id.btnRating);
             String rateingValue;
 
@@ -157,7 +177,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onClick(v, getAdapterPosition());
+            itemClickListener.onClick(v,getAdapterPosition());
         }
     }
 }
