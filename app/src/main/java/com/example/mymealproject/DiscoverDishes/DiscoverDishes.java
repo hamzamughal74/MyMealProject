@@ -6,7 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mymealproject.DashBoard1;
@@ -17,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -25,23 +29,34 @@ public class DiscoverDishes extends AppCompatActivity {
     private RecyclerView mFoodRecycleView;
     ArrayList<MenuModel> mFoodList;
     DatabaseReference mDatabaseReference;
+    FoodAdapter mFoodAdapter;
+    EditText search;
+    Query query;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_restaurant);
+        search=findViewById(R.id.search);
         mFoodRecycleView = findViewById(R.id.recyclerViewDR);
+        LinearLayoutManager mLayoutManger = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mRvLayoutManager = mLayoutManger;
+        mFoodRecycleView.setLayoutManager(mRvLayoutManager);
+        mFoodList = new ArrayList<>();
+        mFoodAdapter = new FoodAdapter(this,mFoodList);
+        mFoodRecycleView.setAdapter(mFoodAdapter);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
+
 //        BottomNavigationView bottomNav = findViewById(R.id.main_nav);
 //        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         foodListShow();
-
-
     }
 
     public void btnDashBoard(View view){
         Intent intent = new Intent(DiscoverDishes.this , DashBoard2.class );
         startActivity(intent);
     }
+
 //    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
 //            new BottomNavigationView.OnNavigationItemSelectedListener() {
 //                @Override
@@ -60,40 +75,87 @@ public class DiscoverDishes extends AppCompatActivity {
 //            };
 
     public void foodListShow(){
+            search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        mFoodList = new ArrayList<>();
+                }
 
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    mFoodList.clear();
+//                        foodListShow();
+                }
 
-        LinearLayoutManager mLayoutManger = new LinearLayoutManager(this);
-        RecyclerView.LayoutManager mRvLayoutManager = mLayoutManger;
-        mFoodRecycleView.setLayoutManager(mRvLayoutManager);
-        final FoodAdapter mFoodAdapter = new FoodAdapter(this,mFoodList);
-        mFoodRecycleView.setAdapter(mFoodAdapter);
-
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                @Override
+                public void afterTextChanged(Editable s) {
                     mFoodList.clear();
+                    foodListShow();
 
-                    for (DataSnapshot Snapshot : dataSnapshot.getChildren()){
-                        MenuModel modelFood = Snapshot.getValue(MenuModel.class);
-                        mFoodList.add(modelFood);
-                    }
-                    mFoodAdapter.notifyDataSetChanged();
                 }
-                else {
-                    Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
-                }
+            });
+        if (search.getText().toString().isEmpty()){
+            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+            mFoodRecycleView.setVisibility(View.VISIBLE);
+        }
+        else {
+            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString());
+            query.addListenerForSingleValueEvent(valueEventListener);
 
-            }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+
+
+
+//        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()){
+//                    mFoodList.clear();
+//
+//                    for (DataSnapshot Snapshot : dataSnapshot.getChildren()){
+//                        MenuModel modelFood = Snapshot.getValue(MenuModel.class);
+//                        mFoodList.add(modelFood);
+//                    }
+//                    mFoodAdapter.notifyDataSetChanged();
+//                }
+//                else {
+//                    Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            mFoodList.clear();
+            if (dataSnapshot.exists()) {
+                mFoodRecycleView.setVisibility(View.VISIBLE);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MenuModel modelFood = snapshot.getValue(MenuModel.class);
+                    mFoodList.add(modelFood);
+                }
+               mFoodAdapter .notifyDataSetChanged();
+            }
+            else {
+//                mFoodRecycleView.setVisibility(View.GONE);
+                mFoodList.clear();
+                Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
+                mFoodAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
 }
