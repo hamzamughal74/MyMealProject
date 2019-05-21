@@ -42,7 +42,7 @@
 
             <View
                 android:id="@+id/view"
-                android:layout_width="217dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_gravity="center"
                 android:background="#C8000000"
@@ -57,6 +57,25 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Monal"
+                android:textSize="20sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorPrimaryDark" />
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|start"
+                android:background="#C8000000"
+                android:textAlignment="textStart"
+
+                />
+            <TextView
+                android:id="@+id/sRestAddress"
+                android:layout_width="92dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="10dp"
+                android:text="Monal"
                 android:textSize="18sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorPrimaryDark" />
@@ -64,7 +83,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:orientation="vertical"
 
             >
@@ -80,23 +99,72 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewDR2"
-                android:layout_width="345dp"
-                android:layout_height="100dp"
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
                 >
-            </android.support.v7.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/btnAll"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/btn_round"
+                        android:text="All"/>
+                    <Button
+
+                        android:layout_marginStart="10dp"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+
+                        android:background="@drawable/btn_round"
+                        android:text="Pakistani"/>
+                    <Button
+                        android:id="@+id/btnRice"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/btn_round"
+                        android:onClick="btnRice"
+
+                        android:text="Rice"/>
+                    <Button
+                        android:layout_marginStart="10dp"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/btn_round"
+                        android:text="BarBeQue"/>
+                    <Button
+                        android:layout_marginStart="10dp"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/btn_round"
+                        android:text="FastFood"/>
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             >
 
             <TextView
-
+                android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -108,23 +176,38 @@
                 android:textSize="18sp" />
 
             <android.support.v7.widget.RecyclerView
+                android:layout_below="@+id/tv"
                 android:id="@+id/recyclerViewDish"
                 android:layout_width="345dp"
-                android:layout_height="315dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
                 >
             </android.support.v7.widget.RecyclerView>
 
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/nav_StaffOpenRestaurant"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnDashBoard"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:textAlignment="center"
-                app:itemBackground="@color/theme_orange"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/staff_rest_nav_items">
-            </android.support.design.widget.BottomNavigationView>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="250dp"
+                android:layout_marginTop="290dp"
+                android:backgroundTint="#000000"
+                android:elevation="6dp"
+                android:onClick="btnDashBoard"
+                android:src="@drawable/dashboard"
+                app:backgroundTint="#FF8B00 "
+                app:pressedTranslationZ="12dp"
+                app:useCompatPadding="true" />
+
+            <!--<android.support.design.widget.BottomNavigationView-->
+            <!--android:id="@+id/openRestNav"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:textAlignment="center"-->
+            <!--app:itemBackground="@color/theme_orange"-->
+            <!--app:labelVisibilityMode="unlabeled"-->
+            <!--app:menu="@menu/rest_nav_items">-->
+            <!--</android.support.design.widget.BottomNavigationView>-->
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
 

@@ -85,10 +85,10 @@ public class fragment_admin extends Fragment {
                                 FirebaseDatabase.getInstance().getReference("Restaurant").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                       for (DataSnapshot data : dataSnapshot.getChildren()){
+//                                       for (DataSnapshot data : dataSnapshot.getChildren())
                                            if (dataSnapshot.hasChild(CurrentId)){
                                                Intent intent = new Intent(getActivity(), AdminOpenRestaurant.class);
-//                                             getActivity().finish();
+                                                getActivity().finish();
                                                startActivity(intent);
 
                                            }
@@ -97,7 +97,7 @@ public class fragment_admin extends Fragment {
                                                getActivity().finish();
                                                startActivity(intent);
                                            }
-                                       }
+
                                     }
 
                                     @Override

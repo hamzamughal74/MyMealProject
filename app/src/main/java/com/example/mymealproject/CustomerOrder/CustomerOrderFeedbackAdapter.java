@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mymealproject.DiscoverDishes.ItemClickListener;
 import com.example.mymealproject.R;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -50,17 +52,20 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CustomerOrderFeedbackAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final CustomerOrderFeedbackAdapter.ViewHolder viewHolder, final int i) {
         database = FirebaseDatabase.getInstance();
         request = database.getReference("Restaurant");
 
         final Order order = orderDetailList.get(i);
-        viewHolder.productName.setText(order.getProductName());
-        viewHolder.productQuantity.setText(order.getQuantity());
-        viewHolder.productPrice.setText(order.getPrice());
+        viewHolder.productName.setText("Dish : "+order.getProductName());
+        viewHolder.productQuantity.setText("Quantity : "+order.getQuantity());
+        viewHolder.productPrice.setText("Price : "+order.getPrice());
+
+
         viewHolder.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final RatingBar ratingBar;
                 final float[] ratingValue = new float[1];
                 final Dialog rankDialog = new Dialog(context);
@@ -86,8 +91,9 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                     public void onClick(View v) {
 
                        getCount(order.getProductId(),ratingValue[0]);
-
+                       removeItem(order.getProductId());
                        rankDialog.dismiss();
+
 
 
                     }
@@ -96,7 +102,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        rankDialog.dismiss();
                     }
                 });
                 rankDialog.show();
@@ -104,6 +110,33 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
         });
 //
     }
+
+    private void removeItem(String productId) {
+        Query query = FirebaseDatabase.getInstance().getReference("OrderRequest").child("orderList").orderByChild("productId").equalTo(productId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("orderList").getValue()!= null) {
+                   String data =  dataSnapshot.getKey();
+                   dataSnapshot.child(data).getRef().removeValue();
+                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    Toast.makeText(context, "Not working", Toast.LENGTH_SHORT).show();
+                }
+//                notifyDataSetChanged();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
     private void getCount(String PID, final float RV){
         countRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").child(PID);
         countRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,15 +144,12 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ratingCount = dataSnapshot.child("ratingCount").getValue(String.class);
                 totalRating = dataSnapshot.child("totalRating").getValue(String.class);
-//
+
                 float newRating = RV;
 
-              totalRating = String.valueOf(Float.parseFloat(totalRating)+ (newRating));
-              rating = String.valueOf(Float.parseFloat(totalRating)/ Float.parseFloat(ratingCount));
-//              float  add = ((Float.parseFloat(totalRating) + (newRating)));
-//              totalRating = String.valueOf(add / Float.parseFloat(ratingCount));
+                totalRating = String.valueOf(Float.parseFloat(totalRating)+ (newRating));
+                rating = String.valueOf(Float.parseFloat(totalRating)/ Float.parseFloat(ratingCount));
                 ratingCount = String.valueOf(Integer.parseInt(ratingCount) + 1);
-//                totalRating = String.valueOf(Float.parseFloat(totalRating) + Float.parseFloat(ratingCount));
                 countRef.child("totalRating").setValue(totalRating);
                 countRef.child("ratingCount").setValue(ratingCount);
                 countRef.child("rating").setValue(rating);

@@ -26,7 +26,7 @@ public class CustomerOrderFeedback extends AppCompatActivity  {
     DatabaseReference request;
 
 
-    String orderID;
+   public String orderID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

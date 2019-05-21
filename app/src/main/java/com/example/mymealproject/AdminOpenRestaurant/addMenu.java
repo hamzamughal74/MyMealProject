@@ -33,7 +33,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 public class addMenu extends AppCompatActivity {
-    private EditText mName,mPrice;
+    private EditText mName,mPrice,mPerson;
     private Spinner mSpinner;
     private ImageButton mDishImage;
     private String rID;
@@ -55,6 +55,7 @@ public class addMenu extends AppCompatActivity {
 
         mName = findViewById(R.id.dishName);
         mPrice = findViewById(R.id.dishPrice);
+        mPerson = findViewById(R.id.dishPerson);
         mSpinner = findViewById(R.id.dishCatagory);
         mDishImage = findViewById(R.id.dishImage);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant");
@@ -136,6 +137,7 @@ public class addMenu extends AppCompatActivity {
 
            final String name = mName.getText().toString();
            final String price = mPrice.getText().toString();
+           final  String person = mPerson.getText().toString();
            final String catagory = mSpinner.getSelectedItem().toString();
            final  String Rating = "0";
            final  String ratingCount = "1";
@@ -160,7 +162,7 @@ public class addMenu extends AppCompatActivity {
                                  imageUrl = uri.toString();
 
                                  MenuModel menu = new MenuModel(
-                                         name,price,catagory,rID,restaurantName,imageUrl,dishID,Rating,ratingCount,totalRating
+                                         name,price,catagory,rID,restaurantName,imageUrl,dishID,Rating,ratingCount,totalRating,person
                                  );
 
                                  mDatabaseReference.setValue(menu);

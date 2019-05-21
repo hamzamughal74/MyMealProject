@@ -29,15 +29,15 @@
         android:padding="5dp"
         android:textAlignment="center"
         android:textSize="24sp" />
-    <TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:textColor="#8F0707"
-        android:text="Forgot Password ?"
-        android:textSize="14sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/forgotPassword"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:textColor="#8F0707"-->
+        <!--android:text="Forgot Password ?"-->
+        <!--android:textSize="14sp" />-->
 
     <Button
         android:id="@+id/btn_login"

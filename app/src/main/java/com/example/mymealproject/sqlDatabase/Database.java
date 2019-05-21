@@ -58,6 +58,12 @@ public class Database extends SQLiteOpenHelper {
         String query = String.format("DELETE FROM OrderDetail");
          db.execSQL(query);
     }
+    public void delItem(String pID){
+//        SQLiteDatabase db  = getReadableDatabase();
+//        String query = String.format("DELETE FROM OrderDetail WHERE ProductId= "+pID+"");
+//        db.execSQL(query);
+        this.getWritableDatabase().delete("OrderDetail","ProductId = '"+ pID +"'",null);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

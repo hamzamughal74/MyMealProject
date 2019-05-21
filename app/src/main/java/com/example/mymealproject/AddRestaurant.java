@@ -34,7 +34,7 @@ public class AddRestaurant extends AppCompatActivity {
     private EditText mRestName, mRestAdress, mRestContact;
     private Button mDone;
     private ImageButton mRestImage;
-    ActionBar mActionBar;
+
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 10;
@@ -59,9 +59,6 @@ public class AddRestaurant extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        mActionBar = getActionBar();
-        mActionBar.setTitle("MY TITLE");
-        mActionBar.show();
 
     }
     public void RestImage(View view){

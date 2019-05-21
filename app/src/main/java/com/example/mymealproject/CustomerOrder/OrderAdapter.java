@@ -1,5 +1,6 @@
 package com.example.mymealproject.CustomerOrder;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.mymealproject.DiscoverDishes.ItemClickListener;
 import com.example.mymealproject.R;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
@@ -40,7 +43,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
     final OrderRequest orderRequest = orderList.get(i);
-            viewHolder.orderID.setText(orderRequest.getCustomerId());
+//            viewHolder.orderID.setText(orderRequest.getCustomerId());
             viewHolder.orderStatus.setText("Status : "+covertCodeToStatus(orderRequest.getStatus()));
             viewHolder.orderTableNo.setText("Table No. : "+orderRequest.getTableNo());
             if (orderRequest.getStatus().equals("1")){
@@ -50,9 +53,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
             viewHolder.btnRate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Deleting order on click feedback
+//                    FirebaseDatabase.getInstance().getReference("OrderRequest").child(orderRequest.getOrderID()).removeValue();
                     Intent intent = new Intent(context, CustomerOrderFeedback.class);
                     intent.putExtra("orderID",orderRequest.getOrderID());
                     context.startActivity(intent);
+
                 }
             });
 //            viewHolder.setItemClickListener(new ItemClickListener() {

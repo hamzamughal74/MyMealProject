@@ -3,13 +3,14 @@ package com.example.mymealproject.DiscoverDishes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.mymealproject.DashBoard1;
+import com.example.mymealproject.DashBoard2;
 import com.example.mymealproject.R;
 import com.example.mymealproject.MenuModel;
 import com.google.firebase.database.DataSnapshot;
@@ -29,29 +30,34 @@ public class DiscoverDishes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_restaurant);
         mFoodRecycleView = findViewById(R.id.recyclerViewDR);
-        BottomNavigationView bottomNav = findViewById(R.id.main_nav);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+//        BottomNavigationView bottomNav = findViewById(R.id.main_nav);
+//        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         foodListShow();
 
 
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    switch (menuItem.getItemId()){
-                        case R.id.nav_discoverRestaurants:
 
-                            Intent intent = new Intent(DiscoverDishes.this , DiscoverDishes.class );
-                            startActivity(intent);
-                            break;
-
-
-                    }
-                    return false;
-                }
-            };
+    public void btnDashBoard(View view){
+        Intent intent = new Intent(DiscoverDishes.this , DashBoard2.class );
+        startActivity(intent);
+    }
+//    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+//            new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                @Override
+//                public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                    switch (menuItem.getItemId()){
+//                        case R.id.nav_discoverRestaurants:
+//
+//                            Intent intent = new Intent(DiscoverDishes.this , DiscoverDishes.class );
+//                            startActivity(intent);
+//                            break;
+//
+//
+//                    }
+//                    return false;
+//                }
+//            };
 
     public void foodListShow(){
 

@@ -1,5 +1,6 @@
 package com.example.mymealproject.CustomerOrder;
 
+import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,7 @@ public class Orders extends AppCompatActivity {
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     FloatingActionButton mbtnCart;
     ElegantNumberButton mElegantNumberButton;
-
+    RatingBar ratingBar;
     String dishId = "";
 
     DatabaseReference mDatabaseReference;
@@ -46,7 +48,7 @@ public class Orders extends AppCompatActivity {
         mbtnCart = findViewById(R.id.btnCart);
 
 
-
+        ratingBar = findViewById(R.id.bar);
         mDishName = findViewById(R.id.dishName);
         mDishPrice = findViewById(R.id.dishPrice);
         mDishImage = findViewById(R.id.dishImage);
@@ -87,6 +89,7 @@ public class Orders extends AppCompatActivity {
                 mCollapsingToolbarLayout.setTitle(currentDish.getName());
                 mDishPrice.setText(currentDish.getPrice());
                 mDishName.setText(currentDish.getName());
+                ratingBar.setRating(Float.parseFloat(currentDish.getRating()));
 
             }
 

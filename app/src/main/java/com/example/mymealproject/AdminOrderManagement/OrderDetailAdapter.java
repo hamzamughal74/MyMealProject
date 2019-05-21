@@ -39,9 +39,9 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Order order = orderDetailList.get(i);
-        viewHolder.productName.setText(order.getProductName());
-        viewHolder.productQuantity.setText(order.getQuantity());
-        viewHolder.productPrice.setText(order.getPrice());
+        viewHolder.productName.setText("Dish : "+order.getProductName());
+        viewHolder.productQuantity.setText("Quantity : "+order.getQuantity());
+        viewHolder.productPrice.setText("Price : "+order.getPrice());
 
 
     }

@@ -3,15 +3,14 @@ package com.example.mymealproject.AdminOpenRestaurant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mymealproject.AdminOrderManagement.AdminOrderStatus;
+import com.example.mymealproject.AdminDashboard;
 import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
 import com.example.mymealproject.dataModelRest;
@@ -23,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.security.Key;
 import java.util.ArrayList;
 
 public class AdminOpenRestaurant extends AppCompatActivity {
@@ -34,15 +32,17 @@ public class AdminOpenRestaurant extends AppCompatActivity {
     ArrayList<dataModelRest>mRestDetails;
     FirebaseAuth Auth;
     String key;
-    TextView RestName;
+    TextView RestName,RestAddress;
+    AdminDishAdapter mAdapter;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_open_restaurant);
-        mRecyclerView = findViewById(R.id.recyclerViewDR2);
+
         mRecyclerViewDish = findViewById(R.id.recyclerViewDish);
         RestName = findViewById(R.id.RestName);
-        BottomNavigationView bottomNav = findViewById(R.id.nav_StaffOpenRestaurant);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        RestAddress = findViewById(R.id.sRestAddress);
+
         Auth = FirebaseAuth.getInstance();
         key = Auth.getCurrentUser().getUid();
         mDatabaseReference= FirebaseDatabase.getInstance().getReference("Restaurant");
@@ -51,17 +51,6 @@ public class AdminOpenRestaurant extends AppCompatActivity {
         //for catagory
 
 
-        mFoodList = new ArrayList<>();
-        mFoodList.add(new AdminModelCatagory(R.drawable.food,"Steaks"));
-        mFoodList.add(new AdminModelCatagory(R.drawable.food,"BBQ"));
-        mFoodList.add(new AdminModelCatagory(R.drawable.food,"Steaks"));
-        mFoodList.add(new AdminModelCatagory(R.drawable.food,"BBQ"));
-
-        LinearLayoutManager mLayoutManger = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView.LayoutManager mCatagoryLayoutManager = mLayoutManger;
-        mRecyclerView.setLayoutManager(mCatagoryLayoutManager);
-        AdminCatagoryAdapter mCatagoryAdapter = new AdminCatagoryAdapter(this,mFoodList);
-        mRecyclerView.setAdapter(mCatagoryAdapter);
 
 
         //for dishes
@@ -70,8 +59,41 @@ public class AdminOpenRestaurant extends AppCompatActivity {
         restDetails();
 
     }
+    public void btnRice(View view){
+        getCatagory("Rice");
+    }
 
+    private void getCatagory(final String cat) {
+        Query query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("rID").equalTo(key);
+        mDishList = new ArrayList<>();
+        mRecyclerViewDish.setLayoutManager(new LinearLayoutManager(this));
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    mDishList.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        MenuModel dishList = dataSnapshot1.getValue(MenuModel.class);
+                        if (dishList.getCatagory().equals(cat)){
+                            mDishList.add(dishList);
+                        }
 
+                    }
+                    mAdapter = new AdminDishAdapter(AdminOpenRestaurant.this, mDishList);
+                    mRecyclerViewDish.setAdapter(mAdapter);
+
+                } else {
+                    mDishList.clear();
+                    Toast.makeText(AdminOpenRestaurant.this, "No data found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(AdminOpenRestaurant.this, "Oops..!Something is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void  dishContent(){
         mDishList = new ArrayList<>();
 
@@ -123,6 +145,7 @@ public class AdminOpenRestaurant extends AppCompatActivity {
                 for (DataSnapshot Snapshot : dataSnapshot.getChildren()) {
                     dataModelRest dataModelRest = Snapshot.getValue(dataModelRest.class);
                     RestName.setText(dataModelRest.getName());
+                    RestAddress.setText(dataModelRest.getAdress());
                 }
             }
 
@@ -133,22 +156,10 @@ public class AdminOpenRestaurant extends AppCompatActivity {
         });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    switch (menuItem.getItemId()){
-                        case R.id.add:
+    public void btnDashBoard(View view){
+        Intent db = new Intent(AdminOpenRestaurant.this, AdminDashboard.class);
+        startActivity(db);
+    }
 
-                            Intent intent = new Intent(AdminOpenRestaurant.this , addMenu.class );
-                            startActivity(intent);
-                            break;
-                        case R.id.nav_orders:
-                        Intent intent1 = new Intent(AdminOpenRestaurant.this, AdminOrderStatus.class);
-                        startActivity(intent1);
-                        break;
-                    }
-                    return false;
-                }
-            };
+
 }

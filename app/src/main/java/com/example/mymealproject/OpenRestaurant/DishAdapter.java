@@ -44,7 +44,8 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final MenuModel menuModel = mDishList.get(i);
         viewHolder.item_name.setText(menuModel.getName());
-        viewHolder.item_price.setText(menuModel.getPrice());
+        viewHolder.item_price.setText("Price : "+menuModel.getPrice()+" Rs");
+        viewHolder.person.setText("Person : "+menuModel.getPerson());
         Picasso.with(mContext).load(menuModel.getImageUrl()).fit().into(viewHolder.item_image);
         viewHolder.setItemClickListener(new ItemClickListener() {
             @Override
@@ -55,6 +56,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
                 mContext.startActivity(intent);
             }
         });
+
 
     }
 
@@ -69,7 +71,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView item_image;
-        TextView item_name,item_price;
+        TextView item_name,item_price,person;
         ImageButton openDish;
         private ItemClickListener itemClickListener;
 
@@ -79,6 +81,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
             item_image = itemView.findViewById(R.id.itemImage);
             item_name = itemView.findViewById(R.id.RestName);
             item_price = itemView.findViewById(R.id.itemPrice);
+            person = itemView.findViewById(R.id.person);
             openDish = itemView.findViewById(R.id.btnOpenDish);
             openDish.setOnClickListener(this);
 

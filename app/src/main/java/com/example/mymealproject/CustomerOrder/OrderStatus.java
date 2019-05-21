@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.mymealproject.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -32,7 +33,6 @@ public class OrderStatus extends AppCompatActivity {
     DatabaseReference requests;
     FirebaseAuth Auth;
     String currentUID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,6 @@ public class OrderStatus extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.listOrders);
 //        recyclerView.setHasFixedSize(true);
-
         Auth = FirebaseAuth.getInstance();
         currentUID = Auth.getCurrentUser().getUid();
 

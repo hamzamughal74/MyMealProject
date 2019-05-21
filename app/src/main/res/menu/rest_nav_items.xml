@@ -2,15 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/rate"
-        android:icon="@drawable/create_icon"
-        android:title="Add" />
-    <item
-        android:id="@+id/nav"
-        android:title="nav_orders"
+        android:id="@+id/Home"
+        android:title="Home"
         android:icon="@drawable/create_icon"/>
     <item
-        android:id="@+id/nav_orders"
+        android:id="@+id/AutoDeal"
         android:icon="@drawable/order_icon"
-        android:title="@string/order" />
+        android:title="AutoDeal" />
+    <item
+        android:id="@+id/Dashboard"
+        android:icon="@drawable/create_icon"
+        android:title="Dashboard" />
 </menu>

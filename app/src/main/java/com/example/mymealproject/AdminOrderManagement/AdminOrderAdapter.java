@@ -47,7 +47,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
         database = FirebaseDatabase.getInstance();
         request = database.getReference("OrderRequest");
         final OrderRequest orderRequest = orderList.get(i);
-        viewHolder.orderID.setText(orderRequest.getCustomerId());
+//        viewHolder.orderID.setText(orderRequest.getCustomerId());
         viewHolder.orderStatus.setText("Status : "+covertCodeToStatus(orderRequest.getStatus()));
         viewHolder.orderTableNo.setText("Table No. : "+orderRequest.getTableNo());
 
