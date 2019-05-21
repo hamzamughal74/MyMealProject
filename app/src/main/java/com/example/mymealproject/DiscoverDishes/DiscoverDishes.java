@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mymealproject.DashBoard1;
@@ -32,12 +33,20 @@ public class DiscoverDishes extends AppCompatActivity {
     FoodAdapter mFoodAdapter;
     EditText search;
     Query query;
+    TextView dc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_restaurant);
         search=findViewById(R.id.search);
         mFoodRecycleView = findViewById(R.id.recyclerViewDR);
+        dc=findViewById(R.id.DC);
+        dc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test();
+            }
+        });
         LinearLayoutManager mLayoutManger = new LinearLayoutManager(this);
         RecyclerView.LayoutManager mRvLayoutManager = mLayoutManger;
         mFoodRecycleView.setLayoutManager(mRvLayoutManager);
@@ -50,6 +59,7 @@ public class DiscoverDishes extends AppCompatActivity {
 //        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         foodListShow();
+        test();
     }
 
     public void btnDashBoard(View view){
@@ -89,20 +99,18 @@ public class DiscoverDishes extends AppCompatActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mFoodList.clear();
-                    foodListShow();
-
+                   test2();
                 }
             });
-        if (search.getText().toString().isEmpty()){
-            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
-            mFoodRecycleView.setVisibility(View.VISIBLE);
-        }
-        else {
-            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString());
-            query.addListenerForSingleValueEvent(valueEventListener);
-
-        }
+//        if (search.getText().toString().isEmpty()){
+//            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+//            mFoodRecycleView.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString());
+//            query.addListenerForSingleValueEvent(valueEventListener);
+//
+//        }
 
 
 
@@ -131,6 +139,24 @@ public class DiscoverDishes extends AppCompatActivity {
 //
 //            }
 //        });
+    }
+    public void test(){
+        if (search.getText().toString().isEmpty()){
+            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+            mFoodRecycleView.setVisibility(View.VISIBLE);
+        }
+        else {
+            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString());
+            query.addListenerForSingleValueEvent(valueEventListener);
+
+        }
+    }
+    public void test2(){
+        if (search.getText().toString().isEmpty()){
+            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+            mFoodRecycleView.setVisibility(View.VISIBLE);
+        }
+
     }
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override

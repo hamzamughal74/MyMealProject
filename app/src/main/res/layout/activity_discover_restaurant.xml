@@ -20,7 +20,8 @@
         android:text="Discover Dishes"
         android:textStyle="bold"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        />
 
     <LinearLayout
         android:id="@+id/LL1"
