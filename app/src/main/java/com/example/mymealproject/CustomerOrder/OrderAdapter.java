@@ -50,11 +50,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
                 viewHolder.btnRate.setVisibility(View.VISIBLE);
                 viewHolder.btnRate.setClickable(true);
             }
+
             viewHolder.btnRate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Deleting order on click feedback
-//                    FirebaseDatabase.getInstance().getReference("OrderRequest").child(orderRequest.getOrderID()).removeValue();
+                    //FirebaseDatabase.getInstance().getReference("OrderRequest").child(orderRequest.getOrderID()).removeValue();
                     Intent intent = new Intent(context, CustomerOrderFeedback.class);
                     intent.putExtra("orderID",orderRequest.getOrderID());
                     context.startActivity(intent);

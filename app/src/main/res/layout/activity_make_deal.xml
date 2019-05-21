@@ -28,7 +28,7 @@
       android:id="@+id/sv"
 
       android:layout_width="match_parent"
-      android:layout_height="400dp">
+      android:layout_height="450dp">
 
   <LinearLayout
         android:id="@+id/MainL"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:text="Gravi"
+            android:text="Pakistani"
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:text="Create Deal"
+            android:text="FastFood"
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -152,7 +152,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv4"
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="200dp">
             </android.support.v7.widget.RecyclerView>
 
 
@@ -171,14 +171,42 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
+    <TextView
+
+        android:id="@+id/totalBudget"
+        android:layout_below="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:layout_marginStart="10dp"
+        android:text="Budget"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/cart"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/balance"
+        android:layout_height="50dp"
+        android:layout_below="@+id/sv"
+        android:layout_marginTop="20dp"
         android:background="@drawable/btn_round"
         android:onClick="refresh"
+        android:layout_alignParentEnd="true"
         android:text="Refresh"
         android:textColor="@android:color/white" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnCart"
+        android:layout_below="@id/sv"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:elevation="6dp"
+        android:onClick="btnCart"
+        android:src="@drawable/newcart"
+        app:backgroundTint="#FF8B00 "
+        app:pressedTranslationZ="12dp"
+        app:useCompatPadding="true" />
 </RelativeLayout>

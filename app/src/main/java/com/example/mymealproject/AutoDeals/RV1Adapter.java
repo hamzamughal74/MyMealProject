@@ -41,8 +41,8 @@ return viewHolder;
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final MenuModel  menuModel = mDishList.get(i);
         viewHolder.name.setText(menuModel.getName());
-        viewHolder.price.setText(menuModel.getPrice());
-        viewHolder.person.setText(menuModel.getPerson());
+        viewHolder.price.setText(menuModel.getPrice()+" Rs");
+        viewHolder.person.setText(menuModel.getPerson()+"P");
         Picasso.with(context).load(menuModel.getImageUrl()).fit().into(viewHolder.image);
         viewHolder.setItemClickListener(new ItemClickListener() {
             @Override

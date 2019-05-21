@@ -1,5 +1,6 @@
 package com.example.mymealproject.AutoDeals;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.mymealproject.Cart;
 import com.example.mymealproject.CartAdapter;
 import com.example.mymealproject.MenuModel;
+import com.example.mymealproject.OpenRestaurant.open_restaurant;
 import com.example.mymealproject.R;
 import com.example.mymealproject.sqlDatabase.Database;
 import com.example.mymealproject.sqlDatabase.Order;
@@ -42,7 +44,7 @@ public class MakeDeal extends AppCompatActivity {
     private String person, budget ,rID,sBalance;
     //cart
     List<Order> cart = new ArrayList<>();
-    TextView balance;
+    TextView balance,totalBudget;
     Button Refresh;
 
     @Override
@@ -53,6 +55,7 @@ public class MakeDeal extends AppCompatActivity {
         rv2 = findViewById(R.id.rv2);
         rv3 = findViewById(R.id.rv3);
         balance = findViewById(R.id.balance);
+        totalBudget = findViewById(R.id.totalBudget);
         Refresh = findViewById(R.id.cart);
         rID = getIntent().getStringExtra("rID");
         person = getIntent().getStringExtra("person");
@@ -65,6 +68,11 @@ public class MakeDeal extends AppCompatActivity {
         getGravi(person,budget,rID);
 
 
+    }
+    public void btnCart(View view){
+        Intent cart = new Intent(MakeDeal.this,Cart.class );
+        cart.putExtra("get",rID);
+        startActivity(cart);
     }
         public void refresh(View view){
         loadFoodList();
@@ -213,7 +221,9 @@ public class MakeDeal extends AppCompatActivity {
         for (Order order : cart)
             total +=   (Integer.parseInt(order.getPrice())) * (Integer.parseInt(order.getQuantity()));
         sBalance = String.valueOf (Integer.parseInt(budget)- total);
-        balance.setText(sBalance);
+        balance.setText("Balance : "+sBalance+" Rs");
+        totalBudget.setText("Budget :  "+budget+" Rs");
+
     }
 
 }

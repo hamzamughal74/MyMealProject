@@ -24,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Orders extends AppCompatActivity {
     TextView mDishName,mDishPrice;
     ImageView mDishImage;
@@ -32,7 +35,6 @@ public class Orders extends AppCompatActivity {
     ElegantNumberButton mElegantNumberButton;
     RatingBar ratingBar;
     String dishId = "";
-
     DatabaseReference mDatabaseReference;
     DatabaseReference mRefDish;
     MenuModel currentDish;
@@ -71,6 +73,7 @@ public class Orders extends AppCompatActivity {
                         currentDish.getName(),
                         mElegantNumberButton.getNumber(),
                         currentDish.getPrice()
+
 
                 ));
                 Toast.makeText(Orders.this, "Added to Cart", Toast.LENGTH_SHORT).show();
