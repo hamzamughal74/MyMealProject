@@ -33,20 +33,13 @@ public class DiscoverDishes extends AppCompatActivity {
     FoodAdapter mFoodAdapter;
     EditText search;
     Query query;
-    TextView dc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_restaurant);
         search=findViewById(R.id.search);
         mFoodRecycleView = findViewById(R.id.recyclerViewDR);
-        dc=findViewById(R.id.DC);
-        dc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                test();
-            }
-        });
         LinearLayoutManager mLayoutManger = new LinearLayoutManager(this);
         RecyclerView.LayoutManager mRvLayoutManager = mLayoutManger;
         mFoodRecycleView.setLayoutManager(mRvLayoutManager);
@@ -55,34 +48,18 @@ public class DiscoverDishes extends AppCompatActivity {
         mFoodRecycleView.setAdapter(mFoodAdapter);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
 
-//        BottomNavigationView bottomNav = findViewById(R.id.main_nav);
-//        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         foodListShow();
-        test();
+        test2();
     }
 
     public void btnDashBoard(View view){
         Intent intent = new Intent(DiscoverDishes.this , DashBoard2.class );
         startActivity(intent);
     }
-
-//    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-//            new BottomNavigationView.OnNavigationItemSelectedListener() {
-//                @Override
-//                public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                    switch (menuItem.getItemId()){
-//                        case R.id.nav_discoverRestaurants:
-//
-//                            Intent intent = new Intent(DiscoverDishes.this , DiscoverDishes.class );
-//                            startActivity(intent);
-//                            break;
-//
-//
-//                    }
-//                    return false;
-//                }
-//            };
+    public void btnSearch(View view){
+        test();
+    }
 
     public void foodListShow(){
             search.addTextChangedListener(new TextWatcher() {
@@ -102,43 +79,7 @@ public class DiscoverDishes extends AppCompatActivity {
                    test2();
                 }
             });
-//        if (search.getText().toString().isEmpty()){
-//            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
-//            mFoodRecycleView.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString());
-//            query.addListenerForSingleValueEvent(valueEventListener);
-//
-//        }
 
-
-
-
-
-//        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()){
-//                    mFoodList.clear();
-//
-//                    for (DataSnapshot Snapshot : dataSnapshot.getChildren()){
-//                        MenuModel modelFood = Snapshot.getValue(MenuModel.class);
-//                        mFoodList.add(modelFood);
-//                    }
-//                    mFoodAdapter.notifyDataSetChanged();
-//                }
-//                else {
-//                    Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
     public void test(){
         if (search.getText().toString().isEmpty()){

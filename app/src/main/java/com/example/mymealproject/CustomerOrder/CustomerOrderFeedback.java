@@ -46,7 +46,7 @@ public class CustomerOrderFeedback extends AppCompatActivity  {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerView.LayoutManager rvLayoutManager = layoutManager;
         orderRecyclerView.setLayoutManager(rvLayoutManager);
-        final CustomerOrderFeedbackAdapter CODA = new CustomerOrderFeedbackAdapter(this,orderDetailList);
+        final CustomerOrderFeedbackAdapter CODA = new CustomerOrderFeedbackAdapter(this,orderDetailList,orderID);
         orderRecyclerView.setAdapter(CODA);
 
         request.child(orderID).child("orderList").addValueEventListener(new ValueEventListener() {

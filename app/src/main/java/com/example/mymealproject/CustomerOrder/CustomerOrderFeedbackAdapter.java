@@ -32,14 +32,16 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
     String ratingCount;
     String totalRating;
     String rating;
-
+    String reqID;
     private Context context;
     private ArrayList<Order> orderDetailList;
 
-    public CustomerOrderFeedbackAdapter(Context context, ArrayList<Order> orderDetailList) {
+    public CustomerOrderFeedbackAdapter(Context context, ArrayList<Order> orderDetailList,String reqID) {
         this.context = context;
         this.orderDetailList = orderDetailList;
+        this.reqID = reqID;
     }
+
 
     @NonNull
     @Override
@@ -112,28 +114,48 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
     }
 
     private void removeItem(String productId) {
-        Query query = FirebaseDatabase.getInstance().getReference("OrderRequest").child("orderList").orderByChild("productId").equalTo(productId);
-        query.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("OrderRequest").child(reqID).child("orderList")
+                .orderByChild("productId").equalTo(productId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("orderList").getValue()!= null) {
-                   String data =  dataSnapshot.getKey();
-                   dataSnapshot.child(data).getRef().removeValue();
-                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+               for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                   String key = snapshot.getKey();
+                   FirebaseDatabase.getInstance().getReference("OrderRequest").child(reqID)
+                           .child("orderList").child(key).removeValue();
+                   Toast.makeText(context, key, Toast.LENGTH_SHORT).show();
+               }
 
-                }
-                else {
-                    Toast.makeText(context, "Not working", Toast.LENGTH_SHORT).show();
-                }
-//                notifyDataSetChanged();
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+
+        });notifyDataSetChanged();
+//        Query query = FirebaseDatabase.getInstance().getReference("OrderRequest").child(reqID).child("orderList").orderByChild("productId").equalTo(productId);
+//        query.getRef().removeValue();
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.child("orderList").getValue()!= null) {
+//                   String data =  dataSnapshot.getKey();
+//                   dataSnapshot.child(data).getRef().removeValue();
+//                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+//
+//                }
+//                else {
+//                    Toast.makeText(context, "Not working", Toast.LENGTH_SHORT).show();
+//                }
+////                notifyDataSetChanged();
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
 
