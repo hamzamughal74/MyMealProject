@@ -86,6 +86,7 @@
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="@color/theme_orange"
+            android:progressBackgroundTint="@color/theme_orange_light"
             android:rating="1"
             android:stepSize="1"
             app:layout_constraintBottom_toTopOf="@+id/goToRest"
