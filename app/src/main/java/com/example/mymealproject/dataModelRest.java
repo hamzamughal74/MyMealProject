@@ -4,10 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 
 public class dataModelRest{
 
-    public dataModelRest(String name, String adress, String contact) {
+    public dataModelRest(String name, String adress, String contact,String imageUrl) {
         this.name = name;
         this.adress = adress;
         this.contact = contact;
+        this.imageUrl = imageUrl;
     }
 
     public dataModelRest() {
@@ -37,7 +38,16 @@ public class dataModelRest{
         this.contact = contact;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     String name;
   String adress;
   String contact;
+  String imageUrl;
 }

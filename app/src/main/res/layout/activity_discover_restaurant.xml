@@ -8,6 +8,8 @@
     tools:context=".DiscoverDishes.DiscoverDishes"
     android:background="@drawable/wallpaper"
     android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     >
 
     <TextView
@@ -22,7 +24,6 @@
         android:textColor="#fff"
         android:textSize="25sp"
         />
-
     <LinearLayout
         android:id="@+id/LL1"
         android:layout_below="@+id/DC"
@@ -37,13 +38,17 @@
 
         <EditText
             android:layout_width="250dp"
-            android:layout_height="33dp"
+            android:layout_height="match_parent"
             android:id="@+id/search"
             android:layout_gravity="center_horizontal"
             android:height="50dp"
+            android:textSize="18sp"
             android:background="@null"
             android:hint="@string/search_here"
+            android:textColorHint="@color/theme_orange"
             android:textAlignment="center"
+            android:inputType="textCapWords"
+            android:imeOptions="actionSearch"
             android:textColor="@color/theme_orange"
             android:textCursorDrawable="@color/theme_orange" />
 

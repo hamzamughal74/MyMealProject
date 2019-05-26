@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mymealproject.Cart;
-import com.example.mymealproject.CartAdapter;
 import com.example.mymealproject.MenuModel;
-import com.example.mymealproject.OpenRestaurant.open_restaurant;
 import com.example.mymealproject.R;
 import com.example.mymealproject.sqlDatabase.Database;
 import com.example.mymealproject.sqlDatabase.Order;
@@ -24,10 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MakeDeal extends AppCompatActivity {
     private RecyclerView rv1,rv2,rv3,rv4;
@@ -54,6 +50,7 @@ public class MakeDeal extends AppCompatActivity {
         rv1 = findViewById(R.id.rv1);
         rv2 = findViewById(R.id.rv2);
         rv3 = findViewById(R.id.rv3);
+        rv4 = findViewById(R.id.rv4);
         balance = findViewById(R.id.balance);
         totalBudget = findViewById(R.id.totalBudget);
         Refresh = findViewById(R.id.cart);
@@ -65,8 +62,8 @@ public class MakeDeal extends AppCompatActivity {
         loadFoodList();
         getRice(person,budget,rID);
         getbbq(person,budget,rID);
-        getGravi(person,budget,rID);
-
+        getPakistani(person,budget,rID);
+        getFastFood(person,budget,rID);
 
     }
     public void btnCart(View view){
@@ -77,10 +74,58 @@ public class MakeDeal extends AppCompatActivity {
         public void refresh(View view){
         loadFoodList();
         }
-    private void getGravi(final String person, final String budget,final  String rID) {
+
+    private void getFastFood(final String person, final String budget, final  String rID) {
+        dishList4 = new ArrayList<>();
+        ref = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu");
+        query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("catagory").equalTo("FastFood");
+        rv4.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    dishList4.clear();
+
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        MenuModel menuModel = dataSnapshot1.getValue(MenuModel.class);
+                        //Int conversion for conditions
+
+                        String sPerson = menuModel.getPerson();
+                        int iPerson = Integer.parseInt(sPerson);
+                        int gPerson = Integer.parseInt(person);
+                        String sPrice = menuModel.getPrice();
+                        int iBudget = Integer.parseInt(budget);
+                        int iPrice = Integer.parseInt(sPrice);
+                        String iID = menuModel.getrID();
+                        if (iID.equals(rID)) {
+                            if (iPerson <= gPerson) {
+                                if (iPrice < iBudget) {
+                                    dishList4.add(menuModel);
+
+                                }
+                            }
+                        }
+
+
+
+                    }
+                    rv4Adapter = new RV4Adapter(MakeDeal.this, dishList4);
+                    rv4.setAdapter(rv4Adapter);
+                }else {
+                    dishList4.clear();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    private void getPakistani(final String person, final String budget, final  String rID) {
         dishList3 = new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu");
-        query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("catagory").equalTo("Gravi");
+        query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("catagory").equalTo("Pakistani");
         rv3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         query.addValueEventListener(new ValueEventListener() {
             @Override

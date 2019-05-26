@@ -1,6 +1,7 @@
 package com.example.mymealproject;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -58,10 +59,11 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
     private List<Order> listData = new ArrayList<>();
     private Context context;
-
-    public CartAdapter(List<Order> listData, Context context) {
+    String restId;
+    public CartAdapter(List<Order> listData, Context context,String restId) {
         this.listData = listData;
         this.context = context;
+        this.restId = restId;
     }
     @NonNull
     @Override
@@ -86,6 +88,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
             @Override
             public void onClick(View v) {
                 new  Database(context).delItem(listData.get(i).getProductId());
+                ((Activity)context).finish();
+                Intent intent = new Intent(context,Cart.class);
+                intent.putExtra("get",restId);
+                context.startActivity(intent);
                 Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
 
             }

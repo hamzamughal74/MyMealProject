@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DashBoard2"></activity>
+        <activity android:name=".DashBoard2" />
         <activity android:name=".AdminDashboard" />
         <activity android:name=".AutoDeals.AutoDeal" />
         <activity android:name=".AutoDeals.MakeDeal" />

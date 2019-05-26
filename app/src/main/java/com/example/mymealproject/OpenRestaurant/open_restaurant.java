@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,7 @@ public class open_restaurant extends AppCompatActivity {
     TextView RestName;
     TextView RestAdress;
     String string;
+    ImageView RestImage;
 Database mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ Database mDatabase;
         mRecyclerViewDish = findViewById(R.id.recyclerViewDish);
         RestName = findViewById(R.id.RestName);
         RestAdress = findViewById(R.id.RestAddress);
-
+        RestImage = findViewById(R.id.itemImage);
 
         //for dishes
 
@@ -55,8 +58,57 @@ Database mDatabase;
         new  Database(getBaseContext()).cleanCart();
 
     }
+
+
+
+    public void btnAll(View view){
+        getAll();
+    }
     public void btnRice(View view){
-       getCatagory("Rice");
+        getCatagory("Rice");
+    }
+    public void btnBBQ(View view){
+        getCatagory("BarBeQue");
+    }
+    public void btnPakistani(View view){
+        getCatagory("Pakistani");
+    }
+    public void btnFastFood(View view){
+        getCatagory("FastFood");
+    }
+
+
+
+    private void getAll() {
+        Query query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("rID").equalTo(string);
+        mDishList = new ArrayList<>();
+        mRecyclerViewDish.setLayoutManager(new LinearLayoutManager(this));
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    mDishList.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        MenuModel dishList = dataSnapshot1.getValue(MenuModel.class);
+
+                            mDishList.add(dishList);
+
+
+                    }
+                    mAdapter = new DishAdapter(open_restaurant.this, mDishList);
+                    mRecyclerViewDish.setAdapter(mAdapter);
+
+                } else {
+                    mDishList.clear();
+                    Toast.makeText(open_restaurant.this, "No data found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(open_restaurant.this, "Oops..!Something is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void getCatagory(final String cat) {
         Query query = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu").orderByChild("rID").equalTo(string);
@@ -142,6 +194,7 @@ Database mDatabase;
                     dataModelRest dataModelRest = Snapshot.getValue(dataModelRest.class);
                     RestName.setText(dataModelRest.getName());
                     RestAdress.setText(dataModelRest.getAdress());
+                    Picasso.with(open_restaurant.this).load(dataModelRest.getImageUrl()).fit().into(RestImage);
                 }
             }
 

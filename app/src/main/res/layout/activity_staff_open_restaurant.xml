@@ -29,7 +29,7 @@
             tools:ignore="ContentDescription">
 
             <ImageView
-                android:id="@+id/itemImage"
+                android:id="@+id/restImage"
                 android:layout_width="match_parent"
                 android:layout_height="158dp"
                 android:layout_gravity="center"
@@ -71,7 +71,7 @@
                 />
             <TextView
                 android:id="@+id/sRestAddress"
-                android:layout_width="92dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="10dp"
@@ -118,14 +118,15 @@
                         android:layout_height="30dp"
                         android:textColor="@android:color/white"
                         android:background="@drawable/btn_round"
+                        android:onClick="btnAll"
                         android:text="All"/>
                     <Button
-
+                        android:id="@+id/btnPakistani"
                         android:layout_marginStart="10dp"
                         android:layout_width="80dp"
                         android:layout_height="30dp"
                         android:textColor="@android:color/white"
-
+                        android:onClick="btnPakistani"
                         android:background="@drawable/btn_round"
                         android:text="Pakistani"/>
                     <Button
@@ -139,18 +140,22 @@
 
                         android:text="Rice"/>
                     <Button
+                        android:id="@+id/btnBBQ"
                         android:layout_marginStart="10dp"
                         android:layout_width="80dp"
                         android:layout_height="30dp"
                         android:textColor="@android:color/white"
                         android:background="@drawable/btn_round"
+                        android:onClick="btnBBQ"
                         android:text="BarBeQue"/>
                     <Button
+                        android:id="@+id/btnFastFood"
                         android:layout_marginStart="10dp"
                         android:layout_width="80dp"
                         android:layout_height="30dp"
                         android:textColor="@android:color/white"
                         android:background="@drawable/btn_round"
+                        android:onClick="btnFastFood"
                         android:text="FastFood"/>
 
 

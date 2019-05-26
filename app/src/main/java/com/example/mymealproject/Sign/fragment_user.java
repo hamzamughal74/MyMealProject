@@ -20,6 +20,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.nio.file.OpenOption;
 
@@ -30,8 +35,8 @@ public class fragment_user extends Fragment {
 
     private EditText mUsername_login;
     private EditText mPassword_login;
-
-
+    private  String CurrentUID;
+    private DatabaseReference mReference;
 
     @Nullable
     @Override
@@ -43,7 +48,7 @@ public class fragment_user extends Fragment {
         mUsername_login = view.findViewById(R.id.username_login);
         mPassword_login = view.findViewById(R.id.password_login);
         auth = FirebaseAuth.getInstance();
-
+        mReference = FirebaseDatabase.getInstance().getReference("Users");
 
         Signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +79,29 @@ public class fragment_user extends Fragment {
                 if (!task.isSuccessful()) {
                     showErrorDialog("There was problem signing in");
                 } else {
-                    Intent intent = new Intent(getActivity(), DiscoverDishes.class);
-                    getActivity().finish();
-                    startActivity(intent);
+                    CurrentUID = auth.getCurrentUser().getUid();
+                    mReference.child(CurrentUID).child("role").addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String mRole = dataSnapshot.getValue(String.class);
+                            if (!mRole.equals("User")){
+                                Toast.makeText(getActivity(), "It's Admin Account", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Intent intent = new Intent(getActivity(), DiscoverDishes.class);
+                                getActivity().finish();
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 }
             }
         });

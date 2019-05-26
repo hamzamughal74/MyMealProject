@@ -26,6 +26,9 @@
         android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
+        android:textSize="24sp"
+        android:hint="Restaurant Name"
+        android:inputType="textCapWords"
         android:background="@drawable/edittext_round"/>
 
     <android.support.v7.widget.CardView
@@ -43,7 +46,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/edittext_round"
             android:hint="Adress"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:padding="5dp"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -55,7 +58,7 @@
             android:layout_marginTop="80dp"
             android:hint="Contact"
             android:background="@drawable/edittext_round"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="5dp"
             android:textAlignment="center"
             android:textSize="24sp" />

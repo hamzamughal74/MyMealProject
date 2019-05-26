@@ -1,14 +1,20 @@
 package com.example.mymealproject.DiscoverDishes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,11 +53,52 @@ public class DiscoverDishes extends AppCompatActivity {
         mFoodAdapter = new FoodAdapter(this,mFoodList);
         mFoodRecycleView.setAdapter(mFoodAdapter);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
+//        search.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
 
 
         foodListShow();
         test2();
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    test();
+                    //to close keypad on search button click
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search.getWindowToken(),
+                            InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
+
     }
+
+    //Functionality for BackPress*******************************************************************
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+//*************************************************************************************************
 
     public void btnDashBoard(View view){
         Intent intent = new Intent(DiscoverDishes.this , DashBoard2.class );

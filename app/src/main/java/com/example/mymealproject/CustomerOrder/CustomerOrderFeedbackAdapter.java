@@ -1,7 +1,9 @@
 package com.example.mymealproject.CustomerOrder;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -95,6 +97,10 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                        getCount(order.getProductId(),ratingValue[0]);
                        removeItem(order.getProductId());
                        rankDialog.dismiss();
+                        ((Activity)context).finish();
+                        Intent intent = new Intent(context,CustomerOrderFeedback.class);
+                        intent.putExtra("orderID",reqID);
+                        context.startActivity(intent);
 
 
 
@@ -127,12 +133,13 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
 
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
 
-        });notifyDataSetChanged();
+        });
 //        Query query = FirebaseDatabase.getInstance().getReference("OrderRequest").child(reqID).child("orderList").orderByChild("productId").equalTo(productId);
 //        query.getRef().removeValue();
 //        query.addValueEventListener(new ValueEventListener() {

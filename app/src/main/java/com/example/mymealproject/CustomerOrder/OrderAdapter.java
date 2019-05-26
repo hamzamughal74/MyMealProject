@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.example.mymealproject.DiscoverDishes.ItemClickListener;
 import com.example.mymealproject.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -55,10 +58,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     //Deleting order on click feedback
-                    //FirebaseDatabase.getInstance().getReference("OrderRequest").child(orderRequest.getOrderID()).removeValue();
+
                     Intent intent = new Intent(context, CustomerOrderFeedback.class);
                     intent.putExtra("orderID",orderRequest.getOrderID());
                     context.startActivity(intent);
+                    FirebaseDatabase.getInstance().getReference("OrderRequest").child(orderRequest.getOrderID())
+                            .addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (!dataSnapshot.child("orderList").exists()){
+                                        dataSnapshot.getRef().removeValue();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
 
                 }
             });

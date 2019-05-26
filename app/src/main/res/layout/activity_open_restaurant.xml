@@ -116,6 +116,7 @@
                     android:layout_height="30dp"
                     android:textColor="@android:color/white"
                     android:background="@drawable/btn_round"
+                    android:onClick="btnAll"
                     android:text="All"/>
                 <Button
 
@@ -123,7 +124,7 @@
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:textColor="@android:color/white"
-
+                    android:onClick="btnPakistani"
                     android:background="@drawable/btn_round"
                     android:text="Pakistani"/>
                 <Button
@@ -142,6 +143,7 @@
                     android:layout_height="30dp"
                     android:textColor="@android:color/white"
                     android:background="@drawable/btn_round"
+                    android:onClick="btnBBQ"
                     android:text="BarBeQue"/>
                 <Button
                     android:layout_marginStart="10dp"
@@ -149,6 +151,7 @@
                     android:layout_height="30dp"
                     android:textColor="@android:color/white"
                     android:background="@drawable/btn_round"
+                    android:onClick="btnFastFood"
                     android:text="FastFood"/>
 
 

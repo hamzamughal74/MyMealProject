@@ -28,11 +28,12 @@
 
     <Spinner
         android:id="@+id/dishCatagory"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimaryDark"
         android:dropDownWidth="wrap_content"
+        android:spinnerMode="dropdown"
         android:entries="@array/catagory">
 
     </Spinner>
@@ -53,7 +54,7 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/edittext_round"
             android:hint="Name"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:padding="5dp"
             android:textAlignment="center"
             android:textSize="24sp" />

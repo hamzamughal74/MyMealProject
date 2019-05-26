@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -57,6 +58,7 @@ public class addMenu extends AppCompatActivity {
         mPrice = findViewById(R.id.dishPrice);
         mPerson = findViewById(R.id.dishPerson);
         mSpinner = findViewById(R.id.dishCatagory);
+
         mDishImage = findViewById(R.id.dishImage);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant");
         storage = FirebaseStorage.getInstance();
@@ -71,8 +73,8 @@ public class addMenu extends AppCompatActivity {
     }
     public void dishDone(View view){
         Dish();
-        Intent intent = new Intent(addMenu.this, AdminOpenRestaurant.class);
-        startActivity(intent);
+//        Intent intent = new Intent(addMenu.this, AdminOpenRestaurant.class);
+//        startActivity(intent);
     }
     private void Dish(){
 //        Intent intent = getIntent();
@@ -166,7 +168,7 @@ public class addMenu extends AppCompatActivity {
                                  );
 
                                  mDatabaseReference.setValue(menu);
-
+                            finish();
                              }
                          })   ;
 

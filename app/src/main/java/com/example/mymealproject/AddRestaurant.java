@@ -34,7 +34,7 @@ public class AddRestaurant extends AppCompatActivity {
     private EditText mRestName, mRestAdress, mRestContact;
     private Button mDone;
     private ImageButton mRestImage;
-
+    private String CurrentUID,imageUrl;
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 10;
@@ -58,7 +58,7 @@ public class AddRestaurant extends AppCompatActivity {
         Auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
+        CurrentUID = Auth.getCurrentUser().getUid();
 
     }
     public void RestImage(View view){
@@ -67,24 +67,65 @@ public class AddRestaurant extends AppCompatActivity {
 
     public void RestDone(View view) {
         createRestaurant();
-        uploadImage();
-
+        Intent  intent = new Intent(AddRestaurant.this, AdminOpenRestaurant.class);
+        finish();
+        startActivity(intent);
+//Image
     }
 
     private void createRestaurant() {
+
+        //REstDetails
         final String name = mRestName.getText().toString();
         final String adress = mRestAdress.getText().toString();
         final String contact = mRestContact.getText().toString();
 
-        dataModelRest rest = new dataModelRest(name, adress, contact);
+        if(filePath != null | !name.isEmpty() |!adress.isEmpty()|!contact.isEmpty())
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
 
-        mDatabaseReference.child("Restaurant").child(Auth.getCurrentUser().getUid()).setValue(rest);
-        Toast.makeText(AddRestaurant.this, "Details Submitted", Toast.LENGTH_SHORT).show();
+            final StorageReference ref = storageReference.child("images/"+ CurrentUID);
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
-        Intent  intent = new Intent(AddRestaurant.this, AdminOpenRestaurant.class);
-//        intent.putExtra("restName",name);
-        finish();
-        startActivity(intent);
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+//                            progressDialog.dismiss();
+                            Toast.makeText(AddRestaurant.this, "Uploaded", Toast.LENGTH_SHORT).show();
+
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    imageUrl = uri.toString();
+                                    dataModelRest rest = new dataModelRest(name, adress, contact,imageUrl);
+                                    mDatabaseReference.child("Restaurant").child(CurrentUID).setValue(rest);
+                                }
+                            });
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(AddRestaurant.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+        }
 
     }
     private void chooseImage() {
@@ -109,40 +150,6 @@ public class AddRestaurant extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
-        }
-    }
-    private void uploadImage() {
-
-        if(filePath != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(AddRestaurant.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(AddRestaurant.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
         }
     }
 

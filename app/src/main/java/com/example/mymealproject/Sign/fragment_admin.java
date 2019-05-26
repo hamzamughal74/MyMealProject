@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mymealproject.AddRestaurant;
 import com.example.mymealproject.AdminOpenRestaurant.AdminOpenRestaurant;
 import com.example.mymealproject.Create;
 import com.example.mymealproject.R;
@@ -78,14 +79,12 @@ public class fragment_admin extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             String mRole =dataSnapshot.getValue(String.class);
                             if(!mRole.equals("Admin")){
-                                Toast.makeText(getActivity(), "Invalid Attempt", Toast.LENGTH_SHORT).show();
-                                getActivity().finish();
+                                Toast.makeText(getActivity(), "It's User Account", Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 FirebaseDatabase.getInstance().getReference("Restaurant").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                       for (DataSnapshot data : dataSnapshot.getChildren())
                                            if (dataSnapshot.hasChild(CurrentId)){
                                                Intent intent = new Intent(getActivity(), AdminOpenRestaurant.class);
                                                 getActivity().finish();
@@ -93,7 +92,7 @@ public class fragment_admin extends Fragment {
 
                                            }
                                            else {
-                                               Intent intent = new Intent(getActivity(),Create.class);
+                                               Intent intent = new Intent(getActivity(), AddRestaurant.class);
                                                getActivity().finish();
                                                startActivity(intent);
                                            }

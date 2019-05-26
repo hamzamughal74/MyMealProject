@@ -78,6 +78,16 @@ try {
                 dishDialog.dismiss();
                 }
             });
+
+            Button btnDelete = dishDialog.findViewById(R.id.btnDelete);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refDish.removeValue();
+                    dishDialog.dismiss();
+                }
+            });
+
             Button btnCancel = dishDialog.findViewById(R.id.btnCancel);
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override

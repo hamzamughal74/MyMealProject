@@ -54,7 +54,6 @@ public class Cart extends AppCompatActivity {
         orderID = UUID.randomUUID().toString();
         database = FirebaseDatabase.getInstance();
         request = database.getReference("OrderRequest");
-
         Auth = FirebaseAuth.getInstance();
         currentUID = Auth.getCurrentUser().getUid();
         //Init
@@ -76,7 +75,7 @@ public class Cart extends AppCompatActivity {
 
 
         cart = new Database(this).getCarts();
-        adapter = new CartAdapter(cart, this);
+        adapter = new CartAdapter(cart, this,restID);
         recyclerViewCart.setAdapter(adapter);
 
         // Calculate total price
@@ -100,7 +99,6 @@ public class Cart extends AppCompatActivity {
         txtAdress.setLayoutParams(layoutParams);
         ad.setView(txtAdress); // add to alert dialog
         ad.setIcon(R.drawable.add_icon);
-
         ad.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

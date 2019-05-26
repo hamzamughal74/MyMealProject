@@ -69,12 +69,11 @@
                 android:textColor="#ffffff" />
             <ImageButton
                 android:id="@+id/btnEditDish"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="right"
-                android:layout_alignParentBottom="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/add_icon" />
+                android:background="@drawable/menu_icon" />
 
         </RelativeLayout>
 
