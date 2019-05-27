@@ -7,13 +7,17 @@ import android.view.View;
 
 import com.example.mymealproject.AutoDeals.AutoDeal;
 import com.example.mymealproject.CustomerOrder.OrderStatus;
+import com.example.mymealproject.Sign.SignIn;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DashBoard1 extends AppCompatActivity {
     private String rID;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        auth = FirebaseAuth.getInstance();
         rID = getIntent().getStringExtra("rID");
 
 
@@ -26,5 +30,13 @@ public class DashBoard1 extends AppCompatActivity {
         Intent ad = new Intent(DashBoard1.this, AutoDeal.class);
         ad.putExtra("rID",rID);
         startActivity(ad);
+
+    }
+    public void btnSignOut(View view){
+        auth.signOut();
+        finish();
+        finishAffinity();
+        Intent intent = new Intent(this, SignIn.class);
+        startActivity(intent);
     }
 }

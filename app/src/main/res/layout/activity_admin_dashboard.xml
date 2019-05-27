@@ -81,8 +81,8 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@drawable/circlebackgroundpurple"
-                    android:src="@drawable/autodeal"
+
+                    android:src="@drawable/add_dish_icon"
                     android:padding="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -111,13 +111,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
-            android:id="@+id/tvSignOut"
+            android:id="@+id/btnAdminSignOut"
             android:layout_width="160dp"
+            app:cardBackgroundColor="@android:color/black"
             android:layout_height="190dp"
+            android:onClick="btnAdminSignOut"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/orange_stroke"
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
@@ -129,12 +132,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textColor="@android:color/white"
                     android:layout_marginTop="10dp"
                     android:text="Sign Out"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/lightgray"
+                    android:background="@color/theme_orange"
                     android:layout_margin="10dp"/>
 
             </LinearLayout>

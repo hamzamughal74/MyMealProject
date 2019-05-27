@@ -112,9 +112,6 @@ public class Cart extends AppCompatActivity {
                         orderID
 
                 );
-                //Submit to Firebase
-//                request = request.push();
-//             String   orderID= request.getKey();
 
                 request.child(orderID)
                         .setValue(orderRequest);

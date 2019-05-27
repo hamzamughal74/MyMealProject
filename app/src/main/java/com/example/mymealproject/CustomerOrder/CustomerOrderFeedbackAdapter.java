@@ -128,7 +128,7 @@ public class CustomerOrderFeedbackAdapter extends RecyclerView.Adapter<CustomerO
                    String key = snapshot.getKey();
                    FirebaseDatabase.getInstance().getReference("OrderRequest").child(reqID)
                            .child("orderList").child(key).removeValue();
-                   Toast.makeText(context, key, Toast.LENGTH_SHORT).show();
+                   Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
                }
 
             }

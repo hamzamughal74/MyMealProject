@@ -79,10 +79,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
                 .buildRound(""+ listData.get(i).getQuantity(), Color.RED);
         cartViewHolder.imageCartCount.setImageDrawable(drawable);
 
-        Locale locale = new Locale("en","US");
-        NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
-        int price = (Integer.parseInt(listData.get(i).getPrice()))*(Integer.parseInt(listData.get(i).getQuantity()));
-        cartViewHolder.price.setText(fmt.format(price));
+        String price = String.valueOf((Integer.parseInt(listData.get(i).getPrice()))*(Integer.parseInt(listData.get(i).getQuantity())));
+        cartViewHolder.price.setText((price)+" Rs");
         cartViewHolder.cartName.setText(listData.get(i).getProductName());
         cartViewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,10 +102,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
         return listData.size();
     }
 
-//    public void removeItem(int postion){
-//        listData.remove(postion);
-//        notifyItemRemoved(postion);
-//    }
+
 }
 
 
