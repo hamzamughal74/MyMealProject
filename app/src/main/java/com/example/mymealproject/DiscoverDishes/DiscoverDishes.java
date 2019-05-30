@@ -129,15 +129,19 @@ public class DiscoverDishes extends AppCompatActivity {
 
     }
     public void test(){
-        if (search.getText().toString().isEmpty()){
-            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
-            mFoodRecycleView.setVisibility(View.VISIBLE);
-        }
-        else {
-            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString());
-            query.addListenerForSingleValueEvent(valueEventListener);
+        query=mDatabaseReference.orderByChild("tags").equalTo("Handi");
 
-        }
+        query.addListenerForSingleValueEvent(valueEventListener);
+//        if (search.getText().toString().isEmpty()){
+//            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
+//            mFoodRecycleView.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//
+//            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString()).endAt(search.getText().toString());
+//            query.addListenerForSingleValueEvent(valueEventListener);
+//
+//        }
     }
     public void test2(){
         if (search.getText().toString().isEmpty()){

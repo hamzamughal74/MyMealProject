@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:text="Add Image"
         android:onClick="RestImage"
+
         android:textColor="#fff"
         android:textSize="38dp"
 
