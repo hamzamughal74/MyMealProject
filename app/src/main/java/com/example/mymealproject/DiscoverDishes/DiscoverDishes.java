@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,6 +24,7 @@ import com.example.mymealproject.DashBoard1;
 import com.example.mymealproject.DashBoard2;
 import com.example.mymealproject.R;
 import com.example.mymealproject.MenuModel;
+import com.example.mymealproject.tagModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiscoverDishes extends AppCompatActivity {
     private RecyclerView mFoodRecycleView;
@@ -57,7 +61,7 @@ public class DiscoverDishes extends AppCompatActivity {
 
 
         foodListShow();
-        test2();
+//        test2();
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -129,9 +133,7 @@ public class DiscoverDishes extends AppCompatActivity {
 
     }
     public void test(){
-        query=mDatabaseReference.orderByChild("tags").equalTo("Handi");
-
-        query.addListenerForSingleValueEvent(valueEventListener);
+    mDatabaseReference.child("-LfusIFss4XvEEtdyzdZ").child("tags").addValueEventListener(valueEventListener);
 //        if (search.getText().toString().isEmpty()){
 //            mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
 //            mFoodRecycleView.setVisibility(View.VISIBLE);
@@ -150,17 +152,27 @@ public class DiscoverDishes extends AppCompatActivity {
         }
 
     }
+
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             mFoodList.clear();
             if (dataSnapshot.exists()) {
                 mFoodRecycleView.setVisibility(View.VISIBLE);
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MenuModel modelFood = snapshot.getValue(MenuModel.class);
-                    mFoodList.add(modelFood);
-                }
-               mFoodAdapter .notifyDataSetChanged();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    tagModel tm = snapshot.getValue(tagModel.class);
+////                    mFoodList.add(tm);
+                    ArrayList arrayList = new ArrayList();
+
+                    for (int i=0;i<3;i++){
+                        arrayList.add(dataSnapshot.child(String.valueOf(i)).getValue(String.class));
+
+                    }
+                String show = (String) arrayList.get(1);
+                    Log.d("tag", "onDataChange:"+show);
+
+//                }
+                mFoodAdapter .notifyDataSetChanged();
             }
             else {
 //                mFoodRecycleView.setVisibility(View.GONE);
@@ -175,5 +187,30 @@ public class DiscoverDishes extends AppCompatActivity {
 
         }
     };
+//    ValueEventListener valueEventListener = new ValueEventListener() {
+//        @Override
+//        public void onDataChange(DataSnapshot dataSnapshot) {
+//            mFoodList.clear();
+//            if (dataSnapshot.exists()) {
+//                mFoodRecycleView.setVisibility(View.VISIBLE);
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    MenuModel modelFood = snapshot.getValue(MenuModel.class);
+//                    mFoodList.add(modelFood);
+//                }
+//               mFoodAdapter .notifyDataSetChanged();
+//            }
+//            else {
+////                mFoodRecycleView.setVisibility(View.GONE);
+//                mFoodList.clear();
+//                Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
+//                mFoodAdapter.notifyDataSetChanged();
+//            }
+//        }
+//
+//        @Override
+//        public void onCancelled(DatabaseError databaseError) {
+//
+//        }
+//    };
 
 }
