@@ -4,14 +4,23 @@ import android.support.v7.app.AppCompatActivity;
 
 public class dataModelRest{
 
-    public dataModelRest(String name, String adress, String contact,String imageUrl) {
+    public dataModelRest(String name, String adress, String contact,String imageUrl,String  city) {
         this.name = name;
         this.adress = adress;
         this.contact = contact;
         this.imageUrl = imageUrl;
+        this.city = city;
     }
 
     public dataModelRest() {
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getName() {
@@ -50,4 +59,5 @@ public class dataModelRest{
   String adress;
   String contact;
   String imageUrl;
+  String city;
 }

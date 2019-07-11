@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.example.mymealproject.AutoDeals.AutoDeal;
 import com.example.mymealproject.CustomerOrder.OrderStatus;
+import com.example.mymealproject.IntelliDeal.choose;
+import com.example.mymealproject.IntelliDeal.intelliDeal;
 import com.example.mymealproject.Sign.SignIn;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -38,5 +40,9 @@ public class DashBoard1 extends AppCompatActivity {
         finishAffinity();
         Intent intent = new Intent(this, SignIn.class);
         startActivity(intent);
+    }
+    public void btniDeal(View view){
+        Intent ideal = new Intent(this, choose.class);
+        startActivity(ideal);
     }
 }

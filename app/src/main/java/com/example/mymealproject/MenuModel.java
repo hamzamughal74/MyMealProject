@@ -2,25 +2,40 @@ package com.example.mymealproject;
 
 
 public class MenuModel  {
-    public String getrID() {
-        return rID;
-    }
-
-    public MenuModel() {
-    }
-
-    public void setrID(String rID) {
-        this.rID = rID;
-    }
-
     private String rID;
     public String name;
-   public String price;
+    public String price;
     private String catagory;
     private  String Rating;
     private String ratingCount;
     private String totalRating;
     private String person;
+    private String imageUrl;
+    private  String restName;
+    private String mID;
+    private String tag;
+    private String restCity;
+
+    public MenuModel() {
+    }
+
+    public String getRestCity() {
+        return restCity;
+    }
+
+    public void setRestCity(String restCity) {
+        this.restCity = restCity;
+    }
+
+    public String getrID() {
+        return rID;
+    }
+
+
+    public void setrID(String rID) {
+        this.rID = rID;
+    }
+
 
     public String getRating() {
         return Rating;
@@ -38,7 +53,7 @@ public class MenuModel  {
         mID = ID;
     }
 
-    private String mID;
+
 
     public String getImageUrl() {
         return imageUrl;
@@ -48,7 +63,7 @@ public class MenuModel  {
         this.imageUrl = imageUrl;
     }
 
-    private String imageUrl;
+
 
     public String getRestName() {
         return restName;
@@ -58,10 +73,11 @@ public class MenuModel  {
         this.restName = restName;
     }
 
-    private  String restName;
+
 
     public MenuModel(String name, String price, String catagory,String rID,String restName,
-                     String imageUrl, String mID,String Rating,String ratingCount,String totalRating,String person) {
+                     String imageUrl, String mID,String Rating,
+                     String ratingCount,String totalRating,String person,String tag , String restCity) {
         this.name = name;
         this.price = price;
         this.catagory = catagory;
@@ -73,7 +89,17 @@ public class MenuModel  {
         this.ratingCount = ratingCount;
         this.totalRating = totalRating;
         this.person = person;
+        this.tag = tag;
+        this.restCity = restCity;
+    }
 
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getPerson() {

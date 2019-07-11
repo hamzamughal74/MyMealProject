@@ -63,6 +63,7 @@ public class Cart extends AppCompatActivity {
         recyclerViewCart.setLayoutManager(layoutManager);
         txtTotalPrice = findViewById(R.id.total);
         btnPlace = findViewById(R.id.btnPlaceOrder);
+
         loadFoodList();
 
     }

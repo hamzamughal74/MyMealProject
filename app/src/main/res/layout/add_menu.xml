@@ -40,9 +40,9 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="320dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         app:cardBackgroundColor="#0FFFFFFF"
         app:cardCornerRadius="8dp">
 
@@ -51,7 +51,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/edittext_round"
             android:hint="Name"
             android:inputType="textCapWords"
@@ -64,7 +64,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="80dp"
             android:background="@drawable/edittext_round"
             android:hint="Price"
             android:inputType="number"
@@ -77,10 +77,22 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="140dp"
             android:background="@drawable/edittext_round"
             android:hint="Person"
             android:inputType="number"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+        <EditText
+            android:id="@+id/tag"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/edittext_round"
+            android:hint="Tag"
+            android:inputType="textCapWords"
             android:padding="5dp"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -90,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="240dp"
+            android:layout_marginTop="260dp"
             android:background="@drawable/btn_round"
             android:onClick="dishDone"
             android:text="Done"

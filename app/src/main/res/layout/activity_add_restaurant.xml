@@ -64,6 +64,17 @@
             android:textAlignment="center"
             android:textSize="24sp" />
 
+        <ImageButton
+            android:id="@+id/locationbtn"
+            android:layout_width="54dp"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/loc_off"
+            android:onClick="btnLocation"
+            android:scaleType="centerCrop" />
+
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"

@@ -63,17 +63,17 @@ return viewHolder;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name,price,person;
-        ImageView image;
-        ImageButton btnOpenDish;
-        private ItemClickListener itemClickListener;
+            ImageView image;
+            ImageButton btnOpenDish;
+            private ItemClickListener itemClickListener;
         public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.dishName);
-            price = itemView.findViewById(R.id.dishPrice);
-            person = itemView.findViewById(R.id.dishPerson);
-            image = itemView.findViewById(R.id.itemImage);
-            btnOpenDish = itemView.findViewById(R.id.btnOpenDish);
-            btnOpenDish.setOnClickListener(this);
+                super(itemView);
+                name = itemView.findViewById(R.id.dishName);
+                price = itemView.findViewById(R.id.dishPrice);
+                person = itemView.findViewById(R.id.dishPerson);
+                image = itemView.findViewById(R.id.itemImage);
+                btnOpenDish = itemView.findViewById(R.id.btnOpenDish);
+                btnOpenDish.setOnClickListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {

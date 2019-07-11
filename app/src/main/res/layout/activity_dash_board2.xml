@@ -66,10 +66,44 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/btnLocation"
+            android:layout_width="160dp"
+            android:background="@drawable/orange_stroke"
+            app:cardBackgroundColor="@android:color/black"
+            android:layout_height="190dp"
+            android:layout_margin="10dp"
+            android:onClick="btnLocation">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@android:color/transparent"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/circlebackgroundpurple"
+                    android:src="@drawable/cube"
+                    android:padding="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="10dp"
+                    android:text="3D Image"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/theme_orange"
+                    android:layout_margin="10dp"/>
 
-
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="80dp"
         android:clipToPadding="false"

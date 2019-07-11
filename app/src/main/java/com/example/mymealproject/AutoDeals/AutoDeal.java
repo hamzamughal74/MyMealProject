@@ -22,7 +22,6 @@ public class AutoDeal extends AppCompatActivity {
 
         mPerson = findViewById(R.id.person);
         mBudget = findViewById(R.id.budget);
-
         rID = getIntent().getStringExtra("rID");
 
 

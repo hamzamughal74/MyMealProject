@@ -68,4 +68,6 @@
     <string name="title_activity_add_restaurant">AddRestaurant</string>
     <string name="title_activity_admin_order_status">AdminOrderStatus</string>
     <string name="title_activity_auto_deals">AutoDeals</string>
+
+    <string name="access_token">pk.eyJ1IjoiaGFtenphbXVnaGFsIiwiYSI6ImNqeHJ4bzJzazA5YnAzaXFva3VuNmk1Mm8ifQ.-wwYPmljEMJazCfi6PzKJw</string>
 </resources>

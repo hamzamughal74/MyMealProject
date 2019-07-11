@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IntelliDeal.intelliDeal"
+    android:background="@android:color/black">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round"
+
+        >
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="10dp"
+            android:text="Your Intelligent Deal"
+            android:textColor="@android:color/white"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:text="No Deal Available "
+        android:textColor="@android:color/white" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="260dp"
+        android:text="Change Your Budget or Persons"
+        android:textColor="@android:color/white" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/appbar"
+        android:id="@+id/iRV"
+        android:layout_width="wrap_content"
+        android:layout_height="489dp"
+        android:background="@android:color/black"
+        android:layout_centerHorizontal="true">
+
+    </android.support.v7.widget.RecyclerView>
+    <Button
+        android:layout_below="@+id/appbar"
+        android:id="@+id/btnDone"
+        android:layout_marginTop="520dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round"
+        android:text="Done"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:onClick="btnDone"
+        android:textSize="24sp"/>
+</RelativeLayout>

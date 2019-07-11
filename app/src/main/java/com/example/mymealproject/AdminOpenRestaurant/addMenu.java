@@ -34,7 +34,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 public class addMenu extends AppCompatActivity {
-    private EditText mName,mPrice,mPerson;
+    private EditText mName,mPrice,mPerson,mTag;
     private Spinner mSpinner;
     private ImageButton mDishImage;
     private String rID;
@@ -47,7 +47,7 @@ public class addMenu extends AppCompatActivity {
     private FirebaseAuth Auth;
     private String dishID;
     private String imageUrl;
-    private String restaurantName;
+    private String restaurantName,restCity = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class addMenu extends AppCompatActivity {
         mName = findViewById(R.id.dishName);
         mPrice = findViewById(R.id.dishPrice);
         mPerson = findViewById(R.id.dishPerson);
+        mTag = findViewById(R.id.tag);
         mSpinner = findViewById(R.id.dishCatagory);
 
         mDishImage = findViewById(R.id.dishImage);
@@ -133,6 +134,17 @@ public class addMenu extends AppCompatActivity {
 
                 }
             });
+            mDatabaseReference.child(CurrentUID).child("city").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    restCity = dataSnapshot.getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
             mDatabaseReference = mDatabaseReference.child("Menu").push();
             dishID = mDatabaseReference.getKey();
@@ -141,6 +153,7 @@ public class addMenu extends AppCompatActivity {
            final String price = mPrice.getText().toString();
            final  String person = mPerson.getText().toString();
            final String catagory = mSpinner.getSelectedItem().toString();
+           final  String tag = mTag.getText().toString();
            final  String Rating = "0";
            final  String ratingCount = "1";
             final  String totalRating = "0";
@@ -164,7 +177,7 @@ public class addMenu extends AppCompatActivity {
                                  imageUrl = uri.toString();
 
                                  MenuModel menu = new MenuModel(
-                                         name,price,catagory,rID,restaurantName,imageUrl,dishID,Rating,ratingCount,totalRating,person
+                                         name,price,catagory,rID,restaurantName,imageUrl,dishID,Rating,ratingCount,totalRating,person,tag,restCity
                                  );
 
                                  mDatabaseReference.setValue(menu);

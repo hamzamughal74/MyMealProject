@@ -29,4 +29,12 @@ public class DashBoard2 extends AppCompatActivity {
         Intent intent = new Intent(this, SignIn.class);
         startActivity(intent);
     }
+    public void btnMap(View view){
+        Intent map = new Intent(DashBoard2.this,Map.class);
+        startActivity(map);
+    }
+    public void btnLocation(View view){
+        Intent location = new Intent(this, ImageView.class);
+        startActivity(location);
+    }
 }
