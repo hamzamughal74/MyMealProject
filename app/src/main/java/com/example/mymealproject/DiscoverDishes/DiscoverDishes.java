@@ -6,13 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,7 +47,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscoverDishes extends AppCompatActivity {
+public class DiscoverDishes extends AppCompatActivity implements LocationListener {
     private RecyclerView mFoodRecycleView;
     ArrayList<MenuModel> mFoodList;
     DatabaseReference mDatabaseReference;
@@ -53,23 +56,31 @@ public class DiscoverDishes extends AppCompatActivity {
     Query query;
     String city = "no";
     private ImageButton locationbtn;
-    private LocationManager mLocationManager;
-    private double lat,lon;
+//    private LocationManager mLocationManager;
 
+
+    public double latitude;
+    public double longitude;
+    public LocationManager locationManager;
+    public Criteria criteria;
+    public String bestProvider;
+
+
+    private double lat, lon;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_restaurant);
-        search=findViewById(R.id.search);
+        search = findViewById(R.id.search);
         mFoodRecycleView = findViewById(R.id.recyclerViewDR);
         locationbtn = findViewById(R.id.locationbtnn);
         LinearLayoutManager mLayoutManger = new LinearLayoutManager(this);
         RecyclerView.LayoutManager mRvLayoutManager = mLayoutManger;
         mFoodRecycleView.setLayoutManager(mRvLayoutManager);
         mFoodList = new ArrayList<>();
-        mFoodAdapter = new FoodAdapter(this,mFoodList);
+        mFoodAdapter = new FoodAdapter(this, mFoodList);
         mFoodRecycleView.setAdapter(mFoodAdapter);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Restaurant").child("Menu");
 //        search.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
@@ -83,7 +94,7 @@ public class DiscoverDishes extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     test();
                     //to close keypad on search button click
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(search.getWindowToken(),
                             InputMethodManager.RESULT_UNCHANGED_SHOWN);
                     return true;
@@ -93,12 +104,11 @@ public class DiscoverDishes extends AppCompatActivity {
         });
 
 
-
-
     }
 
     //Functionality for BackPress*******************************************************************
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -113,55 +123,57 @@ public class DiscoverDishes extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
-        }, 2000);
+        }, 1000);
     }
 //*************************************************************************************************
 
-    public void btnDashBoard(View view){
-        Intent intent = new Intent(DiscoverDishes.this , DashBoard2.class );
+    public void btnDashBoard(View view) {
+        Intent intent = new Intent(DiscoverDishes.this, DashBoard2.class);
         startActivity(intent);
     }
-    public void btnSearch(View view){
+
+    public void btnSearch(View view) {
         test();
     }
 
-    public void foodListShow(){
-            search.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    public void foodListShow() {
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+            }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 //                    mFoodList.clear();
 //                        foodListShow();
-                }
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                   test2();
-                }
-            });
+            @Override
+            public void afterTextChanged(Editable s) {
+                test2();
+            }
+        });
 
     }
-    public void test(){
-        if (search.getText().toString().isEmpty()){
+
+    public void test() {
+        if (search.getText().toString().isEmpty()) {
             mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
             mFoodRecycleView.setVisibility(View.VISIBLE);
 
-        }
-        else {
+        } else {
 
-            query=mDatabaseReference.orderByChild("name").startAt(search.getText().toString()).endAt(search.getText().toString());
+            query = mDatabaseReference.orderByChild("name").startAt(search.getText().toString()).endAt(search.getText().toString());
             query.addListenerForSingleValueEvent(valueEventListener);
 
         }
     }
-    public void test2(){
-        if (search.getText().toString().isEmpty()){
+
+    public void test2() {
+        if (search.getText().toString().isEmpty()) {
             mDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
             mFoodRecycleView.setVisibility(View.VISIBLE);
         }
@@ -177,20 +189,19 @@ public class DiscoverDishes extends AppCompatActivity {
                 mFoodRecycleView.setVisibility(View.VISIBLE);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MenuModel modelFood = snapshot.getValue(MenuModel.class);
-                    if (city.equals("no")){
+                    if (city.equals("no")) {
                         mFoodList.add(modelFood);
-                    }else {
-                        if (snapshot.hasChild("restCity")){
-                            if (modelFood.getRestCity().equals(city)){
+                    } else {
+                        if (snapshot.hasChild("restCity")) {
+                            if (modelFood.getRestCity().equals(city)) {
                                 mFoodList.add(modelFood);
                             }
                         }
 
                     }
                 }
-               mFoodAdapter .notifyDataSetChanged();
-            }
-            else {
+                mFoodAdapter.notifyDataSetChanged();
+            } else {
 //                mFoodRecycleView.setVisibility(View.GONE);
                 mFoodList.clear();
                 Toast.makeText(DiscoverDishes.this, "No data found", Toast.LENGTH_SHORT).show();
@@ -211,7 +222,7 @@ public class DiscoverDishes extends AppCompatActivity {
 
     private void onGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Enable ImageView").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Enable Location").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
@@ -236,51 +247,137 @@ public class DiscoverDishes extends AppCompatActivity {
             @Override
             public void run() {
                 // Do something after 5s = 5000ms
-                mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//
+
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if ( locationManager != null &&  locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     locationbtn.setBackgroundResource(R.drawable.loc_on);
                     getLocation();
-                    Toast.makeText(DiscoverDishes.this, "ImageView Based On", Toast.LENGTH_SHORT).show();
                 }
-                if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     locationbtn.setBackgroundResource(R.drawable.loc_off);
                     city = "no";
                 }
+
                 test2();
+
             }
-        }, 2000);
+
+
+        }, 1000);
+
 
 
     }
-    private void getLocation() {
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+
+    @Override
+    public void onLocationChanged(Location location) {
+        locationManager.removeUpdates(this);
+
+        //open the map:
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    public static boolean isLocationEnabled(Context context) {
+        //...............
+        return true;
+    }
+
+    protected void getLocation() {
+        if (isLocationEnabled(DiscoverDishes.this)) {
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+//            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
+
+            //You can still do this if you like, you might get lucky:
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                           int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
+                Log.e("TAG", "GPS is on");
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                getCity();
+                Toast.makeText(DiscoverDishes.this, ""+city, Toast.LENGTH_SHORT).show();
+            } else {
+                //This is what you need:
+                Toast.makeText(this, "no network", Toast.LENGTH_SHORT).show();
+//                locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+            }
+        } else {
+            //prompt user to enable location....
+            //.................
+
+
         }
-        android.location.Location location = mLocationManager.getLastKnownLocation(mLocationManager.NETWORK_PROVIDER);
-        getLatLon(location);
-        loc();
-        Toast.makeText(this, ""+city, Toast.LENGTH_SHORT).show();
     }
-    public void loc(){
+
+
+    //    private void getLocation() {
+//        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+//        android.location.Location location = mLocationManager.getLastKnownLocation(mLocationManager.NETWORK_PROVIDER);
+//        getLatLon(location);
+//        loc();
+//        Toast.makeText(this, ""+city, Toast.LENGTH_SHORT).show();
+//    }
+//    public void loc(){
+//        try {
+//            Geocoder geocoder = new Geocoder(this);
+//            List<Address> addresses = null;
+//            addresses = geocoder.getFromLocation(lat,lon,1);
+//            city = addresses.get(0).getLocality();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    private void getLatLon(Location location) {
+//        lat = location.getLatitude();
+//        lon = location.getLongitude();
+//    }
+    public void getCity() {
         try {
             Geocoder geocoder = new Geocoder(this);
             List<Address> addresses = null;
-            addresses = geocoder.getFromLocation(lat,lon,1);
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
             city = addresses.get(0).getLocality();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private void getLatLon(Location location) {
-        lat = location.getLatitude();
-        lon = location.getLongitude();
     }
 }

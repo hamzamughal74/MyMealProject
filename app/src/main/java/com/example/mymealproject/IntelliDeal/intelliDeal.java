@@ -5,16 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.mymealproject.CustomerOrder.Orders;
+import com.example.mymealproject.AutoDeals.DealsAdapter;
 import com.example.mymealproject.MenuModel;
 import com.example.mymealproject.R;
 import com.example.mymealproject.sqlDatabase.Database;
-import com.example.mymealproject.sqlDatabase.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,11 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
     public class intelliDeal extends AppCompatActivity {
-        private RecyclerView mRecyclerView;
-        intelliAdapter adapter;
+        private RecyclerView DRV;
+
         private ArrayList<MenuModel> list;
         private  ArrayList<MenuModel> AL1, AL2 ,AL3,AL4,testList1,testList2;
         private  ArrayList<MenuModel> combineList; private  ArrayList<MenuModel> combineList2;
+        ArrayList<ArrayList<MenuModel>> Dlist ;
 
         DatabaseReference dRef;
         String[] array = new String[2];
@@ -48,7 +46,9 @@ import java.util.List;
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_intelli_deal);
-            mRecyclerView = findViewById(R.id.iRV);
+
+            DRV = findViewById(R.id.DRV);
+            DRV.setVisibility(View.GONE);
             dRef = FirebaseDatabase.getInstance().getReference("Restaurant").child("Menu");
             Cs = getIntent().getStringExtra("Cs");
             final String Bs = getIntent().getStringExtra("Bs");
@@ -105,23 +105,73 @@ import java.util.List;
 
         }
 
-        public  void btnDone(View view){
-            int i;
-        for (i = 0;i<combineList.size();i++){
-            itemID = combineList.get(i).getID();
-            itemName = combineList.get(i).getName();
-            itemPrice = combineList.get(i).getPrice();
+//        public  void btnDone(View view){
+//
+//            int count=0;
+//            if (AL1Size>0){
+//                count++;
+//            }
+//            if (AL2Size>0){
+//                count++;
+//            }
+//            if (AL3Size>0){
+//                count++;
+//            }
+//            if (AL4Size>0){
+//                count++;
+//            }
+//
+//
+//
+//            Dlist = new ArrayList<>();
+//            int z = 0;
+//            for (int d=0;d<combineList.size();d++) {
+//                int v = 0;
+//                ArrayList<MenuModel> temp = new ArrayList<>();
+//
+//                while (v < count) {
+//
+//                    temp.add(combineList.get(d));
+//                    v++;
+//                    d++;
+//                    if (v == count) {
+//                        Dlist.add(temp);
+//                        d--;
+//
+//                    }
+//
+//                }
+//
+//            }
+//
+//            DRV.setLayoutManager(new LinearLayoutManager(this));
+//
+//            DRV.setVisibility(View.VISIBLE);
+//            DealsAdapter DA = new DealsAdapter(intelliDeal.this, Dlist);
+//            DRV.setAdapter(DA);
+//
+//
+//            String t1= Dlist.get(0).get(0).price;
+//            Toast.makeText(this, ""+t1, Toast.LENGTH_SHORT).show();
+//
+//            int i;
+//        for (i = 0;i<combineList.size();i++){
+//            itemID = combineList.get(i).getID();
+//            itemName = combineList.get(i).getName();
+//            itemPrice = combineList.get(i).getPrice();
 //            itemPerson = combineList.get(i).getPerson();
-            new Database(getBaseContext()).addToCart(new Order(
-                    itemID,
-                    itemName,
-                    "1",
-                    itemPrice
-            ));
+//            new Database(getBaseContext()).addToCart(new Order(
+//                    itemID,
+//                    itemName,
+//                    "1",
+//                    itemPrice
+//            ));
+//
+//        }
+//            Toast.makeText(intelliDeal.this, "Added to Cart", Toast.LENGTH_SHORT).show();
 
-        }
-            Toast.makeText(intelliDeal.this, "Added to Cart", Toast.LENGTH_SHORT).show();
-        }
+//        }
+
 
 
 
@@ -137,7 +187,6 @@ import java.util.List;
         combineList2 = new ArrayList<>();
         testList1 = new ArrayList<>();
         testList2 = new ArrayList<>();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         dRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -246,7 +295,7 @@ import java.util.List;
                                             if (!AL4.isEmpty()){
                                                 combineList.add(AL4.get(d));
                                             }
-                                        break loop1;
+
                                         }
 
                                     }
@@ -257,12 +306,55 @@ import java.util.List;
                             }
                         }
                     }
-                mRecyclerView.setVisibility(View.VISIBLE);
-                adapter = new intelliAdapter(intelliDeal.this, combineList);
-                mRecyclerView.setAdapter(adapter);
-                if (combineList.isEmpty()){
-                    mRecyclerView.setVisibility(View.GONE);
+
+                int count=0;
+                if (AL1Size>0){
+                    count++;
                 }
+                if (AL2Size>0){
+                    count++;
+                }
+                if (AL3Size>0){
+                    count++;
+                }
+                if (AL4Size>0){
+                    count++;
+                }
+
+
+
+                Dlist = new ArrayList<>();
+                int z = 0;
+                for (int d=0;d<combineList.size();d++) {
+                    int v = 0;
+                    ArrayList<MenuModel> temp = new ArrayList<>();
+
+                    while (v < count) {
+
+                        temp.add(combineList.get(d));
+                        v++;
+                        d++;
+                        if (v == count) {
+                            Dlist.add(temp);
+                            d--;
+
+                        }
+
+                    }
+
+                }
+
+                DRV.setLayoutManager(new LinearLayoutManager(intelliDeal.this));
+                DRV.setVisibility(View.VISIBLE);
+                DealsAdapter DA = new DealsAdapter(intelliDeal.this, Dlist);
+                DRV.setAdapter(DA);
+
+//                mRecyclerView.setVisibility(View.VISIBLE);
+//                adapter = new intelliAdapter(intelliDeal.this, combineList);
+//                mRecyclerView.setAdapter(adapter);
+//                if (combineList.isEmpty()){
+//                    mRecyclerView.setVisibility(View.GONE);
+//                }
             }
 
             private void ifs() {
@@ -347,7 +439,7 @@ import java.util.List;
                                         if (!AL2.isEmpty()) {
                                             combineList.add(AL2.get(b));
                                         }
-                                        break;
+
                                     }
 
                                 }
@@ -383,7 +475,7 @@ import java.util.List;
                                             combineList.add(AL1.get(a));
                                             combineList.add(AL2.get(b));
 
-                                        break loop1;
+
                                     }
 
                                 }
@@ -425,7 +517,7 @@ import java.util.List;
                                         if (!AL3.isEmpty()) {
                                             combineList.add(AL3.get(c));
                                         }
-                                        break loop1;
+
                                     }
 
                                 }
@@ -467,7 +559,7 @@ import java.util.List;
                                         if (!AL3.isEmpty()) {
                                             combineList.add(AL3.get(c));
                                         }
-                                        break loop1;
+
                                     }
 
                                 }
@@ -495,7 +587,7 @@ import java.util.List;
                                         if (!AL1.isEmpty()) {
                                             combineList.add(AL1.get(a));
                                         }
-                                        break;
+
                                     }
 
                                 }
@@ -525,7 +617,7 @@ import java.util.List;
                                         if (!AL3.isEmpty()) {
                                             combineList.add(AL3.get(c));
                                         }
-                                        break;
+
                                     }
 
                                 }
@@ -552,7 +644,7 @@ import java.util.List;
                             if (!AL4.isEmpty()){
                                 combineList.add(AL4.get(d));
                             }
-                                        break;
+
                         }
 
                     }
@@ -592,7 +684,7 @@ import java.util.List;
                                     if (!AL3.isEmpty()) {
                                         combineList.add(AL3.get(c));
                                     }
-                                        break loop2;
+
                                 }
 
                             }
@@ -625,35 +717,38 @@ import java.util.List;
                                 person3 = person2 + Integer.parseInt(AL3.get(c).getPerson());
                                 price3 = price2 + Integer.parseInt(AL3.get(c).getPrice());
                             }
-                                PersonIn = Double.parseDouble(Person);
-                                BudgetIn = Double.parseDouble(Budget);
+                            PersonIn = Double.parseDouble(Person);
+                            BudgetIn = Double.parseDouble(Budget);
 
 
-                                if (price3 <= BudgetIn) {
-                                    if (person3 == PersonIn) {
+                            if (price3 <= BudgetIn) {
+                                if (person3 == PersonIn) {
 
 
-                                        if (!AL1.isEmpty()) {
-                                            combineList.add(AL1.get(a));
-                                        }
-                                        if (!AL2.isEmpty()) {
-                                            combineList.add(AL2.get(b));
-                                        }
-                                        if (!AL3.isEmpty()) {
-                                            combineList.add(AL3.get(c));
-                                        }
-
-                                        break loop1;
+                                    if (!AL1.isEmpty()) {
+                                        combineList.add(AL1.get(a));
                                     }
+                                    if (!AL2.isEmpty()) {
+                                        combineList.add(AL2.get(b));
+                                    }
+                                    if (!AL3.isEmpty()) {
+                                        combineList.add(AL3.get(c));
+                                    }
+
 
                                 }
 
                             }
 
-
                         }
+
+
                     }
                 }
+
+
+
+            }
             private void load6() {
 
                 loop1:
@@ -683,7 +778,7 @@ import java.util.List;
                                         if (!AL4.isEmpty()){
                                             combineList.add(AL4.get(d));
                                         }
-                                        break loop1;
+
                                     }
 
                                 }
@@ -731,7 +826,7 @@ import java.util.List;
                                         if (!AL4.isEmpty()){
                                             combineList.add(AL4.get(d));
                                         }
-                                        break loop2;
+
                                     }
 
                                 }
@@ -774,7 +869,7 @@ import java.util.List;
                                         if (!AL4.isEmpty()){
                                             combineList.add(AL4.get(d));
                                         }
-                                        break loop3;
+
                                     }
 
                                 }
@@ -826,7 +921,7 @@ import java.util.List;
                                         if (!AL4.isEmpty()){
                                             combineList.add(AL4.get(d));
                                         }
-                                        break loop2;
+
                                     }
 
                                 }
@@ -880,7 +975,7 @@ import java.util.List;
                                         if (!AL4.isEmpty()){
                                             combineList.add(AL4.get(d));
                                         }
-                                        break loop1;
+
                                     }
 
                                 }
@@ -935,7 +1030,7 @@ import java.util.List;
                                         if (!AL4.isEmpty()){
                                             combineList.add(AL4.get(d));
                                         }
-                                        break loop1;
+
                                     }
 
                                 }

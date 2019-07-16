@@ -1,7 +1,10 @@
 package com.example.mymealproject;
 
 
-public class MenuModel  {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class MenuModel implements Parcelable {
     private String rID;
     public String name;
     public String price;
@@ -18,6 +21,34 @@ public class MenuModel  {
 
     public MenuModel() {
     }
+
+    protected MenuModel(Parcel in) {
+        rID = in.readString();
+        name = in.readString();
+        price = in.readString();
+        catagory = in.readString();
+        Rating = in.readString();
+        ratingCount = in.readString();
+        totalRating = in.readString();
+        person = in.readString();
+        imageUrl = in.readString();
+        restName = in.readString();
+        mID = in.readString();
+        tag = in.readString();
+        restCity = in.readString();
+    }
+
+    public static final Creator<MenuModel> CREATOR = new Creator<MenuModel>() {
+        @Override
+        public MenuModel createFromParcel(Parcel in) {
+            return new MenuModel(in);
+        }
+
+        @Override
+        public MenuModel[] newArray(int size) {
+            return new MenuModel[size];
+        }
+    };
 
     public String getRestCity() {
         return restCity;
@@ -151,6 +182,25 @@ public class MenuModel  {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(rID);
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(catagory);
+        dest.writeString(Rating);
+        dest.writeString(ratingCount);
+        dest.writeString(totalRating);
+        dest.writeString(person);
+        dest.writeString(imageUrl);
+        dest.writeString(restName);
+        dest.writeString(mID);
+        dest.writeString(tag);
+        dest.writeString(restCity);
+    }
 }
