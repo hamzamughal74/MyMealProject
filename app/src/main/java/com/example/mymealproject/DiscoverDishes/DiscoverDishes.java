@@ -55,6 +55,7 @@ public class DiscoverDishes extends AppCompatActivity implements LocationListene
     EditText search;
     Query query;
     String city = "no";
+    final  int REQUEST_CODE =123;
     private ImageButton locationbtn;
 //    private LocationManager mLocationManager;
 
@@ -264,7 +265,7 @@ public class DiscoverDishes extends AppCompatActivity implements LocationListene
             }
 
 
-        }, 1000);
+        }, 2000);
 
 
 
@@ -316,6 +317,7 @@ public class DiscoverDishes extends AppCompatActivity implements LocationListene
                 //                                           int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
                 return;
             }
             Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.mymealproject.AdminOpenRestaurant.AdminOpenRestaurant;
 import com.example.mymealproject.AdminOpenRestaurant.addMenu;
+import com.example.mymealproject.DiscoverDishes.DiscoverDishes;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +46,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-public class AddRestaurant extends AppCompatActivity {
+public class AddRestaurant extends AppCompatActivity implements LocationListener {
     private EditText mRestName, mRestAdress, mRestContact;
     private Button mDone;
     private ImageButton mRestImage,mBtnLocation;
@@ -58,6 +60,12 @@ public class AddRestaurant extends AppCompatActivity {
     final float MIN_DISTANCE = 1000;
 
     final int REQUEST_CODE = 123;
+
+    public double latitude;
+    public double longitude;
+    public LocationManager locationManager;
+    public Criteria criteria;
+
     String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
     LocationManager mLocationManager;
     LocationListener mLocationListener;
@@ -100,7 +108,7 @@ public class AddRestaurant extends AppCompatActivity {
         }
 
         else {
-            Toast.makeText(this, "Enable ImageView", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enable Location", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -210,44 +218,109 @@ public class AddRestaurant extends AppCompatActivity {
 //        }
 //    }
 
-    private void getLocation() {
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        android.location.Location location = mLocationManager.getLastKnownLocation(mLocationManager.NETWORK_PROVIDER);
-        getLatLon(location);
-        loc();
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE ){
-            if (grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Log.d("Clima", "onRequestPermissionsResult() : PermissionGranted ");
-                getLocation();
-
-            } else {
-                Log.d("Clima", "onRequestPermissionsResult Permission Dennied");
-            }
-        }
-    }
 //    @Override
 //    protected void onPause() {
 //        super.onPause();
 //        if (mLocationManager != null) mLocationManager.removeUpdates(mLocationListener);
 //    }
 
+
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if ( locationManager != null &&  locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            mBtnLocation.setBackgroundResource(R.drawable.loc_on);
+            getLocation();
+        }
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            mBtnLocation.setBackgroundResource(R.drawable.loc_off);
+            city = "no";
+        }
+    }
+    protected void getLocation() {
+        if (isLocationEnabled(AddRestaurant.this)) {
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+//            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
+
+            //You can still do this if you like, you might get lucky:
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                           int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
+                return;
+            }
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
+                Log.e("TAG", "GPS is on");
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                getCity();
+                Toast.makeText(AddRestaurant.this, ""+city, Toast.LENGTH_SHORT).show();
+            } else {
+                //This is what you need:
+                Toast.makeText(this, "no network", Toast.LENGTH_SHORT).show();
+//                locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+            }
+        } else {
+            //prompt user to enable location....
+            //.................
+
+
+        }
+    }
+    public void getCity() {
+        try {
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> addresses = null;
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            city = addresses.get(0).getLocality();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        locationManager.removeUpdates(this);
+
+        //open the map:
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    public static boolean isLocationEnabled(Context context) {
+        //...............
+        return true;
+    }
+
     private void onGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Enable ImageView").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Enable Location").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
@@ -262,31 +335,5 @@ public class AddRestaurant extends AppCompatActivity {
         });
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-    public void loc(){
-        try {
-            Geocoder geocoder = new Geocoder(this);
-            List<Address> addresses = null;
-            addresses = geocoder.getFromLocation(lat,lon,1);
-           city = addresses.get(0).getLocality();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void getLatLon(Location location) {
-        lat = location.getLatitude();
-        lon = location.getLongitude();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            mBtnLocation.setBackgroundResource(R.drawable.loc_on);
-        }
-        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            mBtnLocation.setBackgroundResource(R.drawable.loc_off);
-        }
     }
 }
